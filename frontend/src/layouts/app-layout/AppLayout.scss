@@ -1,0 +1,10 @@
+.app {
+    &__bg {
+        position: fixed;
+        z-index: -1;
+        height: 100%;
+        width: 100%;
+        background-color: #71b7f1;
+        clip-path: circle(50% at 14% -21%);
+    }
+}

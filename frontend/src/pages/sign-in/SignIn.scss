@@ -1,0 +1,49 @@
+@use "../../assets/scss/" as *;
+
+.signin {
+    &__container {
+        flex: 1 0 480px;
+        height: 85%;
+        min-height: calc(10 * 14px);
+        user-select: none;
+    }
+    &__img {
+        @include flex(center, center);
+
+        img {
+            height: 250px;
+
+            @include mobile {
+                height: 150px;
+            }
+        }
+    }
+    &__form-title {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+
+    .forgot-password {
+        display: block;
+        margin-bottom: 1rem;
+        color: blue;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .btn__submit {
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+}
+
+.signup {
+    margin-top: 1.5rem;
+    width: 100%;
+    @include flex(center, center);
+    a {
+        margin-left: 1rem;
+    }
+}

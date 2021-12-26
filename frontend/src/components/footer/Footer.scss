@@ -1,0 +1,30 @@
+@use "../../assets/scss/" as *;
+
+.footer {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 85px;
+    background: linear-gradient(
+        329.81deg,
+        #016ac0 20.71%,
+        rgba(1, 106, 192, 0) 256.27%
+    );
+    &__address {
+        height: 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        @include mobile {
+            padding: 1rem;
+            font-size: 12px;
+        }
+    }
+    & span.bold {
+        font-weight: bold;
+    }
+}
