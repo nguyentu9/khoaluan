@@ -14,6 +14,8 @@
     &__grid {
         display: grid;
         min-width: 320px;
+        grid-template-rows: repeat(auto-fill, 5rem);
+        grid-gap: 2.286rem;
     }
 
     &__buttongroup {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { CheckCircle } from "../../../assets/icons";
 import "./SignUpStep.scss";
 
@@ -38,4 +38,4 @@ const StepItem = ({ value, success = false, children }) => {
     );
 };
 
-export default SignUpStep;
+export default memo(SignUpStep);
