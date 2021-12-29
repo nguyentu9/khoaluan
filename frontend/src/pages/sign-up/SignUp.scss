@@ -1,0 +1,28 @@
+@use "../../assets/scss/" as *;
+
+.signup {
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: 100%;
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    max-width: calc(1127px + 2rem);
+    justify-items: center;
+
+    &__grid {
+        display: grid;
+        min-width: 320px;
+    }
+
+    &__buttongroup {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        max-height: 36px;
+    }
+
+    &__steps {
+        margin-bottom: 2rem;
+    }
+}

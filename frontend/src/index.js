@@ -4,6 +4,12 @@ import "semantic-ui-css/semantic.min.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+
+// if (process.env.NODE_ENV === "development") {
+//     const { worker } = require("./__mocks__/browser");
+//     worker.start();
+// }
+
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>

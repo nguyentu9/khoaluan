@@ -5,6 +5,7 @@ import { ImageSignIn } from "../../assets/icons";
 import "./SignIn.scss";
 
 export const SignIn = () => {
+
     return (
         <Grid container className="signin signin__container">
             <Grid.Row columns={2} stretched>
@@ -49,7 +50,7 @@ export const SignIn = () => {
                             Đăng nhập
                         </Button>
 
-                        <div className="signup">
+                        <div className="redirect__link">
                             <span>Bạn chưa có tài khoản? </span>
                             <Link to="/sign-up">Đăng ký</Link>
                         </div>

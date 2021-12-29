@@ -1,0 +1,31 @@
+@use "../../../assets/scss/" as *;
+.step-wrapper {
+    max-width: 400px;
+    width: 100%;
+    @include flex(space-between, center);
+}
+
+.step-items {
+    @include box(50px);
+    @include flex(center, center);
+    position: relative;
+    border-radius: 50%;
+    background-color: $gray;
+
+    &.success,
+    &.success + &-divider {
+        background-color: $green;
+    }
+
+    &-divider {
+        margin: 0 10px;
+        flex: 1;
+        height: 4px;
+        border-radius: 20px;
+        background-color: $gray;
+    }
+
+    &-icon {
+        @include flex(center, center);
+    }
+}

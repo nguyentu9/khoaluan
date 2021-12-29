@@ -1,16 +1,17 @@
 import { useRoutes } from "react-router-dom";
 import "./App.scss";
 import AppLayout from "./layouts/app-layout/AppLayout";
-import BlankLayout from "./layouts/blank-layout/BlankLayout";
 import Dashboard from "./layouts/dashboard-layout/Dashboard";
+import Home from "./pages/Home";
 import { SignIn } from "./pages/sign-in/SignIn";
+import SignUp from "./pages/sign-up";
 
 let routes = [
     {
         path: "/",
         element: <AppLayout />,
         children: [
-            { path: "/", element: <div>Trang chu</div> },
+            { path: "/", element: <Home /> },
             { path: "/news", element: <div>Tin tuc</div> },
             { path: "/news/:id", element: <div>Chi tiet thong bao</div> },
             { path: "/forms", element: <div>Bieu mau</div> },
@@ -26,7 +27,10 @@ let routes = [
             },
         ],
     },
-    { path: "/sign-up", element: <BlankLayout />, children: [] },
+    {
+        path: "/sign-up",
+        element: <SignUp />,
+    },
     {
         path: "/dashboard",
         element: <Dashboard />,
