@@ -20,4 +20,4 @@ const Degree = sequelize.define(
     }
 );
 
-export default Degree;
+module.exports = Degree;

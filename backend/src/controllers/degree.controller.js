@@ -4,7 +4,7 @@ const asyncMiddleware = require("../middleware/async.mdw");
 // @desc    Lấy học hàm học vị theo ID
 // @route   GET /api/degrees/:id
 // @access  Public
-export const getDegreeById = asyncMiddleware(async (req, res, next) => {
+exports.getDegreeById = asyncMiddleware(async (req, res, next) => {
     const id = req.params.id;
     const degree = await Degree().findByPk(id);
     if (!degree)
@@ -15,7 +15,7 @@ export const getDegreeById = asyncMiddleware(async (req, res, next) => {
 // @desc    Lấy tất cả học hàm học vị
 // @route   GET /api/degrees
 // @access  Public
-export const getDegrees = asyncMiddleware(async (req, res, next) => {
+exports.getDegrees = asyncMiddleware(async (req, res, next) => {
     const degrees = await JobTitle().findAll();
     res.json(degrees);
 });

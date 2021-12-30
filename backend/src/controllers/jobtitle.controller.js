@@ -4,7 +4,7 @@ const asyncMiddleware = require("../middleware/async.mdw");
 // @desc    Lấy chức vụ theo ID
 // @route   GET /api/jobtitles/:id
 // @access  Public
-export const getJobTitleById = asyncMiddleware(async (req, res, next) => {
+module.exports.getJobTitleById = asyncMiddleware(async (req, res, next) => {
     const id = req.params.id;
     const jobTitle = await JobTitle().findByPk(id);
     if (!jobTitle)
@@ -15,7 +15,7 @@ export const getJobTitleById = asyncMiddleware(async (req, res, next) => {
 // @desc    Lấy tất cả chức vụ
 // @route   GET /api/jobtitles
 // @access  Public
-export const getJobTitles = asyncMiddleware(async (req, res, next) => {
+module.exports.getJobTitles = asyncMiddleware(async (req, res, next) => {
     const jobTitles = await JobTitle().findAll();
     res.json(jobTitles);
 });

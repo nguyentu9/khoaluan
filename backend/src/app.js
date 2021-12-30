@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const error = require("./middleware/error.mdw");
+const sequelize = require("./config/db");
 
 app.use(express.json());
 
@@ -14,6 +15,11 @@ app.get("/", (req, res) => {
 app.use("/api/jobtitles", jobTitleRoute);
 app.use("/api/degrees", degreeRoute);
 
-app.use(error());
+app.use(error);
+
+sequelize
+    .sync()
+    .then(() => console.log("Connection Successful!"))
+    .catch((e) => console.log("Error: " + e));
 
 module.exports = app;

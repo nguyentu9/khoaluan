@@ -20,4 +20,4 @@ const JobTitle = sequelize.define(
     }
 );
 
-export default JobTitle;
+module.exports = JobTitle;
