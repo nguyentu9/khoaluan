@@ -31,3 +31,6 @@ ul {
     background: #999999;
     border-radius: 4px 4px 4px 4px;
 }
+.ui.dropdown > .dropdown.icon:before {
+    content: "▼";
+}

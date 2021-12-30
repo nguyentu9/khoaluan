@@ -14,7 +14,7 @@
     &__grid {
         display: grid;
         min-width: 320px;
-        grid-template-rows: repeat(auto-fill, 5rem);
+        grid-template-rows: repeat(auto-fill, 4.5rem);
         grid-gap: 2.286rem;
     }
 
@@ -22,6 +22,14 @@
         border: 1px solid #eee;
         border-radius: 5px;
         max-height: 36px;
+    }
+
+    &__button-submit {
+        @include flex(flex-start, center);
+        max-height: 36px;
+    }
+    &__button-submit > button {
+        flex: 1;
     }
 
     &__steps {

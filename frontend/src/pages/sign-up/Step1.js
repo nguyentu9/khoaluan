@@ -6,7 +6,7 @@ import useToggle from "../../hooks/useToggle";
 import "./SignUp.scss";
 
 const Step1 = () => {
-    const [belongToSchool, setBelongToSchool] = useToggle(true);
+    const [emailBelongToSchool, setEmailBelongToSchool] = useToggle(true);
     return (
         <>
             <SignUpStep step={1} style={{ marginTop: "2rem" }} />
@@ -19,16 +19,16 @@ const Step1 = () => {
                 </h3>
                 <Button.Group className="signup__buttongroup">
                     <Button
-                        primary={belongToSchool}
-                        basic={!belongToSchool}
-                        onClick={setBelongToSchool}
+                        primary={emailBelongToSchool}
+                        basic={!emailBelongToSchool}
+                        onClick={setEmailBelongToSchool}
                     >
                         Trong Trường
                     </Button>
                     <Button
-                        primary={!belongToSchool}
-                        basic={belongToSchool}
-                        onClick={setBelongToSchool}
+                        primary={!emailBelongToSchool}
+                        basic={emailBelongToSchool}
+                        onClick={setEmailBelongToSchool}
                     >
                         Ngoài Trường
                     </Button>

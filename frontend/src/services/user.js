@@ -15,7 +15,7 @@ export const userApi = createApi({
         accountRegister: builder.query({
             query: (user) => ({
                 url: `register`,
-                method: POST,
+                method: "POST",
                 body: user,
             }),
         }),

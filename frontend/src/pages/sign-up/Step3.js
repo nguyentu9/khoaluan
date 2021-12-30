@@ -16,80 +16,108 @@ const Step3 = () => {
                 </h3>
                 <Form.Field>
                     <Form.Input
-                        id="fullName"
-                        name="fullName"
-                        label="Họ tên"
+                        id="userNumber"
+                        name="userNumber"
+                        label="Mã số cán bộ"
                         type="text"
-                        // {...register("fullName")}
+                        // {...register("userNumber")}
                         // error={
-                        //     errors?.fullName?.message
-                        //         ? { content: errors.fullName.message }
+                        //     errors?.userNumber?.message
+                        //         ? { content: errors.userNumber.message }
                         //         : false
                         // }
                     />
                 </Form.Field>
-                <Form.Group widths="equal">
-                    <Form.Input
-                        id="birthDay"
-                        name="birthDay"
-                        label="Ngày sinh"
-                        type="date"
-                        // {...register("birthDay")}
-                        // error={
-                        //     errors?.birthDay?.message
-                        //         ? { content: errors.birthDay.message }
-                        //         : false
-                        // }
-                    />
-                    <Form.Dropdown
-                        id="gender"
-                        name="gender"
-                        label="Giới tính"
-                        style={{ height: "41.7969px" }}
-                        options={[
-                            { key: 1, text: "Nam", value: 1 },
-                            { key: 0, text: "Nữ", value: 0 },
-                        ]}
-                        selection
 
-                        // {...register("gender")}
-                        // error={
-                        //     errors?.gender?.message
-                        //         ? { content: errors.gender.message }
-                        //         : false
-                        // }
-                    />
-                </Form.Group>
-
+                <Form.Dropdown
+                    id="degree"
+                    name="degree"
+                    label="Học hàm - học vị"
+                    type="text"
+                    style={{ height: "41.7969px" }}
+                    options={[
+                        { key: 1, text: "Nam", value: 1 },
+                        { key: 0, text: "Nữ", value: 0 },
+                    ]}
+                    selection
+                    // {...register("gender")}
+                    // error={
+                    //     errors?.gender?.message
+                    //         ? { content: errors.gender.message }
+                    //         : false
+                    // }
+                />
                 <Form.Field>
                     <Form.Input
-                        id="phone"
-                        name="phone"
-                        label="Điện thoại"
+                        id="scientificTitle"
+                        name="scientificTitle"
+                        label="Chức danh khoa học"
                         type="text"
-                        // {...register("phone")}
+                        // {...register("scientificTitle")}
                         // error={
-                        //     errors?.phone?.message
-                        //         ? { content: errors.phone.message }
+                        //     errors?.scientificTitle?.message
+                        //         ? { content: errors.scientificTitle.message }
                         //         : false
                         // }
                     />
                 </Form.Field>
-                <Form.Field>
-                    <Form.Input
-                        id="address"
-                        name="addres"
-                        label="Địa chỉ liên lạc"
-                        type="text"
-                        // {...register("address")}
-                        // error={
-                        //     errors?.address?.message
-                        //         ? { content: errors.address.message }
-                        //         : false
-                        // }
-                    />
-                </Form.Field>
-                <div>
+                <Form.Dropdown
+                    id="position"
+                    name="position"
+                    label="Chức vụ"
+                    type="text"
+                    style={{ height: "41.7969px" }}
+                    options={[
+                        { key: 1, text: "Nam", value: 1 },
+                        { key: 0, text: "Nữ", value: 0 },
+                    ]}
+                    selection
+                    // {...register("position")}
+                    // error={
+                    //     errors?.position?.message
+                    //         ? { content: errors.position.message }
+                    //         : false
+                    // }
+                />
+                <Form.Dropdown
+                    id="workplace"
+                    name="workplace"
+                    label="Đơn vị công tác"
+                    type="text"
+                    style={{ height: "41.7969px" }}
+                    options={[
+                        { key: 1, text: "Nam", value: 1 },
+                        { key: 0, text: "Nữ", value: 0 },
+                    ]}
+                    selection
+                    search
+                    // {...register("workplace")}
+                    // error={
+                    //     errors?.workplace?.message
+                    //         ? { content: errors.workplace.message }
+                    //         : false
+                    // }
+                />
+                <Form.Dropdown
+                    id="major"
+                    name="major"
+                    label="Ngành"
+                    type="text"
+                    style={{ height: "41.7969px" }}
+                    options={[
+                        { key: 1, text: "Nam", value: 1 },
+                        { key: 0, text: "Nữ", value: 0 },
+                    ]}
+                    selection
+                    search
+                    // {...register("major")}
+                    // error={
+                    //     errors?.major?.message
+                    //         ? { content: errors.major.message }
+                    //         : false
+                    // }
+                />
+                <div className="field signup__button-submit">
                     <Button type="button">Trở lại</Button>
                     <Button type="submit" primary>
                         Tiếp tục

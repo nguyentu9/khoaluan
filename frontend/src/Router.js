@@ -8,6 +8,7 @@ import Step1 from "./pages/sign-up/Step1";
 import Step2 from "./pages/sign-up/Step2";
 import Step3 from "./pages/sign-up/Step3";
 import Step4 from "./pages/sign-up/Step4";
+import StepFinal from "./pages/sign-up/StepFinal";
 
 const routes = [
     {
@@ -39,6 +40,7 @@ const routes = [
             { path: "2", element: <Step2 /> },
             { path: "3", element: <Step3 /> },
             { path: "4", element: <Step4 /> },
+            { path: "final", element: <StepFinal /> },
             { path: "*", element: <Navigate to="1" /> },
         ],
     },

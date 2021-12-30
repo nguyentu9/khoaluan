@@ -89,7 +89,7 @@ const Step2 = () => {
                         // }
                     />
                 </Form.Field>
-                <div>
+                <div className="field signup__button-submit">
                     <Button type="button">Trở lại</Button>
                     <Button type="submit" primary>
                         Tiếp tục
