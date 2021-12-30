@@ -4,7 +4,8 @@ import "semantic-ui-css/semantic.min.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-
+import { store } from "./redux";
+import { Provider } from "react-redux";
 // if (process.env.NODE_ENV === "development") {
 //     const { worker } = require("./__mocks__/browser");
 //     worker.start();
@@ -12,9 +13,11 @@ import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>
     </React.StrictMode>,
     document.getElementById("root")
 );
