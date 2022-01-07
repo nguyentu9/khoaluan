@@ -16,7 +16,7 @@ const Degree = sequelize.define(
         },
     },
     {
-        freezeTableName: true,
+        timestamps: false,
     }
 );
 

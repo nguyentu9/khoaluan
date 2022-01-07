@@ -2,9 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Grid } from "semantic-ui-react";
 import { ImageSignIn } from "../../assets/icons";
+import { useLoginMutation } from "../../services/user";
 import "./SignIn.scss";
 
 export const SignIn = () => {
+    const [login, { isLoading, data, error }] = useLoginMutation();
+
+    const handleLogin = () => {
+        // login({email, password})
+    };
 
     return (
         <Grid container className="signin signin__container">
@@ -46,7 +52,13 @@ export const SignIn = () => {
                         <Link to="/forgot-password" className="forgot-password">
                             Quên mật khẩu
                         </Link>
-                        <Button primary type="submit" className="btn__submit">
+                        <Button
+                            primary
+                            type="submit"
+                            className="btn__submit"
+                            onClick={handleLogin}
+                            loading={isLoading}
+                        >
                             Đăng nhập
                         </Button>
 

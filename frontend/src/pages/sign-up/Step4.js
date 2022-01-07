@@ -91,8 +91,8 @@ const Step4 = () => {
                 </Form.Field>
                 <Form.Field>
                     <Form.Input
-                        id="bankAffiliate"
-                        name="bankAffiliate"
+                        id="bankBranch"
+                        name="bankBranch"
                         label="Tại ngân hàng"
                         type="text"
                         // {...register("bankAffiliate")}

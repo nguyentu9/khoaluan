@@ -14,6 +14,10 @@ const Step3 = () => {
                 >
                     THÔNG TIN CÁ NHÂN
                 </h3>
+                {/* 
+                TODO: Kiểm tra mã số cán bộ: T52-(7 ký tự)
+                TODO: Kiểm tra mã sinh viên: 9 chữ số
+                */}
                 <Form.Field>
                     <Form.Input
                         id="userNumber"

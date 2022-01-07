@@ -1,9 +1,9 @@
-const sequelize = require("../config/db");
 const { DataTypes } = require("sequelize");
+const sequelize = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
 
-const JobTitle = sequelize.define(
-    "JobTitle",
+const TopicRole = sequelize.define(
+    "TopicRole",
     {
         id: {
             type: DataTypes.UUID,
@@ -21,4 +21,4 @@ const JobTitle = sequelize.define(
     }
 );
 
-module.exports = JobTitle;
+module.exports = TopicRole;

@@ -4,12 +4,21 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "nodemon index.js"
+        "start": "NODE_ENV=production node index.js",
+        "dev": "NODE_ENV=development nodemon index.js",
+        "start:win": "set NODE_ENV=production && node index.js",
+        "dev:win": "set NODE_ENV=development && nodemon index.js",
+        "seed": "sequelize-cli db:seed --seed"
     },
     "dependencies": {
         "dotenv": "^10.0.0",
         "express": "^4.17.1",
         "mysql2": "^2.3.3",
-        "sequelize": "^6.12.0-alpha.1"
+        "sequelize": "^6.12.0-alpha.1",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {
+        "@withshepherd/faker": "^5.5.5",
+        "sequelize-cli": "^6.3.0"
     }
 }

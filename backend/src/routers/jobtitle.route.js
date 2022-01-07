@@ -2,7 +2,7 @@ const router = require("express").Router();
 const {
     getJobTitles,
     getJobTitleById,
-} = require("../controllers/jobtitle.controller");
+} = require("../controllers/jobTitle.controller");
 
 router.get("/", getJobTitles);
 router.get("/:id", getJobTitleById);
