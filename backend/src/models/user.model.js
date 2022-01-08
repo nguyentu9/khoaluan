@@ -91,4 +91,5 @@ const User = sequelize.define("User", {
     resetToken: DataTypes.STRING,
 });
 
+module.exports.validatorUser = function (user) {};
 module.exports = User;

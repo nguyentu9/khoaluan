@@ -1,5 +1,8 @@
 require("dotenv").config();
 const express = require("express");
+const session = require("express-session");
+const helmet = require("helmet");
+const xss = require("xss-clean");
 const app = express();
 const error = require("./src/middlewares/error.mdw");
 const sequelize = require("./src/config/db");
@@ -9,9 +12,22 @@ const degreeRoute = require("./src/routers/degree.route");
 const authRoute = require("./src/routers/auth.route");
 require("./src/models/association");
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(__dirname + "/public"));
+// TODO: express rate limix
+// TODO: hpp
+// TODO: sequelize sesssion
+// TODO: config helmet
+
+app.use(helmet());
+app.use(xss());
+app.set("trust proxy", 1); // trust first proxy
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: true },
+    })
+);
 
 app.use(function (req, res, next) {
     res.header("Content-Type", "application/json;charset=UTF-8");
@@ -22,6 +38,10 @@ app.use(function (req, res, next) {
     );
     next();
 });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
     res.send("API is running");
@@ -34,8 +54,8 @@ app.use("/api/degrees", degreeRoute);
 app.use(error);
 
 sequelize
-    .sync({ force: true, logging: console.log })
-    // .sync()
+    // .sync({ force: true, logging: console.log })
+    .sync()
     .then(() => console.log("Connection Successful!"))
     .catch((e) => console.log("Error: " + e));
 
