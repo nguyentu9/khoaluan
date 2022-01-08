@@ -2,8 +2,8 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
 
-const Faculty = sequelize.define(
-    "Faculty",
+const UserRole = sequelize.define(
+    "UserRole",
     {
         id: {
             type: DataTypes.UUID,
@@ -11,7 +11,12 @@ const Faculty = sequelize.define(
             primaryKey: true,
         },
         name: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(50),
+            allowNull: false,
+            unique: true,
+        },
+        code: {
+            type: DataTypes.STRING(50),
             allowNull: false,
             unique: true,
         },
@@ -21,4 +26,4 @@ const Faculty = sequelize.define(
     }
 );
 
-module.exports = Faculty;
+module.exports = UserRole;

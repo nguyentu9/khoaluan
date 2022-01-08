@@ -18,11 +18,3 @@ export const topicStatus = [
     "Bị Từ Chối",
     "Tự Huỷ Đề Tài",
 ];
-
-// Vai trò trong đề tài
-export const topicRoles = [
-    { name: "Chủ Nhiệm" },
-    { name: "Đồng Chủ Nhiệm" },
-    { name: "Thành Viên Thực Hiện Chính" },
-    { name: "Thành Viên" },
-];

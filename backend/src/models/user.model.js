@@ -9,7 +9,7 @@ const User = sequelize.define("User", {
         primaryKey: true,
     },
     fullName: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
         validate: {
             len: { args: [5, 50], msg: "Họ tên phải chứa từ 5 đến 50 ký tự" },
@@ -27,7 +27,7 @@ const User = sequelize.define("User", {
         allowNull: false,
     },
     email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
         unique: true,
         validate: {
@@ -35,11 +35,11 @@ const User = sequelize.define("User", {
         },
     },
     password: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
         allowNull: false,
     },
     phone: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(11),
         allowNull: false,
         unique: true,
     },
@@ -54,14 +54,17 @@ const User = sequelize.define("User", {
     },
 
     sientificTitle: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
+    },
+    workplaceOutside: {
+        type: DataTypes.STRING(50),
     },
     address: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(100),
         allowNull: false,
     },
     idcard: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(12),
         allowNull: false,
         unique: true,
     },
@@ -74,19 +77,18 @@ const User = sequelize.define("User", {
         allowNull: false,
     },
     bankNumber: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(12),
         unique: true,
     },
     bankBranch: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(50),
     },
     isBlock: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
     },
-    resetToken: {
-        type: DataTypes.STRING,
-    },
+    resetToken: DataTypes.STRING,
 });
 
 module.exports = User;

@@ -7,26 +7,18 @@ module.exports = {
             {
                 id: uuidv4(),
                 name: "Giáo Sư",
-                createdAt: new Date(),
-                updatedAt: new Date(),
             },
             {
                 id: uuidv4(),
                 name: "Phó Giáo Sư",
-                createdAt: new Date(),
-                updatedAt: new Date(),
             },
             {
                 id: uuidv4(),
                 name: "Tiến Sĩ",
-                createdAt: new Date(),
-                updatedAt: new Date(),
             },
             {
-                id: uuidv4(),
+                id: "3c276de7-524d-41d5-bd88-6cd9cc70834e",
                 name: "Thạc Sĩ",
-                createdAt: new Date(),
-                updatedAt: new Date(),
             },
         ]);
     },
