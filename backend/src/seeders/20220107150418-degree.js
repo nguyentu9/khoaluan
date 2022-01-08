@@ -5,15 +5,15 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.bulkInsert("degree", [
             {
-                id: uuidv4(),
+                id: "a0152c77-b3ea-4501-8d63-2a006577cd87",
                 name: "Giáo Sư",
             },
             {
-                id: uuidv4(),
+                id: "b2b1450e-f3ac-4d3f-ad60-6a3aafb8aeb6",
                 name: "Phó Giáo Sư",
             },
             {
-                id: uuidv4(),
+                id: "39eec572-345d-4fdd-bb6a-527726d66e94",
                 name: "Tiến Sĩ",
             },
             {

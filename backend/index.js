@@ -4,20 +4,24 @@ const session = require("express-session");
 const helmet = require("helmet");
 const xss = require("xss-clean");
 const app = express();
-const error = require("./src/middlewares/error.mdw");
 const sequelize = require("./src/config/db");
+const compression = require("compression");
+
+const notFound = require("./src/middlewares/notFound.mdw");
+const error = require("./src/middlewares/error.mdw");
 
 const jobTitleRoute = require("./src/routers/jobTitle.route");
 const degreeRoute = require("./src/routers/degree.route");
 const authRoute = require("./src/routers/auth.route");
+const majorRoute = require("./src/routers/major.route");
 require("./src/models/association");
 
 // TODO: express rate limix
 // TODO: hpp
 // TODO: sequelize sesssion
 // TODO: config helmet
-
 app.use(helmet());
+app.use(compression());
 app.use(xss());
 app.set("trust proxy", 1); // trust first proxy
 app.use(
@@ -25,7 +29,7 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true },
+        cookie: { maxAge: 1000 * 60 * 60 * 24, secure: true },
     })
 );
 
@@ -40,7 +44,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
@@ -50,7 +54,9 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/jobtitles", jobTitleRoute);
 app.use("/api/degrees", degreeRoute);
+app.use("/api/majors", majorRoute);
 
+app.use(notFound);
 app.use(error);
 
 sequelize

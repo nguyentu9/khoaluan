@@ -165,19 +165,15 @@ Mô tả:
 
 -   Bị khoá tài khoản
     <br/>
-    `GET /users?blocked=true`
+    `GET /users?inactive=true`
 
 -   Người dùng bên ngoài
     <br/>
     `GET /users?external=true`
 
--   Loại trừ người dùng bên trong trường
+-   Người dùng bên trong trường
     <br/>
-    `GET /users?exclude_internal=true`
-
--   Loại trừ người dùng bên ngoài trường
-    <br/>
-    `GET /users?exclude_external=true`
+    `GET /users?internal=true`
 
 ========================
 
@@ -201,15 +197,17 @@ Response
     trạng thái đề tài
 }
 ```
-- Tab: Yêu cầu
+
+-   Tab: Yêu cầu
+
 ## TODO: Tab Yêu cầu chưu thiết kế API
-- Tab: Yêu cầu
-- Tab: Tài liệu
-- Tab: Hoạt động
 
+-   Tab: Yêu cầu
+-   Tab: Tài liệu
+-   Tab: Hoạt động
 
-- Tab: Hội đồng (chỉ thành viên trong hội đồng, 
-trưởng phòng, p.trưởng phòng, trưởng khoa, p.trưởng phòng có thể xem)
+-   Tab: Hội đồng (chỉ thành viên trong hội đồng,
+    trưởng phòng, p.trưởng phòng, trưởng khoa, p.trưởng phòng có thể xem)
 
 ```js
 Response
@@ -219,9 +217,9 @@ Response
         ...
     },
     forms: [
-        { 
+        {
             name, // tên biểu mẩu
-            
+
 
         }
     ]

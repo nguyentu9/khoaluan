@@ -1,6 +1,9 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
+const bcrypt = require("bcrypt");
+const Joi = require("joi");
+const messageVN = require("../constant/validationMsg");
 
 const User = sequelize.define("User", {
     id: {
@@ -9,14 +12,8 @@ const User = sequelize.define("User", {
         primaryKey: true,
     },
     fullName: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(40),
         allowNull: false,
-        validate: {
-            len: { args: [5, 50], msg: "Họ tên phải chứa từ 5 đến 50 ký tự" },
-            notEmpty: {
-                msg: "Họ tên không được trống",
-            },
-        },
     },
     birthday: {
         type: DataTypes.DATE,
@@ -35,7 +32,7 @@ const User = sequelize.define("User", {
         },
     },
     password: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING,
         allowNull: false,
     },
     phone: {
@@ -91,5 +88,15 @@ const User = sequelize.define("User", {
     resetToken: DataTypes.STRING,
 });
 
-module.exports.validatorUser = function (user) {};
+User.beforeCreate(async (user, options) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(user.password, salt);
+    user.password = hashedPassword;
+});
+
+User.beforeBulkCreate(async (user, options) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(user.password, salt);
+    user.password = hashedPassword;
+});
 module.exports = User;

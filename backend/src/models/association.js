@@ -61,7 +61,6 @@ Degree.hasMany(User, {
     foreignKey: {
         name: "degreeID",
         type: DataTypes.UUID,
-        allowNull: false,
     },
     constraints: true,
 });
