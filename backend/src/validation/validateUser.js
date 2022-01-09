@@ -5,33 +5,36 @@ module.exports = async function validateUser(user) {
     const schema = Joi.object()
         .keys({
             isInsider: Joi.boolean().required().messages(messagesVN),
-            email: Joi.alternatives().conditional("isInsider", [
-                {
-                    is: true,
-                    then: Joi.string()
-                        .trim()
-                        .label("Email")
-                        .email()
-                        .regex(/^[A-Za-z0-9._%+-]+@tgu.edu.vn$/)
-                        .max(40)
-                        .required()
-                        .messages({
-                            ...messagesVN,
-                            "string.pattern.base":
-                                "Email không hợp lệ. Vui lòng dùng email của TGU",
-                        }),
-                },
-                {
-                    is: false,
-                    then: Joi.string()
-                        .label("Email")
-                        .trim()
-                        .email()
-                        .max(40)
-                        .required()
-                        .messages(messagesVN),
-                },
-            ]),
+            email: Joi.alternatives()
+                .conditional("isInsider", [
+                    {
+                        is: true,
+                        then: Joi.string()
+                            .trim()
+                            .label("Email")
+                            .email()
+                            .regex(/^[A-Za-z0-9._%+-]+@tgu.edu.vn$/)
+                            .max(40)
+                            .required()
+                            .messages({
+                                ...messagesVN,
+                                "string.pattern.base":
+                                    "Email không hợp lệ. Vui lòng dùng email của TGU",
+                            }),
+                    },
+                    {
+                        is: false,
+                        then: Joi.string()
+                            .label("Email")
+                            .trim()
+                            .email()
+                            .max(40)
+                            .required()
+                            .messages(messagesVN),
+                    },
+                ])
+                .required()
+                .messages(messagesVN),
             password: Joi.string()
                 .min(8)
                 .max(30)

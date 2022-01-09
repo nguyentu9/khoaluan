@@ -4,7 +4,7 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.bulkInsert("user", [
             {
-                id: uuidv4(),
+                id: "30ebad88-67da-49b5-9984-0c0b006032ce",
                 fullName: "admin",
                 birthday: "1970/1/1",
                 gender: 1,
@@ -25,7 +25,7 @@ module.exports = {
                 updatedAt: new Date(),
             },
             {
-                id: uuidv4(),
+                id: "62b20519-a71f-4964-965b-92969f76397a",
                 fullName: "Thục Trinh Nguyễn",
                 birthday: "1978/1/15",
                 gender: 1,

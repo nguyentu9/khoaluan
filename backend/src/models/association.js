@@ -12,6 +12,7 @@ const TopicRole = require("./topicRole.model");
 const Scores = require("./scores.model");
 const TopicMember = require("./topicMember.model");
 const UserPermission = require("./userPermission.model");
+const Council = require("./council.model");
 
 const WorkPlace = sequelize.define(
     "workplace",
@@ -24,12 +25,11 @@ const WorkPlace = sequelize.define(
         },
         isHeadOfDept: {
             type: DataTypes.BOOLEAN,
+            defaultValue: false,
         },
         isDeputyOfDept: {
             type: DataTypes.BOOLEAN,
-        },
-        isStaff: {
-            type: DataTypes.BOOLEAN,
+            defaultValue: false,
         },
     },
     { timestamps: false }
@@ -111,12 +111,10 @@ Permission.belongsToMany(UserRole, {
 Topic.belongsToMany(User, {
     through: TopicMember,
     foreignKey: "userID",
-    constraints: true,
 });
 User.belongsToMany(Topic, {
     through: TopicMember,
     foreignKey: "topicID",
-    constraints: true,
 });
 
 // ========= TopicRole 1 - N TopicMember ========
@@ -138,6 +136,10 @@ User.belongsToMany(Topic, {
     constraints: true,
 });
 
+// ========= Topic 1 - N User (Instructor) ========
+User.hasMany(Topic, { as: "Instructor", foreignKey: "instructor" });
+Topic.belongsTo(User, { as: "Instructor", foreignKey: "instructor" });
+
 // ========= Topic 1 - N Status ========
 const Status = sequelize.define(
     "Status",
@@ -148,7 +150,7 @@ const Status = sequelize.define(
             autoIncrement: true,
             allowNull: false,
         },
-        nextStatus: {
+        name: {
             type: DataTypes.STRING(100),
             allowNull: false,
         },
@@ -160,6 +162,10 @@ const Status = sequelize.define(
 Topic.belongsToMany(Status, { through: "TopicStatus", foreignKey: "statusID" });
 Status.belongsToMany(Topic, { through: "TopicStatus", foreignKey: "topicID" });
 
+// ========= Status 1 - 1 Status ========
+Status.hasOne(Status, { foreignKey: "nextStatus" });
+
+// ========= Topic 1 - N Keyword ========
 const Keyword = sequelize.define(
     "keyword",
     {
@@ -180,3 +186,36 @@ const Keyword = sequelize.define(
 );
 
 Topic.hasMany(Keyword, { constraints: true, foreignKey: "topicID" });
+Keyword.belongsTo(Topic, { constraints: true, foreignKey: "topicID" });
+
+// ========= Topic 1 - N Council ========
+Topic.hasMany(Council, { constraints: true, foreignKey: "topicID" });
+Council.belongsTo(Topic, { constraints: true, foreignKey: "topicID" });
+
+// ========= Council 1 - 1 CouncilType ========
+const CouncilType = sequelize.define(
+    "CouncilType",
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false,
+        },
+        name: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
+        },
+    },
+    {
+        timestamps: false,
+    }
+);
+CouncilType.hasMany(Council, {
+    constraints: true,
+    foreignKey: "councilTypeID",
+});
+Council.belongsTo(CouncilType, {
+    constraints: true,
+    foreignKey: "councilTypeID",
+});

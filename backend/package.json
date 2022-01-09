@@ -7,7 +7,7 @@
         "start": "NODE_ENV=production node index.js",
         "dev": "NODE_ENV=development nodemon index.js",
         "start:win": "set NODE_ENV=production && node index.js",
-        "dev:win": "set NODE_ENV=development && nodemon index.js",
+        "dev:win": "set NODE_ENV=development && nodemon --inspect index.js",
         "seed": "sequelize-cli db:seed --seed"
     },
     "dependencies": {

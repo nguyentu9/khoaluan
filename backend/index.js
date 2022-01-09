@@ -62,8 +62,8 @@ app.use(notFound);
 app.use(error);
 
 sequelize
-    .sync({ force: true, logging: console.log })
-    // .sync()
+    // .sync({ force: true, logging: console.log })
+    .sync()
     .then(() => console.log("Connection Successful!"))
     .catch((e) => console.log("Error: " + e));
 

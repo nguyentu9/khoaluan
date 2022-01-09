@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 const crypto = require("crypto");
 const fs = require("fs");
+const sequelize = require("../config/db");
 const createError = require("http-errors");
 const validateUser = require("../validation/validateUser");
 
@@ -48,33 +49,43 @@ exports.isUserValid = async (req, res, next) => {
     }
     const { errors, user } = await validateUser(body);
 
-    if (user?.isInsider || errors) {
+    if (errors || user?.isInsider) {
         fs.unlink(req.file.path, (err) => {
-            if (err) return res.status(500).send("Something wrong.");
+            if (err) {
+                res.status(500).send("Error");
+                return;
+            }
             req.file = null;
-            req.user = user;
-            next();
+            req.data = { errors, user };
         });
-    } else if (!user?.isInsider && !errors) {
+    }
+    if (errors) {
+        res.status(400).json({
+            message: "Thông tin không hợp lệ",
+            errors,
+        });
+        return;
+    }
+
+    if (!user?.isInsider && !errors) {
         // File checksum
         let file_buffer = fs.readFileSync(req.file.path);
         let sum = crypto.createHash("md5");
         sum.update(file_buffer);
-        // Assign to user
         user.hash = sum.digest("hex");
-
-        req.user = user;
-        next();
+        req.data = { errors, user };
     }
+
+    req.data = { user, errors };
+    next();
+    return;
 };
 
 // @desc    Đăng ký
 // @route   POST /api/auth/register
 // @access  Public
 exports.signup = async (req, res, next) => {
-    const user = req.user;
-
-    // // TODO: Kiểm tra insider == true : Thêm user vào workplace
+    const { user } = req.data;
     const newUser = await User.build({
         isInsider: user.isInsider,
         email: user.email,
@@ -87,6 +98,7 @@ exports.signup = async (req, res, next) => {
         nationalID: user.nationalID,
         issuedDate: user.issuedDate,
         issuedPlace: user.issuedPlace,
+        majorID: user.majorID,
     });
 
     if (user.haveABankNum)
@@ -102,12 +114,52 @@ exports.signup = async (req, res, next) => {
         });
     }
     if (user.isInsider)
-        newUser.set({ isStudent: user.isStudent, insiderID: user.insiderID });
+        newUser.set({
+            isStudent: user.isStudent,
+            insiderID: user.insiderID,
+        });
+    if (!user.isStudent) {
+        newUser.set({
+            scientificTitle: user.scientificTitle,
+            jobTitleID: user.jobTitleID,
+        });
+    }
 
-    const savedUser = await newUser.save();
-    res.status(201).json({
-        message: "Đăng ký thành công!",
-        data: user,
-        file: req.file,
-    });
+    const savedUser = await newUser.save({});
+
+    if (user.isInsider) {
+        savedUser.addWorkplace();
+    }
+
+    // const t = await sequelize.transaction();
+
+    // try {
+    //     const savedUser = await newUser.save({}, { transaction: t });
+
+    //     if (user.isInsider) {
+    //         savedUser.setFacDept({}, { transaction: t });
+    //     }
+    //     // If the execution reaches this line, no errors were thrown.
+    //     // We commit the transaction.
+    //     await t.commit();
+
+    // res.status(201).json({
+    //     message: "Đăng ký thành công!",
+    //     data: savedUser,
+    // });
+    //     return;
+    // } catch (error) {
+    //     // If the execution reaches this line, an error was thrown.
+    //     // We rollback the transaction.
+    // res.status(500).json({
+    //     message: "Đăng ký thất bại!",
+    //     err: error,
+    //     u: newUser,
+    // });
+    //     await t.rollback();
+
+    //     return;
+    // }
+
+    // TODO: Kiểm tra insider == true : Thêm user vào workplace
 };
