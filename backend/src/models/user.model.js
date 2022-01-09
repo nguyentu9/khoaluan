@@ -2,8 +2,6 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-const Joi = require("joi");
-const messageVN = require("../constant/validationMsg");
 
 const User = sequelize.define("User", {
     id: {
@@ -60,7 +58,7 @@ const User = sequelize.define("User", {
         type: DataTypes.STRING(100),
         allowNull: false,
     },
-    idcard: {
+    nationalID: {
         type: DataTypes.STRING(12),
         allowNull: false,
         unique: true,
@@ -70,7 +68,7 @@ const User = sequelize.define("User", {
         allowNull: false,
     },
     issuedPlace: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(30),
         allowNull: false,
     },
     bankNumber: {

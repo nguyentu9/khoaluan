@@ -50,14 +50,16 @@ module.exports = async function validateUser(user) {
             .required()
             .messages(messagesVN),
         birthday: Joi.date()
+            .label("Ngày sinh")
             .format("YYYY-MM-DD")
             .utc()
-            .label("Ngày sinh")
+            .less(Date.now())
+            .required()
             .messages({
                 ...messagesVN,
+                "date.less": "Ngày sinh phải nhỏ hơn ngày hiện tại",
                 "date.format": "Ngày sinh phải ở định dạng YYYY-MM-DD",
-            })
-            .required(),
+            }),
         gender: Joi.boolean()
             .label("Giới tính")
             .required()
@@ -154,11 +156,68 @@ module.exports = async function validateUser(user) {
             .max(36)
             .guid({ version: "uuidv4" })
             .messages(messagesVN),
-        workplaceOutside: Joi.string().when("isInsider", {
-            is: false,
+        workplaceOutside: Joi.string()
+            .label("Đơn vị công tác")
+            .when("isInsider", {
+                is: false,
+                then: Joi.string()
+                    .trim()
+                    .min(5)
+                    .max(50)
+                    .required()
+                    .messages(messagesVN),
+            }),
+        nationalID: Joi.string()
+            .label("Chứng minh nhân dân")
+            .trim()
+            .min(9)
+            .max(12)
+            .regex(/^(\b(\d{9})\b|\b(\d{12})\b)$/)
+            .required()
+            .messages({
+                ...messagesVN,
+                "string.pattern.base": "CMND/CCCD phải là 9 hoặc 12 ký tự số",
+            }),
+        issuedDate: Joi.date()
+            .format("YYYY-MM-DD")
+            .utc()
+            .label("Ngày cấp")
+            .greater(Joi.ref("birthday"))
+            .less("now")
+            .required()
+            .messages({
+                ...messagesVN,
+                "date.greater": "Ngày cấp phải nhỏ hơn ngày sinh",
+                "date.format": "Ngày cấp phải ở định dạng YYYY-MM-DD",
+            }),
+        issuedPlace: Joi.string()
+            .label("Nơi cấp")
+            .trim()
+            .min(5)
+            .max(30)
+            .required()
+            .messages(messagesVN),
+        haveABankNum: Joi.boolean().required().messages(messagesVN),
+        bankNumber: Joi.string().when("haveABankNum", {
+            is: true,
             then: Joi.string()
                 .trim()
-                .min(5)
+                .label("Số tài khoản")
+                .regex(/^(\d)+$/)
+                .max(12)
+                .required()
+                .messages({
+                    ...messagesVN,
+                    "string.pattern.base":
+                        "Số tài khoản phải là chuỗi ký tự số",
+                }),
+        }),
+        bankBranch: Joi.string().when("haveABankNum", {
+            is: true,
+            then: Joi.string()
+                .trim()
+                .alphanum()
+                .label("Chi nhánh ngân hàng")
                 .max(50)
                 .required()
                 .messages(messagesVN),
