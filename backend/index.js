@@ -3,6 +3,7 @@ const express = require("express");
 const session = require("express-session");
 const helmet = require("helmet");
 const xss = require("xss-clean");
+const hpp = require("hpp");
 const app = express();
 const sequelize = require("./src/config/db");
 const compression = require("compression");
@@ -20,10 +21,11 @@ require("./src/models/association");
 // TODO: hpp
 // TODO: sequelize sesssion
 // TODO: config helmet
-app.use(helmet());
-app.use(compression());
-app.use(xss());
-app.set("trust proxy", 1); // trust first proxy
+// app.use(helmet());
+// app.use(hpp());
+// app.use(compression());
+// app.use(xss());
+// app.set("trust proxy", 1); // trust first proxy
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
@@ -60,8 +62,8 @@ app.use(notFound);
 app.use(error);
 
 sequelize
-    // .sync({ force: true, logging: console.log })
-    .sync()
+    .sync({ force: true, logging: console.log })
+    // .sync()
     .then(() => console.log("Connection Successful!"))
     .catch((e) => console.log("Error: " + e));
 

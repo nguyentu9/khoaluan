@@ -7,6 +7,8 @@ const Major = require("./major.model");
 const User = require("./user.model");
 const UserRole = require("./userRole.model");
 const Permission = require("./permission.model");
+const Topic = require("./topic.model");
+const TopicRole = require("./topicRole.model");
 
 const WorkPlace = sequelize.define(
     "workplace",
@@ -107,5 +109,30 @@ const UserPermission = sequelize.define(
         timestamps: false,
     }
 );
-UserRole.belongsToMany(Permission, { through: UserPermission });
-Permission.belongsToMany(UserRole, { through: UserPermission });
+UserRole.belongsToMany(Permission, {
+    through: UserPermission,
+    foreignKey: "permissionID",
+});
+Permission.belongsToMany(UserRole, {
+    through: UserPermission,
+    foreignKey: "userRoleID",
+});
+
+// ========= Topic N - N User ========
+
+const TopicMember = sequelize.define(
+    "TopicMember",
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false,
+        },
+    },
+    { timestamps: false }
+);
+Topic.belongsToMany(User, { through: TopicMember, foreignKey: "userID" });
+User.belongsToMany(Topic, { through: TopicMember, foreignKey: "topicID" });
+
+TopicMember.belongsTo(TopicRole, { foreignKey: "topicRoleID" });

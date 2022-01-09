@@ -41,6 +41,7 @@ const User = sequelize.define("User", {
     isStudent: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
     },
     isInsider: {
         type: DataTypes.BOOLEAN,
@@ -61,6 +62,13 @@ const User = sequelize.define("User", {
     nationalID: {
         type: DataTypes.STRING(12),
         allowNull: false,
+        unique: true,
+    },
+    nationalIDImg: {
+        type: DataTypes.STRING,
+    },
+    hash: {
+        type: DataTypes.STRING,
         unique: true,
     },
     issuedDate: {
