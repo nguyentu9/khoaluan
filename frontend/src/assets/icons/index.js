@@ -3,3 +3,7 @@ export { default as ImageSignIn } from "./signInImg.svg";
 export { default as MenuIcon } from "./menu-alt-3.svg";
 export { default as CloseIcon } from "./x.svg";
 export { default as CheckCircle } from "./check-circle.svg";
+export { default as Plus } from "./plus.svg";
+export { default as DocumentText } from "./document-text.svg";
+export { default as Bell } from "./bell.svg";
+export { default as MenuAlt2 } from "./menu-alt-2.svg";

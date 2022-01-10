@@ -1,0 +1,88 @@
+@use "../../assets/scss/" as *;
+
+.sidebar__section {
+    @include flex(flex-start, center, column);
+}
+.logo {
+    width: 100%;
+    @include flex(center, center);
+    margin-top: 2rem;
+    img {
+        cursor: pointer;
+        width: 90px;
+    }
+}
+
+.btn__registration {
+    @include flex(center, center);
+    border: 1px solid rgba(126, 180, 223, 0.4);
+    box-sizing: border-box;
+    border-radius: 15px;
+    margin-top: 24px;
+    width: 188px;
+    height: 50px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+
+    color: $button-text;
+    box-shadow: 0px 8px 20px rgba(126, 180, 223, 0.25);
+    background: #ffffff;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+        background-color: #e7f4ff;
+    }
+    p {
+        transition: all 0.3s;
+    }
+}
+
+.line {
+    width: 90%;
+    height: 1px;
+    background-color: #cfdff0;
+    margin-top: 24px;
+
+    &::before {
+        content: "MENU";
+        margin-top: 5px;
+        display: block;
+        font-size: 12px;
+        color: #88b2db;
+    }
+}
+
+.sidebar__groupitem {
+    @include flex(flex-start, flex-start, column);
+    width: 100%;
+    padding: 12px;
+    margin-top: 36px;
+}
+.sidebar__item {
+    @include flex(flex-start, center);
+    width: 100%;
+    height: 44px;
+    padding: 10px;
+    margin-bottom: 6px;
+    color: rgba(4, 21, 47, 0.7);
+    font-weight: 500;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    p {
+        margin-left: 8px;
+    }
+    &.active,
+    &:hover {
+        background-color: #e7f4ff;
+        color: #076ec1;
+        img {
+            transition: 0.3s;
+            filter: invert(29%) sepia(46%) saturate(2733%) hue-rotate(188deg)
+                brightness(99%) contrast(95%);
+        }
+    }
+}
