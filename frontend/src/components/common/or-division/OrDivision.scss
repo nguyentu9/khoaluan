@@ -1,0 +1,20 @@
+.ordivision {
+    position: relative;
+    &__wrapper {
+        padding: 4px 35px;
+        max-width: 100px;
+    }
+    &:before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: 9px;
+        left: -35px;
+        width: 29px;
+        height: 2px;
+        background-color: rgb(0 0 0 / 30%);
+    }
+    &::after {
+        left: 35px;
+    }
+}

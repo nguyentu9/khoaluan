@@ -1,0 +1,14 @@
+@use "../../assets/scss/" as *;
+
+.search__wrapper,
+.result__wrapper {
+    @include flex(space-between, center);
+    width: 100%;
+    color: $primary-black;
+}
+
+.result__wrapper {
+    p {
+        margin: 0;
+    }
+}

@@ -1,0 +1,14 @@
+@use "../../assets/scss/" as *;
+
+.inputfield {
+    margin-bottom: 2rem;
+}
+.group .customfield {
+    @include flex(flex-start, center);
+    input {
+        max-width: 150px;
+    }
+    span {
+        margin-left: 1rem;
+    }
+}

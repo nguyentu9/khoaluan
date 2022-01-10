@@ -1,0 +1,19 @@
+@use "../../../assets/scss/" as *;
+.adduser {
+    &__wrapper {
+        @include flex(flex-start, center);
+        color: $primary;
+        max-width: 160px;
+        padding: 12px;
+        border-radius: 10px;
+        cursor: pointer;
+        user-select: none;
+        &:hover {
+            background-color: #e7f4ff;
+        }
+    }
+    &__text {
+        font-weight: 500;
+        margin-left: 4px;
+    }
+}

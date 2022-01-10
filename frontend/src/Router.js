@@ -1,7 +1,9 @@
 import { Navigate } from "react-router-dom";
 import AppLayout from "./layouts/app-layout/AppLayout";
 import DashboardLayout from "./layouts/dashboard-layout/Dashboard";
+import ChangePassword from "./pages/change-password/ChangePassword";
 import Home from "./pages/Home";
+import MyTopic from "./pages/my-topic/MyTopic";
 import { SignIn } from "./pages/sign-in/SignIn";
 import SignUp from "./pages/sign-up";
 import Step1 from "./pages/sign-up/Step1";
@@ -48,7 +50,11 @@ const routes = [
     {
         path: "/dashboard",
         element: <DashboardLayout />,
-        children: [{ path: "topic-register", element: <TopicRegister /> }],
+        children: [
+            { path: "topic-register", element: <TopicRegister /> },
+            { path: "change-password", element: <ChangePassword /> },
+            { path: "my-topic", element: <MyTopic /> },
+        ],
     },
     { path: "*", element: <Navigate to="/" /> },
 ];

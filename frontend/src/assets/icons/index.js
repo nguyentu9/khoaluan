@@ -11,3 +11,8 @@ export { default as MenuAlt2 } from "./menu-alt-2.svg";
 export { default as Key } from "./key.svg";
 export { default as Logout } from "./logout.svg";
 export { default as UseCircle } from "./user-circle.svg";
+export { default as User } from "./user.svg";
+
+export { default as ChangeCircle } from "./change-circle.svg";
+export { default as XCircle } from "./x-circle.svg";
+export { default as UserAdd } from "./user-add.svg";

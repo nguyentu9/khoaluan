@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { Bell, Key, Logout, MenuAlt2, UseCircle } from "../../assets/icons";
+import Avartar from "../../components/common/avartar/Avartar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import "./Dashboard.scss";
 
@@ -36,29 +37,32 @@ function DashboardLayout() {
                         <div ref={dropdownToggleEl}>
                             <div className="avatar" ref={dropdownContentEl}>
                                 <ul className="avatar__menu">
-                                    <li>
-                                        <img
-                                            src={UseCircle}
-                                            alt="icon"
-                                            className=""
-                                            onClick={() => {}}
-                                        />
-                                        <span>Thông tin cá nhân</span>
-                                    </li>
-                                    <li>
-                                        <img
-                                            src={Key}
-                                            alt="icon"
-                                            className=""
-                                            onClick={() => {}}
-                                        />
-                                        <span>Đổi mật khẩu</span>
-                                    </li>
-                                    <li>
+                                    <Link to="/">
+                                        <li>
+                                            <img
+                                                src={UseCircle}
+                                                alt="icon"
+                                                className=""
+                                                onClick={() => {}}
+                                            />
+                                            <span>Thông tin cá nhân</span>
+                                        </li>
+                                    </Link>
+                                    <Link to="/dashboard/change-password">
+                                        <li>
+                                            <img
+                                                src={Key}
+                                                alt="icon"
+                                                className=""
+                                                onClick={() => {}}
+                                            />
+                                            <span>Đổi mật khẩu</span>
+                                        </li>
+                                    </Link>
+                                    <li className="logout">
                                         <img
                                             src={Logout}
                                             alt="icon"
-                                            className=""
                                             onClick={() => {}}
                                         />
                                         <span>Đăng xuất</span>
