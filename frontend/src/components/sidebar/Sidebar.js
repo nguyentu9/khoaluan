@@ -1,16 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Bell, DocumentText, Logo, Plus } from "../../assets/icons";
 import "./Sidebar.scss";
 const Sidebar = () => {
     return (
         <div className="sidebar__section">
-            <div className="logo">
+            <Link to="/dashboard" className="logo">
                 <img src={Logo} alt="logo" />
-            </div>
-            <button className="btn__registration">
+            </Link>
+            <Link to="./topic-register" className="btn__registration">
                 <img src={Plus} alt="plus" />
                 <p>Đăng ký đề tài</p>
-            </button>
+            </Link>
             <div className="line"></div>
             <div className="sidebar__groupitem">
                 <div className="sidebar__item active">
@@ -26,4 +27,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

@@ -7,3 +7,7 @@ export { default as Plus } from "./plus.svg";
 export { default as DocumentText } from "./document-text.svg";
 export { default as Bell } from "./bell.svg";
 export { default as MenuAlt2 } from "./menu-alt-2.svg";
+
+export { default as Key } from "./key.svg";
+export { default as Logout } from "./logout.svg";
+export { default as UseCircle } from "./user-circle.svg";

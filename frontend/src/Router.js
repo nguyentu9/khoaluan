@@ -9,6 +9,7 @@ import Step2 from "./pages/sign-up/Step2";
 import Step3 from "./pages/sign-up/Step3";
 import Step4 from "./pages/sign-up/Step4";
 import StepFinal from "./pages/sign-up/StepFinal";
+import TopicRegister from "./pages/topic-register/TopicRegister";
 
 const routes = [
     {
@@ -47,6 +48,7 @@ const routes = [
     {
         path: "/dashboard",
         element: <DashboardLayout />,
+        children: [{ path: "topic-register", element: <TopicRegister /> }],
     },
     { path: "*", element: <Navigate to="/" /> },
 ];
