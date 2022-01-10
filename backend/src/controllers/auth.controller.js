@@ -5,6 +5,7 @@ const fs = require("fs");
 const sequelize = require("../config/db");
 const createError = require("http-errors");
 const validateUser = require("../validation/validateUser");
+const FacDept = require("../models/facdept.model");
 
 // @desc    Đăng nhập
 // @route   POST /api/auth/login
@@ -98,7 +99,7 @@ exports.signup = async (req, res, next) => {
         nationalID: user.nationalID,
         issuedDate: user.issuedDate,
         issuedPlace: user.issuedPlace,
-        majorID: user.majorID,
+        majorID: user.major,
     });
 
     if (user.haveABankNum)
@@ -125,41 +126,23 @@ exports.signup = async (req, res, next) => {
         });
     }
 
-    const savedUser = await newUser.save({});
+    try {
+        const savedUser = await newUser.save();
+        const fetchedFacdept = await FacDept.findByPk(user.workplace);
+        if (user.isInsider) {
+            await savedUser.addFacdept(fetchedFacdept);
+        }
 
-    if (user.isInsider) {
-        savedUser.addWorkplace();
+        res.status(201).json({
+            message: "Đăng ký thành công!",
+        });
+        return;
+    } catch (err) {
+        const errArr = err?.errors?.map((e) => ({
+            message: e.message,
+            key: e.path,
+        }));
+        res.status(400).json(errArr);
+        return;
     }
-
-    // const t = await sequelize.transaction();
-
-    // try {
-    //     const savedUser = await newUser.save({}, { transaction: t });
-
-    //     if (user.isInsider) {
-    //         savedUser.setFacDept({}, { transaction: t });
-    //     }
-    //     // If the execution reaches this line, no errors were thrown.
-    //     // We commit the transaction.
-    //     await t.commit();
-
-    // res.status(201).json({
-    //     message: "Đăng ký thành công!",
-    //     data: savedUser,
-    // });
-    //     return;
-    // } catch (error) {
-    //     // If the execution reaches this line, an error was thrown.
-    //     // We rollback the transaction.
-    // res.status(500).json({
-    //     message: "Đăng ký thất bại!",
-    //     err: error,
-    //     u: newUser,
-    // });
-    //     await t.rollback();
-
-    //     return;
-    // }
-
-    // TODO: Kiểm tra insider == true : Thêm user vào workplace
 };

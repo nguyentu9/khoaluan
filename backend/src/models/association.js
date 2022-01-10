@@ -37,10 +37,14 @@ const WorkPlace = sequelize.define(
 
 FacDept.belongsToMany(User, {
     through: WorkPlace,
+    foreignKey: "userID",
+    constraints: true,
 });
 
 User.belongsToMany(FacDept, {
     through: WorkPlace,
+    foreignKey: "facdeptID",
+    constraints: true,
 });
 
 // ========= FacDept 1 - N Major ========
@@ -89,7 +93,6 @@ UserRole.hasMany(User, {
     foreignKey: {
         name: "roleID",
         type: DataTypes.UUID,
-        allowNull: false,
     },
 });
 

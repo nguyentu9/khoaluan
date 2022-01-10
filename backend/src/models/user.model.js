@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const User = sequelize.define("User", {
     id: {
         type: DataTypes.UUID,
-        defaultValue: uuidv4(),
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
     fullName: {
@@ -28,6 +28,10 @@ const User = sequelize.define("User", {
         validate: {
             isEmail: true,
         },
+        unique: {
+            args: true,
+            msg: "Email đã được sử dụng!",
+        },
     },
     password: {
         type: DataTypes.STRING,
@@ -36,7 +40,10 @@ const User = sequelize.define("User", {
     phone: {
         type: DataTypes.STRING(11),
         allowNull: false,
-        unique: true,
+        unique: {
+            args: true,
+            msg: "SĐT đã được sử dụng!",
+        },
     },
     isStudent: {
         type: DataTypes.BOOLEAN,
@@ -62,14 +69,20 @@ const User = sequelize.define("User", {
     nationalID: {
         type: DataTypes.STRING(12),
         allowNull: false,
-        unique: true,
+        unique: {
+            args: true,
+            msg: "Số CMND đã được sử dụng!",
+        },
     },
     nationalIDImg: {
         type: DataTypes.STRING,
     },
     hash: {
         type: DataTypes.STRING,
-        unique: true,
+        unique: {
+            args: true,
+            msg: "Ảnh CMND đã được sử dụng!. Vui lòng tải lên iại.",
+        },
     },
     issuedDate: {
         type: DataTypes.DATE,
@@ -81,7 +94,10 @@ const User = sequelize.define("User", {
     },
     bankNumber: {
         type: DataTypes.STRING(12),
-        unique: true,
+        unique: {
+            args: true,
+            msg: "Số tài khoản đã được sử dụng!",
+        },
     },
     bankBranch: {
         type: DataTypes.STRING(50),
