@@ -14,22 +14,23 @@ function DashboardLayout() {
     const [isFold, setIsFold] = useState(false);
 
     const dropdownToggleEl = useRef();
-    const dropdownContentEl = useRef();
-    // clickOutsideRef(dropdownContentEl, dropdownToggleEl);
 
     useEffect(() => {
-        const toggleEl = (dropdownToggleEl) => {
-            document.addEventListener("click", (e) => {
-                if (dropdownToggleEl?.current?.contains(e.target)) {
-                    dropdownToggleEl.current.classList.toggle("active");
+        const toggleEl = (element) => {
+            document.addEventListener("mousedown", (e) => {
+                if (element?.current?.contains(e.target)) {
+                    element?.current?.classList?.toggle("active");
                 } else {
-                    dropdownToggleEl.current.classList.remove("active");
+                    element?.current?.classList?.remove("active");
                 }
             });
         };
         toggleEl(dropdownToggleEl);
 
-        return () => document.removeEventListener("click", null);
+        return () => {
+            // dropdownToggleEl?.current?.classList.remove("active");
+            // document.removeEventListener("click", null);
+        };
     }, []);
 
     const handleFoldSidebar = useCallback(() => {
@@ -47,7 +48,6 @@ function DashboardLayout() {
     }, [data, error]);
 
     const handleLogout = () => {
-        console.log("click");
         logout();
     };
     return (
@@ -66,14 +66,13 @@ function DashboardLayout() {
                         />
                         <p className="topnav__title">Dashboard</p>
                     </div>
-                    <div className="topnav__right">
+                    <div
+                        className="topnav__right"
+                        // onClick={(e) => e.stopPropagation()}
+                    >
                         <img src={Bell} alt="Bell" />
 
-                        <div
-                            className="avatar active"
-                            ref={dropdownToggleEl}
-                            // onClick={(e) => e.stopPropagation()}
-                        >
+                        <div className="avatar active" ref={dropdownToggleEl}>
                             <Avatar />
                             <div className="avatar__wrapper">
                                 <ul className="avatar__menu">
