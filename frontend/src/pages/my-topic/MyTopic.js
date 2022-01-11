@@ -1,17 +1,13 @@
-import React from "react";
-import {
-    Breadcrumb,
-    Button,
-    Icon,
-    Input,
-    Menu,
-    Sidebar,
-    Table,
-} from "semantic-ui-react";
-import { User } from "../../assets/icons";
+import React, { useState } from "react";
+import { Breadcrumb, Button, Input, Table } from "semantic-ui-react";
 import Badge from "../../components/common/badge/Badge";
+import SidebarFilter from "../../components/common/sidebar-filter/SidebarFilter";
 import "./MyTopic.scss";
 const MyTopic = () => {
+    const [visible, setVisible] = useState(false);
+    const handleChangeVisible = () => {
+        setVisible((prev) => !prev);
+    };
     return (
         <div className="container">
             <div className="row">
@@ -30,8 +26,15 @@ const MyTopic = () => {
                     <div className="search__wrapper">
                         <div className="search__input">
                             <Input placeholder="Search..." />
-
-                            <Button basic>Bộ lọc</Button>
+                            <div class="ui left icon input">
+                                <input
+                                    placeholder="Search users..."
+                                    type="text"
+                                />
+                            </div>
+                            <Button basic onClick={handleChangeVisible}>
+                                Bộ lọc
+                            </Button>
                         </div>
                         <div className="search__filter"></div>
                     </div>
@@ -76,6 +79,10 @@ const MyTopic = () => {
                             </Table.Row>
                         </Table.Body>
                     </Table>
+                    <SidebarFilter
+                        isVisible={visible}
+                        onHandleClick={handleChangeVisible}
+                    />
                 </div>
             </div>
         </div>

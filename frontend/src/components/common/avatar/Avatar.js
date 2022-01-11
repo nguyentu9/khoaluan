@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { User } from "../../../assets/icons";
-import "./Avartar.scss";
-const Avartar = ({ srcImg = User }, ref) => {
+import "./Avatar.scss";
+const Avatar = ({ srcImg = User }, ref) => {
     return (
         <div className="member__avatar" ref={ref}>
             <img src={srcImg} alt="icon" />
@@ -9,4 +9,4 @@ const Avartar = ({ srcImg = User }, ref) => {
     );
 };
 
-export default forwardRef(Avartar);
+export default forwardRef(Avatar);

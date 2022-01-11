@@ -9,23 +9,35 @@ export const userApi = createApi({
             headers.set("Content-Type", "application/json");
             return headers;
         },
+        credentials: "include",
     }),
     endpoints: (builder) => ({
         login: builder.mutation({
             query: ({ email, password }) => ({
-                url: "/login",
+                url: "/auth/login",
                 method: "POST",
                 body: { email, password },
             }),
         }),
         accountRegister: builder.mutation({
             query: (user) => ({
-                url: `/register`,
+                url: `/auth/register`,
                 method: "POST",
                 body: user,
+            }),
+        }),
+        logout: builder.mutation({
+            query: (userID) => ({
+                url: `/auth/logout`,
+                method: "POST",
+                body: { userID },
             }),
         }),
     }),
 });
 
-export const { useLoginMutation, useAccountRegisterMutation } = userApi;
+export const {
+    useLoginMutation,
+    useAccountRegisterMutation,
+    useLogoutMutation,
+} = userApi;

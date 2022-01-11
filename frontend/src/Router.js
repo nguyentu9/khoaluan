@@ -3,6 +3,7 @@ import AppLayout from "./layouts/app-layout/AppLayout";
 import DashboardLayout from "./layouts/dashboard-layout/Dashboard";
 import ChangePassword from "./pages/change-password/ChangePassword";
 import Home from "./pages/Home";
+import MyInfo from "./pages/my-info/MyInfo";
 import MyTopic from "./pages/my-topic/MyTopic";
 import { SignIn } from "./pages/sign-in/SignIn";
 import SignUp from "./pages/sign-up";
@@ -54,6 +55,7 @@ const routes = [
             { path: "topic-register", element: <TopicRegister /> },
             { path: "change-password", element: <ChangePassword /> },
             { path: "my-topic", element: <MyTopic /> },
+            { path: "my-info", element: <MyInfo /> },
         ],
     },
     { path: "*", element: <Navigate to="/" /> },

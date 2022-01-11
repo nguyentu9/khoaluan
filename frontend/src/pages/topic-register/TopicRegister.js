@@ -135,9 +135,9 @@ const TopicRegister = () => {
                         </Form.Field>
 
                         <UserCountLabel />
-                        {Array(4)
-                            .fill(<Member />)
-                            .map((e) => e)}
+                        {Array(4).map((e, i) => (
+                            <Member key={i} />
+                        ))}
                         <AddUser />
                     </div>
                 </div>

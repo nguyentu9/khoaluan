@@ -1,6 +1,6 @@
 import React from "react";
-import { ChangeCircle, User, XCircle } from "../../../assets/icons";
-import Avartar from "../avartar/Avartar";
+import { ChangeCircle, XCircle } from "../../../assets/icons";
+import Avatar from "../avatar/Avatar";
 import "./Member.scss";
 
 const Member = ({
@@ -12,7 +12,7 @@ const Member = ({
 }) => {
     return (
         <div className="member__item">
-            <Avartar />
+            <Avatar />
             <div className="member__info">
                 <h4 className="member__name">{name}</h4>
                 <span className="member__role">

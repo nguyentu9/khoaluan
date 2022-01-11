@@ -7,7 +7,9 @@ export const userSigninSlice = createSlice({
         userInfo: {},
     },
     reducers: {
-        updateInfo: (state, action) => {},
+        updateInfo: (state, action) => {
+            state.userInfo = action.payload;
+        },
         register: (state, action) => {},
     },
 });

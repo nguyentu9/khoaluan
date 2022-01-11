@@ -4,6 +4,7 @@ const session = require("express-session");
 const helmet = require("helmet");
 const xss = require("xss-clean");
 const hpp = require("hpp");
+const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 const sequelize = require("./src/config/db");
@@ -24,25 +25,28 @@ require("./src/models/association");
 // TODO: sequelize sesssion
 // TODO: config helmet
 app.use(helmet());
+app.use(morgan("dev"));
 // app.use(hpp());
 app.use(compression());
 // app.use(xss());
 app.set("trust proxy", 1); // trust first proxy
 
-app.use(function (req, res, next) {
-    res.header("Content-Type", "application/json;charset=UTF-8");
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    next();
-});
+// app.use(function (req, res, next) {
+// res.header("Access-Control-Allow-Origin", "*");
+// res.header("Content-Type", "application/json;charset=UTF-8");
+// res.header("Access-Control-Allow-Credentials", true);
+// res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+// );
+//     next();
+// });
 
 app.use(
     cors({
-        origin: "http://localhost:3001",
+        origin: "http://localhost:3000",
         methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+        preflightContinue: false,
         credentials: true,
     })
 );
@@ -63,8 +67,6 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-    req.session.authenticated = true;
-
     return res.status(200).send({ status: "success", user: req.session });
 });
 

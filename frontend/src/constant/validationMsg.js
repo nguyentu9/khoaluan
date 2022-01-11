@@ -1,4 +1,4 @@
-const message = {
+const messageVN = {
     "string.alphanum": "{{#label}} chỉ được chứa các ký tự chữ và số",
     "string.base": "{{#label}} phải là chuỗi ký tự",
     "string.creditCard": "{{#label}} phải là một thẻ tín dụng hợp lệ",
@@ -11,5 +11,6 @@ const message = {
     "string.trim": "{{#label}} không được có khoảng trắng ở đầu hoặc cuối",
     "string.uppercase": "{{#label}} chỉ được chứa các ký tự viết hoa",
     "any.required": "{{#label}} là bắt buộc",
+    "date.base": "{{#label}} phải là ngày hợp lệ",
 };
-export default message;
+export default messageVN;

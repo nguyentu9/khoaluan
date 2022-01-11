@@ -12,19 +12,24 @@ const FacDept = require("../models/facdept.model");
 // @access  Public
 exports.login = async (req, res, next) => {
     const { email, password } = req.body;
+    if (!email || !password)
+        return next(createError.NotFound("Email và mật khẩu không được trống"));
     const user = await User.findOne({ where: { email } });
     if (!user) {
         return next(createError.NotFound("Email hoặc mật khẩu không đúng"));
     }
 
     if (await bcrypt.compare(password, user.password)) {
-        const { id, fullName, email, roleID } = user;
+        const { id, fullName, email, roleID, avatarUrl } = user;
+
+        req.session.user = user;
         return res.json({
             message: "Đăng nhập thành công",
             data: {
                 id,
                 fullName,
                 email,
+                avatarUrl,
                 roleID,
             },
         });
@@ -37,7 +42,8 @@ exports.login = async (req, res, next) => {
 // @route   POST /api/auth/logout
 // @access  Public
 exports.logout = async (req, res, next) => {
-    // req.ression.destroy();
+    console.log(req.session);
+    req.session.destroy();
     res.json({
         message: "Đăng xuất thành công !",
     });
