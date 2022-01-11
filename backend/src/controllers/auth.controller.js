@@ -21,6 +21,7 @@ exports.login = async (req, res, next) => {
 
     if (await bcrypt.compare(password, user.password)) {
         const { id, fullName, email, roleID, avatarUrl } = user;
+        const role = await user.getUserrole();
 
         req.session.user = user;
         return res.json({
@@ -30,7 +31,7 @@ exports.login = async (req, res, next) => {
                 fullName,
                 email,
                 avatarUrl,
-                roleID,
+                role,
             },
         });
     } else {
@@ -152,3 +153,8 @@ exports.signup = async (req, res, next) => {
         return;
     }
 };
+
+// @desc    Kiểm tra cookie session có hợp lệ
+// @route   POST /api/auth/validuser
+// @access  Public
+exports.validuser = async (req, res, next) => {};

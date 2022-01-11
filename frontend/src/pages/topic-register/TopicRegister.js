@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Breadcrumb, Form } from "semantic-ui-react";
 import AddUser from "../../components/common/add-user/AddUser";
-import UserCountLabel from "../../components/common/user-count-label/UserCountLabel";
 import Member from "../../components/common/member/Member";
+import UserCountLabel from "../../components/common/user-count-label/UserCountLabel";
+import { useGetMajorsQuery } from "../../services/major";
 import "./TopicRegister.scss";
+
 const TopicRegister = () => {
+    const dispatch = useDispatch();
+    const { data: majorData, isLoading: majorLoading } = useGetMajorsQuery();
+    const handleMajorChange = (e) => {
+        // setMajorSelected(e.target.value);
+    };
+
+    const members = useSelector((state) => state.members);
+
     return (
         <div className="container-fluid">
             <Breadcrumb>
@@ -106,25 +117,15 @@ const TopicRegister = () => {
                             name="major"
                             label="Lĩnh vực"
                             style={{ height: "41.7969px" }}
-                            options={[
-                                {
-                                    key: 1,
-                                    text: "Công nghệ thông tin",
-                                    value: 1,
-                                },
-                                {
-                                    key: 0,
-                                    text: "Hệ thống thông tin",
-                                    value: 0,
-                                },
-                            ]}
+                            options={majorData?.map((e) => ({
+                                key: e.id,
+                                value: e.id,
+                                text: e.name,
+                            }))}
                             selection
-                            // {...register("major")}
-                            // error={
-                            //     errors?.major?.message
-                            //         ? { content: errors.major.message }
-                            //         : false
-                            // }
+                            search
+                            loading={majorLoading}
+                            onChange={handleMajorChange}
                         />
                         <Form.Field>
                             <Form.Input
@@ -134,7 +135,8 @@ const TopicRegister = () => {
                             ></Form.Input>
                         </Form.Field>
 
-                        <UserCountLabel />
+                        <UserCountLabel currentNum={1} />
+                        <Member isOwner showAction={false} />
                         {Array(4).map((e, i) => (
                             <Member key={i} />
                         ))}

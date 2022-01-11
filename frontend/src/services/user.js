@@ -1,16 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import baseUrl from "./baseUrl";
+import { baseQuery } from "./baseUrl";
 
 export const userApi = createApi({
     reducerPath: "userApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl,
-        prepareHeaders(headers) {
-            headers.set("Content-Type", "application/json");
-            return headers;
-        },
-        credentials: "include",
-    }),
+    baseQuery: fetchBaseQuery(baseQuery),
     endpoints: (builder) => ({
         login: builder.mutation({
             query: ({ email, password }) => ({

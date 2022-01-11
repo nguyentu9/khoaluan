@@ -11,7 +11,9 @@
 -   Đăng xuất
     <br/>
     `POST /auth/logout`
-
+-   Kiểm tra cookie session có hợp lệ
+<br/>
+`POST /api/auth/validuser`
 <hr/>
 
 ## Dashboard

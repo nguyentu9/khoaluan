@@ -69,7 +69,6 @@ app.use(
 app.get("/", (req, res) => {
     return res.status(200).send({ status: "success", user: req.session });
 });
-
 app.use("/api/auth", authRoute);
 app.use("/api/jobtitles", jobTitleRoute);
 app.use("/api/degrees", degreeRoute);

@@ -17,18 +17,36 @@ function DashboardLayout() {
 
     useEffect(() => {
         const toggleEl = (element) => {
-            document.addEventListener("mousedown", (e) => {
-                if (element?.current?.contains(e.target)) {
-                    element?.current?.classList?.toggle("active");
-                } else {
-                    element?.current?.classList?.remove("active");
-                }
-            });
+            document.addEventListener(
+                "mousedown",
+                (e) => {
+                    if (element?.current?.contains(e.target)) {
+                        element?.current?.classList?.toggle("active");
+                    } else {
+                        element?.current?.classList?.remove("active");
+                    }
+                    switch (e.target.dataset.type) {
+                        case "my-info": {
+                            navigate(`/dashboard/my-info`);
+                            break;
+                        }
+                        case "change-password": {
+                            navigate(`/dashboard/change-password`);
+                            break;
+                        }
+                        case "logout": {
+                            logout();
+                            break;
+                        }
+                        default: {
+                        }
+                    }
+                },
+                true
+            );
         };
         toggleEl(dropdownToggleEl);
-
         return () => {
-            dropdownToggleEl?.current?.classList.remove("active");
             document.removeEventListener("click", null);
         };
     }, []);
@@ -47,9 +65,6 @@ function DashboardLayout() {
         }
     }, [data, error]);
 
-    const handleLogout = () => {
-        logout();
-    };
     return (
         <div className={`dashboard ${isFold ? "fold" : ""}`}>
             <div className="sidebar">
@@ -66,42 +81,46 @@ function DashboardLayout() {
                         />
                         <p className="topnav__title">Dashboard</p>
                     </div>
-                    <div
-                        className="topnav__right"
-                        // onClick={(e) => e.stopPropagation()}
-                    >
+                    <div className="topnav__right">
                         <img src={Bell} alt="Bell" />
 
                         <div className="avatar" ref={dropdownToggleEl}>
                             <Avatar />
                             <div className="avatar__wrapper">
                                 <ul className="avatar__menu">
-                                    <Link to="/dashboard/my-info">
-                                        <li>
-                                            <img
-                                                src={UseCircle}
-                                                alt="icon"
-                                                className=""
-                                            />
-                                            <span>Thông tin cá nhân</span>
-                                        </li>
-                                    </Link>
-                                    <Link to="/dashboard/change-password">
-                                        <li>
-                                            <img
-                                                src={Key}
-                                                alt="icon"
-                                                className=""
-                                            />
-                                            <span>Đổi mật khẩu</span>
-                                        </li>
-                                    </Link>
-                                    <li
-                                        className="logout"
-                                        onClick={handleLogout}
-                                    >
-                                        <img src={Logout} alt="icon" />
-                                        <span>Đăng xuất</span>
+                                    <li data-type="my-info">
+                                        <img
+                                            src={UseCircle}
+                                            alt="icon"
+                                            className=""
+                                            data-type="my-info"
+                                        />
+                                        <span data-type="my-info">
+                                            Thông tin cá nhân
+                                        </span>
+                                    </li>
+
+                                    <li data-type="change-password">
+                                        <img
+                                            src={Key}
+                                            alt="icon"
+                                            className=""
+                                            data-type="change-password"
+                                        />
+                                        <span data-type="change-password">
+                                            Đổi mật khẩu
+                                        </span>
+                                    </li>
+
+                                    <li className="logout" data-type="logout">
+                                        <img
+                                            src={Logout}
+                                            alt="icon"
+                                            data-type="logout"
+                                        />
+                                        <span data-type="logout">
+                                            Đăng xuất
+                                        </span>
                                     </li>
                                 </ul>
                             </div>

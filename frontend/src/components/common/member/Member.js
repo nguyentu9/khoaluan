@@ -7,6 +7,7 @@ const Member = ({
     name = "Unknown",
     role = "Chủ Nhiệm",
     isOwner = false,
+    showAction = true,
     onChange,
     onDelete,
 }) => {
@@ -19,20 +20,22 @@ const Member = ({
                     {role} {isOwner ? "(Bạn)" : ""}
                 </span>
             </div>
-            <div className="member__action">
-                <img
-                    src={ChangeCircle}
-                    alt="icon"
-                    className="member__action-change"
-                    onClick={onChange}
-                />
-                <img
-                    src={XCircle}
-                    alt="icon"
-                    className="member__action-delete"
-                    onClick={onDelete}
-                />
-            </div>
+            {showAction && (
+                <div className="member__action">
+                    <img
+                        src={ChangeCircle}
+                        alt="icon"
+                        className="member__action-change"
+                        onClick={onChange}
+                    />
+                    <img
+                        src={XCircle}
+                        alt="icon"
+                        className="member__action-delete"
+                        onClick={onDelete}
+                    />
+                </div>
+            )}
         </div>
     );
 };

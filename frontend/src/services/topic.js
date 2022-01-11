@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./baseUrl";
 
-export const jobTitleApi = createApi({
-    reducerPath: "jobTilteApi",
+export const topicApi = createApi({
+    reducerPath: "topicApi",
     baseQuery: fetchBaseQuery(baseQuery),
     endpoints: (builder) => ({
-        getJobTitles: builder.query({
-            query: () => `/jobtitles`,
+        getMyTopics: builder.query({
+            query: () => `/topics`,
         }),
     }),
 });
 
-export const { useGetJobTitlesQuery } = jobTitleApi;
+export const {} = topicApi;

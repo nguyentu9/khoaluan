@@ -1,16 +1,23 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userSigninReducer from "./userSlice";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { userApi } from "../services/user";
-
-const reducer = {
+import { jobTitleApi } from "../services/jobTitle";
+import { majorApi } from "../services/major";
+const reducer = combineReducers({
     [userApi.reducerPath]: userApi.reducer,
+    [jobTitleApi.reducerPath]: jobTitleApi.reducer,
+    [majorApi.reducerPath]: majorApi.reducer,
     userSignin: userSigninReducer,
-};
+});
 export const store = configureStore({
     reducer,
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(userApi.middleware),
+        getDefaultMiddleware().concat([
+            userApi.middleware,
+            majorApi.middleware,
+            jobTitleApi.middleware,
+        ]),
     devTools: process.env.NODE_ENV !== "production",
 });
 

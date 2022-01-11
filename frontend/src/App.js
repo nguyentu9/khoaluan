@@ -1,7 +1,7 @@
 import { useRoutes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "./App.scss";
 import routes from "./Router";
-import { ToastContainer, toast } from "react-toastify";
 function App() {
     let routing = useRoutes(routes);
     return (
