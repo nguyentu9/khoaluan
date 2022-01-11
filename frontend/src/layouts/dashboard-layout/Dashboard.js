@@ -28,8 +28,8 @@ function DashboardLayout() {
         toggleEl(dropdownToggleEl);
 
         return () => {
-            // dropdownToggleEl?.current?.classList.remove("active");
-            // document.removeEventListener("click", null);
+            dropdownToggleEl?.current?.classList.remove("active");
+            document.removeEventListener("click", null);
         };
     }, []);
 
@@ -72,7 +72,7 @@ function DashboardLayout() {
                     >
                         <img src={Bell} alt="Bell" />
 
-                        <div className="avatar active" ref={dropdownToggleEl}>
+                        <div className="avatar" ref={dropdownToggleEl}>
                             <Avatar />
                             <div className="avatar__wrapper">
                                 <ul className="avatar__menu">
