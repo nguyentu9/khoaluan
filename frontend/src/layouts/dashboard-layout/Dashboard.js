@@ -22,6 +22,8 @@ function DashboardLayout() {
             document.addEventListener("click", (e) => {
                 if (dropdownToggleEl?.current?.contains(e.target)) {
                     dropdownToggleEl.current.classList.toggle("active");
+                } else {
+                    dropdownToggleEl.current.classList.remove("active");
                 }
             });
         };
