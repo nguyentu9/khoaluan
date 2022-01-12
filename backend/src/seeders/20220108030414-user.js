@@ -23,6 +23,7 @@ module.exports = {
                 roleID: "70b23c8d-26b8-49ae-b546-7fc445a35fc5",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "62b20519-a71f-4964-965b-92969f76397a",
@@ -44,6 +45,7 @@ module.exports = {
                 roleID: "70b23c8d-26b8-49ae-b546-7fc445a35fc5",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "6874845a-1f6c-405f-8057-10e8acd2b45f",
@@ -65,6 +67,7 @@ module.exports = {
                 roleID: "70b23c8d-26b8-49ae-b546-7fc445a35fc5",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "71781964-2f0a-41cc-b6c9-42e01014d4bc",
@@ -86,6 +89,7 @@ module.exports = {
                 roleID: "70b23c8d-26b8-49ae-b546-7fc445a35fc5",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "725bab2a-5826-44ef-97f8-70913ad49085",
@@ -107,6 +111,7 @@ module.exports = {
                 roleID: "70b23c8d-26b8-49ae-b546-7fc445a35fc5",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "ecb75b0b-7d6f-467f-ae96-8ad73886d68c",
@@ -128,6 +133,7 @@ module.exports = {
                 roleID: "06c259a6-cbf6-4c35-af2b-618ee80a3b6a",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "aeb4eddd-fa7f-4379-bd49-f8669230b5ea",
@@ -149,6 +155,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "399894ce-4110-4fa1-b2f6-b71279ebe785",
@@ -170,6 +177,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "2daa9a4c-3afe-40ee-9e74-cff32ce9375a",
@@ -191,6 +199,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "6dc84838-426f-4cff-bc5f-db334cfe976a",
@@ -212,6 +221,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "bb3e937f-e245-4cbc-8da3-1b8d9ad1e288",
@@ -233,6 +243,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "c0570d50-10c2-449f-afe9-ff129caf7cf0",
@@ -254,6 +265,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "3a503586-e43c-4d6b-bfca-dba5bcc29d71",
@@ -275,6 +287,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "68f1344c-1896-46c9-a334-9b45971ad614",
@@ -296,6 +309,7 @@ module.exports = {
                 roleID: "a6e4e3d9-76eb-4cb5-89eb-2088c706dade",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "3947d580-8ef2-4918-a0e0-4b9fb038bebf",
@@ -316,6 +330,7 @@ module.exports = {
                 roleID: "06c259a6-cbf6-4c35-af2b-618ee80a3b6a",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "e52ea468-a8e0-44bc-9cab-533f15144725",
@@ -336,6 +351,7 @@ module.exports = {
                 roleID: "06c259a6-cbf6-4c35-af2b-618ee80a3b6a",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "bb7d391e-c15c-4a0a-88c8-1d17382cf6a3",
@@ -356,6 +372,7 @@ module.exports = {
                 roleID: "06c259a6-cbf6-4c35-af2b-618ee80a3b6a",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "106f3bd4-86b9-4c1d-bee4-1f8efadf6713",
@@ -376,6 +393,7 @@ module.exports = {
                 roleID: "06c259a6-cbf6-4c35-af2b-618ee80a3b6a",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
             {
                 id: "944113ed-bfcf-4814-ab8d-3f3358f54604",
@@ -396,6 +414,7 @@ module.exports = {
                 roleID: "06c259a6-cbf6-4c35-af2b-618ee80a3b6a",
                 createdAt: new Date(),
                 updatedAt: new Date(),
+                isActive: true,
             },
         ]);
     },

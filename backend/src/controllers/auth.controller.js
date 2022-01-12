@@ -12,15 +12,25 @@ const FacDept = require("../models/facdept.model");
 // @access  Public
 exports.login = async (req, res, next) => {
     const { email, password } = req.body;
-    if (!email || !password)
-        return next(createError.NotFound("Email và mật khẩu không được trống"));
+    if (!email || !password) {
+        return next(
+            createError.BadRequest("Email và mật khẩu không được trống")
+        );
+    }
+
     const user = await User.findOne({ where: { email } });
+
     if (!user) {
-        return next(createError.NotFound("Email hoặc mật khẩu không đúng"));
+        return next(createError.BadRequest("Email hoặc mật khẩu không đúng"));
     }
 
     if (await bcrypt.compare(password, user.password)) {
-        const { id, fullName, email, roleID, avatarUrl } = user;
+        const { id, fullName, email, isActive, avatarUrl } = user;
+
+        if (!isActive) {
+            return next(createError.Forbidden("Tài khoản của bạn đã bị khoá"));
+        }
+
         const role = await user.getUserrole();
 
         req.session.user = user;
@@ -35,13 +45,13 @@ exports.login = async (req, res, next) => {
             },
         });
     } else {
-        return next(createError.NotFound("Email hoặc mật khẩu không đúng"));
+        return next(createError.BadRequest("Email hoặc mật khẩu không đúng"));
     }
 };
 
 // @desc    Đăng xuất
 // @route   POST /api/auth/logout
-// @access  Public
+// @access  Private
 exports.logout = async (req, res, next) => {
     console.log(req.session);
     req.session.destroy();
@@ -157,4 +167,12 @@ exports.signup = async (req, res, next) => {
 // @desc    Kiểm tra cookie session có hợp lệ
 // @route   POST /api/auth/validuser
 // @access  Public
-exports.validuser = async (req, res, next) => {};
+exports.validuser = async (req, res, next) => {
+    if (req.session.user) {
+        return res.json({
+            message: "Người dùng hợp lệ.",
+        });
+    } else {
+        return next(createError.Forbidden("Người dùng không hợp lệ."));
+    }
+};

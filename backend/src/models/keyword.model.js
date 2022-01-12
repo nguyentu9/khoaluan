@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
-const TopicStatus = sequelize.define(
-    "Topicstatus",
+const { DataTypes } = require("sequelize");
+const Keyword = sequelize.define(
+    "keyword",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -9,15 +9,13 @@ const TopicStatus = sequelize.define(
             autoIncrement: true,
             allowNull: false,
         },
-        topicID: {
-            type: DataTypes.UUIDV4,
-        },
-        statusID: {
-            type: DataTypes.UUIDV4,
+        name: {
+            type: DataTypes.STRING(100),
+            allowNull: false,
         },
     },
     {
         timestamps: false,
     }
 );
-module.exports = TopicStatus;
+module.exports = Keyword;

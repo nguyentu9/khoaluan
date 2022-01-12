@@ -8,7 +8,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 const sequelize = require("./src/config/db");
-const MemoryStore = session.MemoryStore;
+const store = new session.MemoryStore();
 const compression = require("compression");
 
 const notFound = require("./src/middlewares/notFound.mdw");
@@ -18,6 +18,10 @@ const jobTitleRoute = require("./src/routers/jobTitle.route");
 const degreeRoute = require("./src/routers/degree.route");
 const authRoute = require("./src/routers/auth.route");
 const majorRoute = require("./src/routers/major.route");
+const topicRoute = require("./src/routers/topic.route");
+const userRoute = require("./src/routers/user.route");
+const statusRoute = require("./src/routers/status.route");
+const topicRoleRoute = require("./src/routers/topicRole.route");
 require("./src/models/association");
 
 // TODO: express rate limix
@@ -58,7 +62,7 @@ app.use(
     session({
         secret: "1234567890QWERTY",
         resave: false,
-        store: new MemoryStore(),
+        store,
         saveUninitialized: true,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24,
@@ -73,6 +77,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/jobtitles", jobTitleRoute);
 app.use("/api/degrees", degreeRoute);
 app.use("/api/majors", majorRoute);
+app.use("/api/topics", topicRoute);
+app.use("/api/users", userRoute);
+app.use("/api/statuses", statusRoute);
+app.use("/api/topicroles", topicRoleRoute);
 
 app.use(notFound);
 app.use(error);

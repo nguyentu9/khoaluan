@@ -1,13 +1,21 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 const TopicMember = sequelize.define(
-    "TopicMember",
+    "Topicmember",
     {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            allowNull: false,
+        },
+        topicID: {
+            type: DataTypes.UUID,
+        },
+        userID: {
+            type: DataTypes.UUID,
+        },
+        topicRoleID: {
+            type: DataTypes.UUID,
         },
     },
     { timestamps: false }

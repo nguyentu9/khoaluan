@@ -128,7 +128,7 @@ Mô tả:
     ```json
     Response:
     {
-        topics: [
+        rows: [
             {
                 id,
                 name, // tên đề tài
@@ -137,15 +137,15 @@ Mô tả:
             },
             ...
         ],
-        total_pages, // tổng số đề tài,
+        count, // tổng số đề tài,
         page, // trang hiện tại
-        per_page, // số đề tài mỗi trang
+        size, // số đề tài mỗi trang
     }
     ```
 
     (áp dụng phân trang)
     <br/>
-    `GET /topics/me?page=1&per_page=5`
+    `GET /topics/me?page=1&size=5`
     <br/>
 
     (áp dụng bộ lọc)

@@ -1,3 +1,4 @@
+const createError = require("http-errors");
 const Degree = require("../models/degree.model");
 
 // @desc    Lấy học hàm học vị theo ID
@@ -7,7 +8,9 @@ exports.getDegreeById = async (req, res, next) => {
     const id = req.params.id;
     const degree = await Degree.findByPk(id);
     if (!degree)
-        return res.status(404).json(`Không tìm thấy học hàm với ID: ${id}`);
+        return next(
+            createError.NotFound(`Không tìm thấy học hàm với ID: ${id}`)
+        );
     res.json(degree);
 };
 

@@ -102,7 +102,7 @@ const User = sequelize.define("User", {
     bankBranch: {
         type: DataTypes.STRING(50),
     },
-    isBlock: {
+    isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,

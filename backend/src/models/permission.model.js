@@ -11,7 +11,7 @@ const Permission = sequelize.define(
             primaryKey: true,
         },
         name: {
-            type: DataTypes.STRING(50),
+            type: DataTypes.STRING,
             allowNull: false,
             unique: true,
         },
@@ -19,6 +19,9 @@ const Permission = sequelize.define(
             type: DataTypes.STRING(50),
             allowNull: false,
             unique: true,
+        },
+        desc: {
+            type: DataTypes.STRING,
         },
     },
     {
