@@ -18,26 +18,32 @@ const Status = require("./status.model");
 const Keyword = require("./keyword.model");
 const TopicStatus = require("./topicStatus.model");
 
-FacDept.belongsToMany(User, {
-    through: WorkPlace,
-    foreignKey: "userID",
-    constraints: true,
-});
+// FacDept.belongsToMany(User, {
+//     through: WorkPlace,
+//     foreignKey: "userID",
+//     constraints: true,
+// });
 
-User.belongsToMany(FacDept, {
-    through: WorkPlace,
-    foreignKey: "facdeptID",
-    constraints: true,
-});
+// User.belongsToMany(FacDept, {
+//     through: WorkPlace,
+//     foreignKey: "facdeptID",
+//     constraints: true,
+// });
 
 // ========= FacDept 1 - N Major ========
 FacDept.hasMany(Major, {
     foreignKey: {
         name: "facultyID",
-        type: DataTypes.UUID,
-        allowNull: false,
+        constraints: true,
     },
 });
+Major.belongsTo(FacDept, {
+    foreignKey: {
+        name: "facultyID",
+        constraints: true,
+    },
+});
+
 // ========= Major 1 - N User ========
 Major.hasMany(User, {
     foreignKey: {

@@ -16,3 +16,4 @@ export { default as User } from "./user.svg";
 export { default as ChangeCircle } from "./change-circle.svg";
 export { default as XCircle } from "./x-circle.svg";
 export { default as UserAdd } from "./user-add.svg";
+export { default as SearchIcon } from "./search.svg";

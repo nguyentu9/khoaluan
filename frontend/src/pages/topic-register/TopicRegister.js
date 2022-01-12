@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Breadcrumb, Form } from "semantic-ui-react";
-import AddUser from "../../components/common/add-user/AddUser";
+import AddMemberModal from "../../components/common/add-member-modal/AddMemberModal";
 import Member from "../../components/common/member/Member";
 import UserCountLabel from "../../components/common/user-count-label/UserCountLabel";
 import { useGetMajorsQuery } from "../../services/major";
@@ -9,6 +9,7 @@ import "./TopicRegister.scss";
 
 const TopicRegister = () => {
     const dispatch = useDispatch();
+    const [open, setOpen] = useState(false);
     const { data: majorData, isLoading: majorLoading } = useGetMajorsQuery();
     const handleMajorChange = (e) => {
         // setMajorSelected(e.target.value);
@@ -23,7 +24,7 @@ const TopicRegister = () => {
                 <Breadcrumb.Divider />
                 <Breadcrumb.Section active>Đăng ký đề tài</Breadcrumb.Section>
             </Breadcrumb>
-            <Form className="container-fluid" style={{ marginTop: "3rem" }}>
+            <Form className="container" style={{ marginTop: "3rem" }}>
                 <div className="row">
                     <div className="col-lg-4 offset-lg-1">
                         <div className="inputfield">
@@ -140,11 +141,12 @@ const TopicRegister = () => {
                         {Array(4).map((e, i) => (
                             <Member key={i} />
                         ))}
-                        <AddUser />
+
+                        <AddMemberModal open={open} setOpen={setOpen} />
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-lg-2 offset-lg-8">
+                    <div className="col-lg-1 offset-lg-9">
                         <Form.Button primary fluid>
                             Gửi
                         </Form.Button>

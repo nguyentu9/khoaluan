@@ -20,6 +20,10 @@ module.exports = {
                 id: "3c276de7-524d-41d5-bd88-6cd9cc70834e",
                 name: "Thạc Sĩ",
             },
+            {
+                id: "3c276de7-0000-41d5-bd88-6cd9cc70834e",
+                name: "Đại Học",
+            },
         ]);
     },
 

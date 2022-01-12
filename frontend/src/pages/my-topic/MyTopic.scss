@@ -5,10 +5,23 @@
     @include flex(space-between, center);
     width: 100%;
     color: $primary-black;
+    margin-bottom: 1.5rem;
 }
-
 .result__wrapper {
     p {
         margin: 0;
+    }
+}
+.search__input {
+    @include flex(space-between, center);
+    width: 100%;
+    gap: 16px;
+}
+.result__perpage {
+    @include flex(space-between, center);
+    gap: 16px;
+
+    div.ui.selection.dropdown {
+        min-width: 5em;
     }
 }

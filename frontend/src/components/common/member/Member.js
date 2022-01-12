@@ -5,11 +5,11 @@ import "./Member.scss";
 
 const Member = ({
     name = "Unknown",
-    role = "Chủ Nhiệm",
     isOwner = false,
     showAction = true,
     onChange,
     onDelete,
+    desc,
 }) => {
     return (
         <div className="member__item">
@@ -17,7 +17,7 @@ const Member = ({
             <div className="member__info">
                 <h4 className="member__name">{name}</h4>
                 <span className="member__role">
-                    {role} {isOwner ? "(Bạn)" : ""}
+                    {desc} {isOwner ? "(Bạn)" : ""}
                 </span>
             </div>
             {showAction && (

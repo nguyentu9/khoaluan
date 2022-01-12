@@ -20,7 +20,6 @@ export const SignIn = () => {
 
     useEffect(() => {
         if (data) {
-            console.log(data);
             dispatch(updateInfo(data));
             navigate(`/dashboard`);
         }
@@ -78,7 +77,9 @@ export const SignIn = () => {
                         {error ? (
                             <Message negative>
                                 <Message.Header>
-                                    {error?.data?.message}
+                                    {error?.data?.message
+                                        ? error?.data?.message
+                                        : "Kết nối thất bại."}
                                 </Message.Header>
                             </Message>
                         ) : (
@@ -98,7 +99,6 @@ export const SignIn = () => {
                                 label="Mật khẩu"
                                 type="password"
                                 onChange={handleChangePassword}
-                                // error={{ content: "asdfasdf" }}
                             ></Form.Input>
                         </Form.Field>
                         <Link to="/forgot-password" className="forgot-password">

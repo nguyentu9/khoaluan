@@ -4,10 +4,12 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { userApi } from "../services/user";
 import { jobTitleApi } from "../services/jobTitle";
 import { majorApi } from "../services/major";
+import { topicApi } from "../services/topic";
 const reducer = combineReducers({
     [userApi.reducerPath]: userApi.reducer,
     [jobTitleApi.reducerPath]: jobTitleApi.reducer,
     [majorApi.reducerPath]: majorApi.reducer,
+    [topicApi.reducerPath]: topicApi.reducer,
     userSignin: userSigninReducer,
 });
 export const store = configureStore({

@@ -4,11 +4,12 @@ import { baseQuery } from "./baseUrl";
 export const topicApi = createApi({
     reducerPath: "topicApi",
     baseQuery: fetchBaseQuery(baseQuery),
+    tagTypes: ["topicapi"],
     endpoints: (builder) => ({
         getMyTopics: builder.query({
-            query: () => `/topics`,
+            query: () => `/topics/me`,
         }),
     }),
 });
 
-export const {} = topicApi;
+export const { useGetMyTopicsQuery } = topicApi;

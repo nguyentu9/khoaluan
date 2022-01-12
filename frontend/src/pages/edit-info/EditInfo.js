@@ -1,7 +1,7 @@
 import React from "react";
 import { Breadcrumb, Button, Form } from "semantic-ui-react";
 import { useGetMyProfileQuery } from "../../services/user";
-import "./MyInfo.scss";
+import "./EditInfo.scss";
 
 const userGenders = [
     {
@@ -16,7 +16,7 @@ const userGenders = [
     },
 ];
 
-const MyInfo = () => {
+const EditInfo = () => {
     const {
         data: userInfo,
         isLoading: userLoading,
@@ -35,14 +35,12 @@ const MyInfo = () => {
         nationalID,
         issuedDate,
         issuedPlace,
-        Degree,
         Major,
         Userrole,
         bankNumber,
         bankBranch,
-        isStudent,
-        JobTitle,
     } = userInfo || {};
+    const isStudent = true;
     return (
         <div>
             <Breadcrumb>
@@ -67,7 +65,6 @@ const MyInfo = () => {
                                             label="ID"
                                             type="text"
                                             value={id}
-                                            readOnly
                                         ></Form.Input>
                                     </Form.Field>
                                     <Form.Field>
@@ -79,10 +76,7 @@ const MyInfo = () => {
                                                     : "cán bộ"
                                             }`}
                                             type="text"
-                                            value={
-                                                insiderID ? insiderID : "Không"
-                                            }
-                                            readOnly
+                                            value={insiderID}
                                         ></Form.Input>
                                     </Form.Field>
                                     <Form.Field>
@@ -91,7 +85,6 @@ const MyInfo = () => {
                                             label="Họ tên"
                                             type="text"
                                             value={fullName}
-                                            readOnly
                                         ></Form.Input>
                                     </Form.Field>
                                     <div className="info__birthday-gender">
@@ -100,27 +93,18 @@ const MyInfo = () => {
                                                 id="birthday"
                                                 label="Ngày sinh"
                                                 type="date"
-                                                value={
-                                                    birthday
-                                                        ? birthday.substring(
-                                                              0,
-                                                              10
-                                                          )
-                                                        : ""
-                                                }
-                                                readOnly
+                                                value={birthday}
                                             ></Form.Input>
                                         </Form.Field>
 
-                                        <Form.Field>
-                                            <Form.Input
-                                                id="gender"
-                                                name="gender"
-                                                label="Giới tính"
-                                                value={gender ? "Nam" : "Nữ"}
-                                                readOnly
-                                            ></Form.Input>
-                                        </Form.Field>
+                                        <Form.Dropdown
+                                            id="gender"
+                                            name="gender"
+                                            label="Giới tính"
+                                            value={gender ? 1 : 0}
+                                            options={userGenders}
+                                            selection
+                                        />
                                     </div>
                                     <Form.Field>
                                         <Form.Input
@@ -128,7 +112,6 @@ const MyInfo = () => {
                                             label="Điện thoại"
                                             type="text"
                                             value={phone}
-                                            readOnly
                                         ></Form.Input>
                                     </Form.Field>
                                     <Form.Field>
@@ -137,7 +120,6 @@ const MyInfo = () => {
                                             label="Địa chỉ liên lạc"
                                             type="text"
                                             value={address}
-                                            readOnly
                                         ></Form.Input>
                                     </Form.Field>
                                     <Form.Field>
@@ -146,7 +128,6 @@ const MyInfo = () => {
                                             label="CMND/CCCD"
                                             type="text"
                                             value={nationalID}
-                                            readOnly
                                         ></Form.Input>
                                     </Form.Field>
                                     <Form.Field>
@@ -154,15 +135,7 @@ const MyInfo = () => {
                                             id="issuedDate"
                                             label="Ngày cấp"
                                             type="date"
-                                            value={
-                                                issuedDate
-                                                    ? issuedDate.substring(
-                                                          0,
-                                                          10
-                                                      )
-                                                    : ""
-                                            }
-                                            readOnly
+                                            value={issuedDate}
                                         ></Form.Input>
                                     </Form.Field>
                                     <Form.Field>
@@ -171,7 +144,6 @@ const MyInfo = () => {
                                             label="Nơi cấp"
                                             type="text"
                                             value={issuedPlace}
-                                            readOnly
                                         ></Form.Input>
                                     </Form.Field>
                                 </div>
@@ -201,71 +173,88 @@ const MyInfo = () => {
                                     </Button.Group>
                                 </div>
                                 <div className="info__grid">
-                                    <Form.Field>
-                                        <Form.Input
-                                            id="degree"
-                                            name="degree"
-                                            label="Học hàm - học vị"
-                                            value={
-                                                Degree?.name
-                                                    ? Degree?.name
-                                                    : "Đại học"
-                                            }
-                                            readOnly
-                                        ></Form.Input>
-                                    </Form.Field>
+                                    <Form.Dropdown
+                                        id="degree"
+                                        name="degree"
+                                        label="Học hàm - học vị"
+                                        options={[
+                                            {
+                                                key: 1,
+                                                text: "Nam",
+                                                value: 1,
+                                            },
+                                            {
+                                                key: 0,
+                                                text: "Nữ",
+                                                value: 0,
+                                            },
+                                        ]}
+                                        selection
+                                    />
                                     <Form.Field>
                                         <Form.Input
                                             id="scientificTitle"
                                             label="Chức danh khoa học"
                                             type="text"
-                                            value={
-                                                sientificTitle
-                                                    ? sientificTitle
-                                                    : "Không"
-                                            }
-                                            readOnly
+                                            value={sientificTitle}
                                         ></Form.Input>
                                     </Form.Field>
-                                    <Form.Field>
-                                        <Form.Input
-                                            id="jobTitle"
-                                            name="jobTitle"
-                                            label="Chức vụ"
-                                            value={
-                                                JobTitle?.name
-                                                    ? JobTitle?.name
-                                                    : "Không"
-                                            }
-                                            readOnly
-                                        ></Form.Input>
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Form.Input
-                                            id="workplace"
-                                            name="workplace"
-                                            label="Đơn vị công tác"
-                                            value={
-                                                Major?.Facdept?.name
-                                                    ? Major?.Facdept?.name
-                                                    : "Không"
-                                            }
-                                            readOnly
-                                        ></Form.Input>
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Form.Input
-                                            id="major"
-                                            name="major"
-                                            label="Chuyên ngành"
-                                            value={
-                                                Major?.name
-                                                    ? Major?.name
-                                                    : "Không"
-                                            }
-                                            readOnly
-                                        ></Form.Input>
-                                    </Form.Field>
+                                    <Form.Dropdown
+                                        id="jobTitle"
+                                        name="jobTitle"
+                                        label="Chức vụ"
+                                        options={[
+                                            {
+                                                key: 1,
+                                                text: "Nam",
+                                                value: 1,
+                                            },
+                                            {
+                                                key: 0,
+                                                text: "Nữ",
+                                                value: 0,
+                                            },
+                                        ]}
+                                        selection
+                                    />
+                                    <Form.Dropdown
+                                        id="workplace"
+                                        name="workplace"
+                                        label="Đơn vị công tác"
+                                        value={Major?.Facdept?.name}
+                                        options={[
+                                            {
+                                                key: 1,
+                                                text: "Nam",
+                                                value: 1,
+                                            },
+                                            {
+                                                key: 0,
+                                                text: "Nữ",
+                                                value: 0,
+                                            },
+                                        ]}
+                                        selection
+                                    />
+                                    <Form.Dropdown
+                                        id="major"
+                                        name="major"
+                                        label="Chuyên ngành"
+                                        value={Major?.name}
+                                        options={[
+                                            {
+                                                key: 1,
+                                                text: "Nam",
+                                                value: 1,
+                                            },
+                                            {
+                                                key: 0,
+                                                text: "Nữ",
+                                                value: 0,
+                                            },
+                                        ]}
+                                        selection
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -282,12 +271,7 @@ const MyInfo = () => {
                                             id="bankNumber"
                                             label="Số tài khoản"
                                             type="text"
-                                            value={
-                                                bankNumber
-                                                    ? bankNumber
-                                                    : "Không"
-                                            }
-                                            readOnly
+                                            value={bankNumber}
                                         ></Form.Input>
                                     </Form.Field>
                                     <Form.Field>
@@ -295,12 +279,7 @@ const MyInfo = () => {
                                             id="bankBranch"
                                             label="Chi nhánh ngân hàng"
                                             type="text"
-                                            value={
-                                                bankBranch
-                                                    ? bankBranch
-                                                    : "Không"
-                                            }
-                                            readOnly
+                                            value={bankBranch}
                                         ></Form.Input>
                                     </Form.Field>
                                 </div>
@@ -313,15 +292,25 @@ const MyInfo = () => {
                                 <h3 className="info__header">
                                     Phân quyền hệ thống
                                 </h3>
-                                <Form.Field>
-                                    <Form.Input
-                                        id="role"
-                                        name="role"
-                                        label="Vai trò"
-                                        value={Userrole?.name}
-                                        readOnly
-                                    ></Form.Input>
-                                </Form.Field>
+                                <Form.Dropdown
+                                    id="role"
+                                    name="role"
+                                    label="Vai trò"
+                                    value={Userrole?.name}
+                                    options={[
+                                        {
+                                            key: 1,
+                                            text: "Nam",
+                                            value: 1,
+                                        },
+                                        {
+                                            key: 0,
+                                            text: "Nữ",
+                                            value: 0,
+                                        },
+                                    ]}
+                                    selection
+                                />
                             </div>
                         </div>
                     </div>
@@ -331,4 +320,4 @@ const MyInfo = () => {
     );
 };
 
-export default MyInfo;
+export default EditInfo;
