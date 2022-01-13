@@ -22,6 +22,7 @@ const topicRoute = require("./src/routers/topic.route");
 const userRoute = require("./src/routers/user.route");
 const statusRoute = require("./src/routers/status.route");
 const topicRoleRoute = require("./src/routers/topicRole.route");
+const facDeptRoute = require("./src/routers/facdept.route");
 require("./src/models/association");
 
 // TODO: express rate limix
@@ -36,9 +37,7 @@ app.use(compression());
 app.set("trust proxy", 1); // trust first proxy
 
 // app.use(function (req, res, next) {
-// res.header("Access-Control-Allow-Origin", "*");
 // res.header("Content-Type", "application/json;charset=UTF-8");
-// res.header("Access-Control-Allow-Credentials", true);
 // res.header(
 //     "Access-Control-Allow-Headers",
 //     "Origin, X-Requested-With, Content-Type, Accept"
@@ -81,6 +80,7 @@ app.use("/api/topics", topicRoute);
 app.use("/api/users", userRoute);
 app.use("/api/statuses", statusRoute);
 app.use("/api/topicroles", topicRoleRoute);
+app.use("/api/facdepts", facDeptRoute);
 
 app.use(notFound);
 app.use(error);

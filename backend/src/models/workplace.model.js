@@ -10,6 +10,12 @@ const WorkPlace = sequelize.define(
             autoIncrement: true,
             allowNull: false,
         },
+        insiderID: {
+            type: DataTypes.BOOLEAN,
+        },
+        isInsider: {
+            type: DataTypes.BOOLEAN,
+        },
         isHeadOfDept: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
@@ -17,6 +23,17 @@ const WorkPlace = sequelize.define(
         isDeputyOfDept: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+        },
+        isStudent: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        isStaff: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false,
+        },
+        workplaceOutside: {
+            type: DataTypes.STRING,
         },
     },
     { timestamps: false }

@@ -3,7 +3,13 @@ import { Button, Form } from "semantic-ui-react";
 import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
 import "./SignUp.scss";
 
-const Step4 = () => {
+const Step4 = ({ goToPrev, goToNext }) => {
+    const handleGoToNext = () => {
+        goToNext({ a: 1 });
+    };
+    const handleGoToPrev = () => {
+        goToPrev();
+    };
     return (
         <>
             <SignUpStep step={4} style={{ marginTop: "2rem" }} />
@@ -104,9 +110,16 @@ const Step4 = () => {
                     />
                 </Form.Field>
                 <div className="field signup__button-submit">
-                    <Button type="button">Trở lại</Button>
-                    <Button type="submit" primary>
-                        Hoàn thành
+                    <Button type="button" onClick={handleGoToPrev}>
+                        Trở lại
+                    </Button>
+                    <Button
+                        type="submit"
+                        primary
+                        fluid
+                        onClick={handleGoToNext}
+                    >
+                        Tiếp tục
                     </Button>
                 </div>
             </Form>

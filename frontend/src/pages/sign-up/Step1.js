@@ -1,12 +1,53 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form } from "semantic-ui-react";
 import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
-import useToggle from "../../hooks/useToggle";
+import Joi from "joi";
+import messagesVN from "../../constant/validationMsg";
 import "./SignUp.scss";
 
-const Step1 = () => {
-    const [emailBelongToSchool, setEmailBelongToSchool] = useToggle(true);
+const Step1 = ({ goToNext }) => {
+    const [isInsider, setInsider] = useState(true);
+    const [state, setState] = useState({
+        email: "",
+        password: "",
+        passwordAgain: "",
+    });
+    const [errors, setErrors] = useState({});
+
+    const handleChange = ({ target }) => {
+        const value = target.value;
+        setState((state) => ({
+            ...state,
+            [target.name]: value,
+        }));
+        setErrors({});
+    };
+
+    const handleGoToNext = async (e) => {
+        e.preventDefault();
+        const { email, password, passwordAgain } = state;
+        const errors = validateUserSignUp({
+            isInsider,
+            email,
+            password,
+            passwordAgain,
+        });
+
+        if (isInsider === false && state.email.includes("tgu.edu.vn")) {
+            setErrors({ ...errors, email: "Email TGU chỉ dùng trong trường!" });
+        }
+        if (errors) {
+            setErrors(errors);
+        } else {
+            goToNext(state);
+        }
+    };
+    const handleSetInsider = (e) => () => {
+        setInsider(e);
+        setErrors();
+    };
+
     return (
         <>
             <SignUpStep step={1} style={{ marginTop: "2rem" }} />
@@ -19,16 +60,16 @@ const Step1 = () => {
                 </h3>
                 <Button.Group className="signup__buttongroup">
                     <Button
-                        primary={emailBelongToSchool}
-                        basic={!emailBelongToSchool}
-                        onClick={setEmailBelongToSchool}
+                        primary={isInsider}
+                        basic={!isInsider}
+                        onClick={handleSetInsider(true)}
                     >
                         Trong Trường
                     </Button>
                     <Button
-                        primary={!emailBelongToSchool}
-                        basic={emailBelongToSchool}
-                        onClick={setEmailBelongToSchool}
+                        primary={!isInsider}
+                        basic={isInsider}
+                        onClick={handleSetInsider(false)}
                     >
                         Ngoài Trường
                     </Button>
@@ -39,25 +80,20 @@ const Step1 = () => {
                         name="email"
                         label="Email"
                         type="email"
-                        // {...register("email")}
-                        // error={
-                        //     errors?.email?.message
-                        //         ? { content: errors.email.message }
-                        //         : false
-                        // }
+                        value={state.email}
+                        onChange={handleChange}
+                        error={errors?.email ? errors.email : false}
                     />
                 </Form.Field>
                 <Form.Field>
                     <Form.Input
                         id="password"
+                        name="password"
                         label="Mật khẩu"
                         type="password"
-                        // {...register("password")}
-                        // error={
-                        //     errors?.password?.message
-                        //         ? { content: errors.password.message }
-                        //         : false
-                        // }
+                        value={state.password}
+                        onChange={handleChange}
+                        error={errors?.password ? errors.password : false}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -66,17 +102,21 @@ const Step1 = () => {
                         name="passwordAgain"
                         label="Nhập lại mật khẩu"
                         type="password"
-                        // {...register("passwordAgain")}
-                        // error={
-                        //     errors?.passwordAgain?.message
-                        //         ? { content: errors.passwordAgain.message }
-                        //         : false
-                        // }
+                        value={state.passwordAgain}
+                        onChange={handleChange}
+                        error={
+                            errors?.passwordAgain ? errors.passwordAgain : false
+                        }
                     />
                 </Form.Field>
 
                 <div>
-                    <Button type="submit" primary fluid>
+                    <Button
+                        type="submit"
+                        primary
+                        fluid
+                        onClick={handleGoToNext}
+                    >
                         Tiếp tục
                     </Button>
                     <div className="redirect__link">
@@ -87,6 +127,65 @@ const Step1 = () => {
             </Form>
         </>
     );
+};
+
+const validateUserSignUp = (user) => {
+    const schema = Joi.object().keys({
+        isInsider: Joi.boolean().required().messages(messagesVN),
+        email: Joi.alternatives()
+            .conditional("isInsider", [
+                {
+                    is: true,
+                    then: Joi.string()
+                        .email({ tlds: { allow: false } })
+                        .trim()
+                        .label("Email")
+                        .regex(/^[A-Za-z0-9._%+-]+@tgu.edu.vn$/)
+                        .max(40)
+                        .required()
+                        .messages({
+                            ...messagesVN,
+                            "string.pattern.base":
+                                "Email không hợp lệ. Vui lòng dùng email của TGU",
+                        }),
+                },
+                {
+                    is: false,
+                    then: Joi.string()
+                        .label("Email")
+                        .trim()
+                        .email({ tlds: { allow: false } })
+                        .max(40)
+                        .required()
+                        .messages(messagesVN),
+                },
+            ])
+            .required()
+            .messages(messagesVN),
+        password: Joi.string()
+            .min(8)
+            .max(30)
+            .label("Mật khẩu")
+            .required()
+            .messages(messagesVN),
+        passwordAgain: Joi.string()
+            .required()
+            .label("Mật khẩu nhập lại")
+            .valid(Joi.ref("password"))
+            .messages({
+                ...messagesVN,
+                "any.only": "Mật khẩu không khớp",
+            }),
+    });
+
+    const { error } = schema.validate(user, {
+        abortEarly: true,
+    });
+
+    if (!error) return null;
+    const errors = {};
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
 };
 
 export default Step1;

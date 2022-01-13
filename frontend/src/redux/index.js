@@ -5,10 +5,12 @@ import { userApi } from "../services/user";
 import { jobTitleApi } from "../services/jobTitle";
 import { majorApi } from "../services/major";
 import { topicApi } from "../services/topic";
+import { degreeApi } from "../services/degree";
 const reducer = combineReducers({
     [userApi.reducerPath]: userApi.reducer,
     [jobTitleApi.reducerPath]: jobTitleApi.reducer,
     [majorApi.reducerPath]: majorApi.reducer,
+    [degreeApi.reducerPath]: degreeApi.reducer,
     [topicApi.reducerPath]: topicApi.reducer,
     userSignin: userSigninReducer,
 });
@@ -18,6 +20,7 @@ export const store = configureStore({
         getDefaultMiddleware().concat([
             userApi.middleware,
             majorApi.middleware,
+            degreeApi.middleware,
             jobTitleApi.middleware,
         ]),
     devTools: process.env.NODE_ENV !== "production",

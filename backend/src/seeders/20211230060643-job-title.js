@@ -5,6 +5,10 @@ module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.bulkInsert("jobtitle", [
             {
+                id: "00000000-0000-0000-0000-000000000000",
+                name: "_Không",
+            },
+            {
                 id: "e3ddf021-6b49-4e6a-af25-63a7a7d40916",
                 name: "Chủ tịch Công đoàn trường",
             },

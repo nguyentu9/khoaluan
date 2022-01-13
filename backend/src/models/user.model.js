@@ -9,8 +9,11 @@ const User = sequelize.define("User", {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
+    avatarUrl: {
+        type: DataTypes.STRING,
+    },
     fullName: {
-        type: DataTypes.STRING(40),
+        type: DataTypes.STRING(50),
         allowNull: false,
     },
     birthday: {
@@ -45,21 +48,7 @@ const User = sequelize.define("User", {
             msg: "SĐT đã được sử dụng!",
         },
     },
-    isStudent: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-    },
-    isInsider: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
-    },
-
     sientificTitle: {
-        type: DataTypes.STRING(50),
-    },
-    workplaceOutside: {
         type: DataTypes.STRING(50),
     },
     address: {

@@ -1,4 +1,4 @@
-const Joi = require("joi").extend(require("@joi/date"));
+const Joi = require("joi");
 const messagesVN = require("../constant/validationMsg");
 
 module.exports = async function validateUser(user) {
@@ -51,18 +51,22 @@ module.exports = async function validateUser(user) {
                 .min(5)
                 .max(40)
                 .label("Họ tên")
-                .required()
-                .messages(messagesVN),
-            birthday: Joi.date()
-                .label("Ngày sinh")
-                // .format("YYYY-MM-DD")
-                // .utc()
-                .less(Date.now())
+                .regex(
+                    /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/
+                )
                 .required()
                 .messages({
                     ...messagesVN,
-                    "date.less": "Ngày sinh phải nhỏ hơn ngày hiện tại",
-                    "date.format": "Ngày sinh phải ở định dạng YYYY-MM-DD",
+                    "string.pattern.base": "Họ tên không hợp lệ",
+                }),
+
+            birthday: Joi.date()
+                .label("Ngày sinh")
+                .less(new Date(Date.now() - 568024668))
+                .required()
+                .messages({
+                    ...messagesVN,
+                    "date.less": "Người đăng ký phải đủ 18 tuổi.",
                 }),
             gender: Joi.number()
                 .label("Giới tính")
@@ -194,7 +198,7 @@ module.exports = async function validateUser(user) {
             nationalIDImg: Joi.string().when("isInsider", {
                 is: false,
                 then: Joi.string()
-                    .label(" CMND/CCCD")
+                    .label("CMND/CCCD")
                     .required()
                     .messages(messagesVN),
             }),
@@ -217,13 +221,6 @@ module.exports = async function validateUser(user) {
                 .max(30)
                 .required()
                 .messages(messagesVN),
-            nationalIDImg: Joi.string().when("isInsider", {
-                is: false,
-                then: Joi.string()
-                    .label("Mặt trước CMND/CCCD")
-                    .required()
-                    .messages(messagesVN),
-            }),
             haveABankNum: Joi.boolean().required().messages(messagesVN),
             bankNumber: Joi.string().when("haveABankNum", {
                 is: true,
