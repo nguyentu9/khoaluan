@@ -74,16 +74,6 @@ exports.isUserValid = async (req, res, next) => {
     }
     const { errors, user } = await validateUser(body);
 
-    if (errors || user?.isInsider) {
-        fs.unlink(req.file.path, (err) => {
-            if (err) {
-                res.status(500).send("Error");
-                return;
-            }
-            req.file = null;
-            req.data = { errors, user };
-        });
-    }
     if (errors) {
         res.status(400).json({
             message: "Thông tin không hợp lệ",
@@ -91,16 +81,6 @@ exports.isUserValid = async (req, res, next) => {
         });
         return;
     }
-
-    if (!user?.isInsider && !errors) {
-        // File checksum
-        let file_buffer = fs.readFileSync(req.file.path);
-        let sum = crypto.createHash("md5");
-        sum.update(file_buffer);
-        user.hash = sum.digest("hex");
-        req.data = { errors, user };
-    }
-
     req.data = { user, errors };
     next();
     return;
