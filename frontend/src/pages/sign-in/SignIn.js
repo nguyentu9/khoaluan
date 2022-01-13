@@ -8,7 +8,7 @@ import "./SignIn.scss";
 import messageVN from "../../constant/validationMsg";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { updateInfo } from "../../redux/userSlice";
+import { updateInfo } from "../../redux/userSignInSlice";
 
 export const SignIn = () => {
     const [login, { isLoading, data, error }] = useLoginMutation();

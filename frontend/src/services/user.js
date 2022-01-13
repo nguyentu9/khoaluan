@@ -26,6 +26,13 @@ export const userApi = createApi({
                 body: { userID },
             }),
         }),
+        checkInfoSteps: builder.mutation({
+            query: ({ step, data }) => ({
+                url: `/auth/step/${step}`,
+                method: "POST",
+                body: { data },
+            }),
+        }),
         getMyProfile: builder.query({
             query: () => `/users/me/profile`,
         }),
@@ -37,4 +44,5 @@ export const {
     useAccountRegisterMutation,
     useLogoutMutation,
     useGetMyProfileQuery,
+    useCheckInfoStepsMutation,
 } = userApi;

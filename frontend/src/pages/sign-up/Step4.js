@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Form } from "semantic-ui-react";
 import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
 import "./SignUp.scss";
 
 const Step4 = ({ goToPrev, goToNext }) => {
+    const [errors, setErrors] = useState({});
     const handleGoToNext = () => {
         goToNext({ a: 1 });
     };
@@ -22,16 +23,11 @@ const Step4 = ({ goToPrev, goToNext }) => {
                 </h3>
                 <Form.Field>
                     <Form.Input
-                        id="IDCard"
-                        name="IDCard"
+                        id="nationalID"
+                        name="nationalID"
                         label="CMND/CCCD"
                         type="text"
-                        // {...register("IDCard")}
-                        // error={
-                        //     errors?.IDCard?.message
-                        //         ? { content: errors.IDCard.message }
-                        //         : false
-                        // }
+                        error={errors?.nationalID ? errors?.nationalID : false}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -40,12 +36,7 @@ const Step4 = ({ goToPrev, goToNext }) => {
                         name="issuedDate"
                         label="Ngày cấp"
                         type="date"
-                        // {...register("issuedDate")}
-                        // error={
-                        //     errors?.issuedDate?.message
-                        //         ? { content: errors.issuedDate.message }
-                        //         : false
-                        // }
+                        error={errors?.issuedDate ? errors?.issuedDate : false}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -54,12 +45,9 @@ const Step4 = ({ goToPrev, goToNext }) => {
                         name="issuedPlace"
                         label="Nơi cấp"
                         type="text"
-                        // {...register("issuedPlace")}
-                        // error={
-                        //     errors?.issuedPlace?.message
-                        //         ? { content: errors.issuedPlace.message }
-                        //         : false
-                        // }
+                        error={
+                            errors?.issuedPlace ? errors?.issuedPlace : false
+                        }
                     />
                 </Form.Field>
 
@@ -83,16 +71,11 @@ const Step4 = ({ goToPrev, goToNext }) => {
 
                 <Form.Field>
                     <Form.Input
-                        id="accountNumber"
-                        name="accountNumber"
+                        id="bankNumber"
+                        name="bankNumber"
                         label="Số tài khoản"
                         type="text"
-                        // {...register("accountNumber")}
-                        // error={
-                        //     errors?.accountNumber?.message
-                        //         ? { content: errors.accountNumber.message }
-                        //         : false
-                        // }
+                        error={errors?.bankNumber ? errors?.bankNumber : false}
                     />
                 </Form.Field>
                 <Form.Field>
@@ -101,12 +84,7 @@ const Step4 = ({ goToPrev, goToNext }) => {
                         name="bankBranch"
                         label="Tại ngân hàng"
                         type="text"
-                        // {...register("bankAffiliate")}
-                        // error={
-                        //     errors?.bankAffiliate?.message
-                        //         ? { content: errors.bankAffiliate.message }
-                        //         : false
-                        // }
+                        error={errors?.bankBranch ? errors?.bankBranch : false}
                     />
                 </Form.Field>
                 <div className="field signup__button-submit">

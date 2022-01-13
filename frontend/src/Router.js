@@ -9,7 +9,7 @@ import { SignIn } from "./pages/sign-in/SignIn";
 import SignUp from "./pages/sign-up";
 import Step1 from "./pages/sign-up/Step1";
 import Step2 from "./pages/sign-up/Step2";
-import Step3 from "./pages/sign-up/Step3/Step3";
+import Step3 from "./pages/sign-up/Step3/";
 import Step4 from "./pages/sign-up/Step4";
 import StepFinal from "./pages/sign-up/StepFinal";
 import TopicRegister from "./pages/topic-register/TopicRegister";
@@ -39,9 +39,9 @@ const routes = [
         path: "/sign-up",
         element: (
             <SignUp>
-                <Step3 />
                 <Step1 />
                 <Step2 />
+                <Step3 />
                 <Step4 />
                 <StepFinal />
             </SignUp>

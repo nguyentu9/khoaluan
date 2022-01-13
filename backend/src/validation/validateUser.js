@@ -10,9 +10,9 @@ module.exports = async function validateUser(user) {
                     {
                         is: true,
                         then: Joi.string()
+                            .email({ tlds: { allow: false } })
                             .trim()
                             .label("Email")
-                            .email()
                             .regex(/^[A-Za-z0-9._%+-]+@tgu.edu.vn$/)
                             .max(40)
                             .required()
@@ -27,7 +27,7 @@ module.exports = async function validateUser(user) {
                         then: Joi.string()
                             .label("Email")
                             .trim()
-                            .email()
+                            .email({ tlds: { allow: false } })
                             .max(40)
                             .required()
                             .messages(messagesVN),
@@ -45,7 +45,10 @@ module.exports = async function validateUser(user) {
                 .required()
                 .label("Mật khẩu nhập lại")
                 .valid(Joi.ref("password"))
-                .messages({ ...messagesVN, "any.only": "Mật khẩu không khớp" }),
+                .messages({
+                    ...messagesVN,
+                    "any.only": "Mật khẩu không khớp",
+                }),
             fullName: Joi.string()
                 .trim()
                 .min(5)
@@ -267,7 +270,6 @@ module.exports = async function validateUser(user) {
         }));
         return {
             errors: errorArr,
-            user: null,
         };
     }
 };

@@ -18,6 +18,13 @@ exports.getFacdeptByID = async (req, res, next) => {
 // @route   GET /api/facdepts
 // @access  Public
 exports.getFacdepts = async (req, res, next) => {
-    const facDept = await FacDept.findAll();
+    let { type } = req.query;
+
+    if (["faculty", "department"].includes(type)) type = { type };
+    else type = {};
+
+    const facDept = await FacDept.findAll({
+        where: type,
+    });
     res.json(facDept);
 };

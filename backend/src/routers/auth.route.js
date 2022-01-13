@@ -4,6 +4,7 @@ const {
     logout,
     signup,
     isUserValid,
+    validateSteps,
 } = require("../controllers/auth.controller");
 const { uploadIDCard } = require("../utils/upload");
 
@@ -15,5 +16,6 @@ router.post(
     isUserValid,
     signup
 );
+router.post("/step/:id", validateSteps);
 
 module.exports = router;

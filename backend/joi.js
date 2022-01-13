@@ -338,60 +338,175 @@ const messagesVN = require("./src/constant/validationMsg");
 
 // fun(data);
 
+// const user = {
+//     isInsider: false,
+//     email: "toan0181@tgu.edu.vn",
+//     password: "password",
+//     passwordAgain: "password",
+// };
+
+// const validateUserSignIn = (user) => {
+//     const schema = Joi.object().keys({
+//         isInsider: Joi.boolean().required().messages(messagesVN),
+//         email: Joi.alternatives()
+//             .conditional("isInsider", [
+//                 {
+//                     is: true,
+//                     then: Joi.string()
+//                         .email({ tlds: { allow: false } })
+//                         .trim()
+//                         .label("Email")
+//                         .regex(/^[A-Za-z0-9._%+-]+@tgu.edu.vn$/)
+//                         .max(40)
+//                         .required()
+//                         .messages({
+//                             ...messagesVN,
+//                             "string.pattern.base":
+//                                 "Email không hợp lệ. Vui lòng dùng email của TGU",
+//                         }),
+//                 },
+//                 {
+//                     is: false,
+//                     then: Joi.string()
+//                         .label("Email")
+//                         .trim()
+//                         .invalid(/^\w+@tgu.edu.vn$/)
+//                         .email({ tlds: { allow: false } })
+//                         .max(40)
+//                         .required()
+//                         .messages(messagesVN),
+//                 },
+//             ])
+//             .required()
+//             .messages(messagesVN),
+//         password: Joi.string()
+//             .min(8)
+//             .max(30)
+//             .label("Mật khẩu")
+//             .required()
+//             .messages(messagesVN),
+//         passwordAgain: Joi.string()
+//             .required()
+//             .label("Mật khẩu nhập lại")
+//             .valid(Joi.ref("password"))
+//             .messages({
+//                 ...messagesVN,
+//                 "any.only": "Mật khẩu không khớp",
+//             }),
+//     });
+
+//     const { error } = schema.validate(user, {
+//         abortEarly: true,
+//     });
+
+//     if (!error) return null;
+//     const errors = {};
+//     for (let item of error.details) errors[item.path[0]] = item.message;
+//     return errors;
+// };
+// let a = validateUserSignIn(user);
+
 const user = {
-    isInsider: false,
-    email: "toan0181@tgu.edu.vn",
-    password: "password",
-    passwordAgain: "password",
+    isInsider: true,
+    isStudent: true,
+    degree: "",
+    insiderID: "018101059",
+    jobTitle: "00000000-0000-0000-0000-000000000000",
+    major: "3b87ff69-bfa9-4b93-94fc-39e99935ac2f",
+    scientificTitle: "",
+    workplace: "",
+    workplaceOutside: "",
 };
 
-const validateUserSignIn = (user) => {
+const validateUserSignUp = (user) => {
     const schema = Joi.object().keys({
-        isInsider: Joi.boolean().required().messages(messagesVN),
-        email: Joi.alternatives()
+        isInsider: Joi.boolean().required(),
+        isStudent: Joi.boolean().required(),
+        insiderID: Joi.alternatives()
             .conditional("isInsider", [
                 {
                     is: true,
-                    then: Joi.string()
-                        .email({ tlds: { allow: false } })
-                        .trim()
-                        .label("Email")
-                        .regex(/^[A-Za-z0-9._%+-]+@tgu.edu.vn$/)
-                        .max(40)
-                        .required()
-                        .messages({
-                            ...messagesVN,
-                            "string.pattern.base":
-                                "Email không hợp lệ. Vui lòng dùng email của TGU",
-                        }),
+                    then: Joi.when("isStudent", {
+                        is: false,
+                        then: Joi.string()
+                            .trim()
+                            .regex(/^(T52-[0-9]{7})$/)
+                            .required()
+                            .messages({
+                                ...messagesVN,
+                                "string.pattern.base":
+                                    "Mã số cán bộ không hợp lệ",
+                            }),
+                        otherwise: Joi.string()
+                            .trim()
+                            .regex(/^0[0-9]{8}$/)
+                            .required()
+                            .messages({
+                                ...messagesVN,
+                                "string.pattern.base":
+                                    "Mã số sinh viên không hợp lệ",
+                            }),
+                    }),
                 },
                 {
                     is: false,
-                    then: Joi.string()
-                        .label("Email")
-                        .trim()
-                        .invalid(/^\w+@tgu.edu.vn$/)
-                        .email({ tlds: { allow: false } })
-                        .max(40)
-                        .required()
-                        .messages(messagesVN),
+                    then: Joi.allow(null),
                 },
             ])
-            .required()
+            .label("Mã số")
             .messages(messagesVN),
-        password: Joi.string()
-            .min(8)
-            .max(30)
-            .label("Mật khẩu")
-            .required()
+        workplace: Joi.string()
+            .label("Đơn vị công tác")
+            .allow("")
+            .when("isInsider", {
+                is: true,
+                then: Joi.allow(null),
+                otherwise: Joi.string()
+                    .required()
+                    .trim()
+                    .max(36)
+                    .guid({ version: "uuidv4" }),
+            })
             .messages(messagesVN),
-        passwordAgain: Joi.string()
+        major: Joi.string()
+            .label("Chuyên ngành")
             .required()
-            .label("Mật khẩu nhập lại")
-            .valid(Joi.ref("password"))
-            .messages({
-                ...messagesVN,
-                "any.only": "Mật khẩu không khớp",
+            .trim()
+            .max(36)
+            .guid({ version: "uuidv4" })
+            .messages(messagesVN),
+        degree: Joi.string()
+            .label("Học hàm - Học vị")
+            .allow("")
+            .when("isStudent", {
+                is: false,
+                then: Joi.string()
+                    .trim()
+                    .max(36)
+                    .guid({ version: "uuidv4" })
+                    .required()
+                    .messages(messagesVN),
+            }),
+        scientificTitle: Joi.string()
+            .label("Chức danh khoa học")
+            .max(50)
+            .allow("")
+            .messages(messagesVN),
+        jobTitle: Joi.string()
+            .label("Chức vụ")
+            .trim()
+            .allow("")
+            .messages(messagesVN),
+        workplaceOutside: Joi.string()
+            .label("Đơn vị công tác")
+            .allow(null)
+            .trim()
+            .min(5)
+            .max(50)
+            .required()
+            .when("isInsider", {
+                is: true,
+                then: Joi.allow("").messages(messagesVN),
             }),
     });
 
@@ -404,5 +519,6 @@ const validateUserSignIn = (user) => {
     for (let item of error.details) errors[item.path[0]] = item.message;
     return errors;
 };
-let a = validateUserSignIn(user);
+
+let a = validateUserSignUp(user);
 console.log(a);

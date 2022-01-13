@@ -176,3 +176,68 @@ exports.validuser = async (req, res, next) => {
         return next(createError.Forbidden("Người dùng không hợp lệ."));
     }
 };
+
+// @desc    Kiểm tra thông tin có khả năng bị trùng từng màng hình đăng ký tài khoản
+// @route   POST /api/auth/step/:id
+// @access  Public
+exports.validateSteps = async (req, res, next) => {
+    const step = req.params.id;
+    const data = req.body.data;
+    switch (step) {
+        case "1": {
+            let email = data;
+            if (!email)
+                return next(createError.BadRequest("Thông tin không hợp lệ"));
+
+            let isExsist = await User.findOne({
+                attributes: ["id"],
+                where: { email },
+            });
+
+            if (isExsist)
+                return next(createError.BadRequest("Email đã tồn tại"));
+            else return res.json({ message: "Thông tin hợp lệ" });
+        }
+        case "2": {
+            let phone = data;
+            if (!phone)
+                return next(createError.BadRequest("Thông tin không hợp lệ"));
+
+            let isExsist = await User.findOne({
+                attributes: ["id"],
+                where: { phone },
+            });
+            if (isExsist)
+                return next(createError.BadRequest("Số điện thoại đã tồn tại"));
+            else return res.json({ message: "Thông tin hợp lệ" });
+        }
+        case "3": {
+            // TODO: Tìm kiếm mã số bên bảng workplace
+            let insiderID = data;
+            if (!insiderID)
+                return next(createError.BadRequest("Thông tin không hợp lệ"));
+            let isExsist = await User.findOne({
+                attributes: ["id"],
+                where: { insiderID },
+            });
+            if (isExsist)
+                return next(createError.BadRequest("Mã số đã tồn tại"));
+            else return res.json({ message: "Thông tin hợp lệ" });
+        }
+        case "4": {
+            let nationalID = data;
+            if (!nationalID)
+                return next(createError.BadRequest("Thông tin không hợp lệ"));
+            let isExsist = await User.findOne({
+                attributes: ["id"],
+                where: { nationalIDImg },
+            });
+            if (isExsist)
+                return next(createError.BadRequest("CMND/CCCD đã tồn tại"));
+            else return res.json({ message: "Thông tin hợp lệ" });
+        }
+        default: {
+            return next(createError.BadRequest("Not Found!."));
+        }
+    }
+};

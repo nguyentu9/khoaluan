@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Button, Form } from "semantic-ui-react";
 import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
 import Joi from "joi";
 import messagesVN from "../../constant/validationMsg";
 import "./SignUp.scss";
+import { updateInfoRegister } from "../../redux/userSignUpSlice";
+import { useCheckInfoStepsMutation } from "../../services/user";
 
 const Step1 = ({ goToNext }) => {
+    const dispatch = useDispatch();
+    const [checkInfoSteps, { isLoading, data, error }] =
+        useCheckInfoStepsMutation();
     const [isInsider, setInsider] = useState(true);
     const [state, setState] = useState({
         email: "",
@@ -14,6 +20,18 @@ const Step1 = ({ goToNext }) => {
         passwordAgain: "",
     });
     const [errors, setErrors] = useState({});
+
+    useEffect(() => {
+        if (error?.data?.message) {
+            setErrors({ ["email"]: error?.data?.message });
+            return;
+        } else if (data) {
+            const regex = new RegExp(/^\w+\d+(@tgu.edu.vn)$/);
+            const isStudent = regex.test(state.email);
+            dispatch(updateInfoRegister({ isStudent, isInsider, ...state }));
+            goToNext();
+        }
+    }, [data, error]);
 
     const handleChange = ({ target }) => {
         const value = target.value;
@@ -25,7 +43,6 @@ const Step1 = ({ goToNext }) => {
     };
 
     const handleGoToNext = async (e) => {
-        e.preventDefault();
         const { email, password, passwordAgain } = state;
         const errors = validateUserSignUp({
             isInsider,
@@ -34,15 +51,16 @@ const Step1 = ({ goToNext }) => {
             passwordAgain,
         });
 
-        if (isInsider === false && state.email.includes("tgu.edu.vn")) {
+        if (isInsider === false && email?.includes("@tgu.edu.vn")) {
             setErrors({ ...errors, email: "Email TGU chỉ dùng trong trường!" });
         }
         if (errors) {
             setErrors(errors);
         } else {
-            goToNext(state);
+            checkInfoSteps({ step: "1", data: email });
         }
     };
+
     const handleSetInsider = (e) => () => {
         setInsider(e);
         setErrors();
@@ -115,6 +133,7 @@ const Step1 = ({ goToNext }) => {
                         type="submit"
                         primary
                         fluid
+                        loading={isLoading}
                         onClick={handleGoToNext}
                     >
                         Tiếp tục
