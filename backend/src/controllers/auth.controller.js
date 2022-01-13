@@ -53,10 +53,17 @@ exports.login = async (req, res, next) => {
 // @route   POST /api/auth/logout
 // @access  Private
 exports.logout = async (req, res, next) => {
-    console.log(req.session);
-    req.session.destroy();
-    res.json({
-        message: "Đăng xuất thành công !",
+    req.logOut();
+    req.session.destroy((err) => {
+        res.clearCookie("connect.sid", {
+            path: "/",
+            secure: false,
+            httpOnly: true,
+            // domain: "localhost",
+            // sameSite: true,
+        }).json({
+            message: "Đăng xuất thành công",
+        });
     });
 };
 
