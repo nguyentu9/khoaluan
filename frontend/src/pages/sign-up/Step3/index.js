@@ -13,26 +13,34 @@ import { useCheckInfoStepsMutation } from "../../../services/user";
 import { useDispatch } from "react-redux";
 
 const Step3 = ({ goToPrev, goToNext }) => {
+    const isInsider = useSelector(({ userSignup }) => userSignup.isInsider);
+    const isStudent = useSelector(({ userSignup }) => userSignup.isStudent);
+    const scientificTitle = useSelector(
+        ({ userSignup }) => userSignup.scientificTitle
+    );
+    const workplaceOutside = useSelector(
+        ({ userSignup }) => userSignup.workplaceOutside
+    );
+    const insiderID = useSelector(({ userSignup }) => userSignup.insiderID);
+    const degree = useSelector(({ userSignup }) => userSignup.degree);
+    const jobTitle = useSelector(({ userSignup }) => userSignup.jobTitle);
+    const workplace = useSelector(({ userSignup }) => userSignup.workplace);
+    const major = useSelector(({ userSignup }) => userSignup.major);
+
+    const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
     const [checkInfoSteps, { isLoading, data, error }] =
         useCheckInfoStepsMutation();
 
     const [state, setState] = useState({
-        scientificTitle: "",
-        workplaceOutside: "",
-        insiderID: "",
-        degree: "",
-        jobTitle: "",
-        workplace: "",
-        major: "",
-        degree: "",
-        jobTitle: "",
+        scientificTitle,
+        workplaceOutside,
+        insiderID,
+        degree,
+        jobTitle,
+        workplace,
+        major,
     });
-
-    const isInsider = useSelector(({ userSignup }) => userSignup.isInsider);
-    const isStudent = useSelector(({ userSignup }) => userSignup.isStudent);
-
-    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         if (error?.data?.message) {

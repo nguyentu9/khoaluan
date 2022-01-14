@@ -23,10 +23,48 @@ const Sidebar = () => {
                     <img src={DocumentText} alt="DocumentText" />
                     <p>Đề tài của tôi</p>
                 </NavLink>
+                {/* <NavLink
+                    to="/dashboard/my-topic"
+                    className={isActiveSidebarItem}
+                >
+                    <img src={DocumentText} alt="DocumentText" />
+                    <p>Đề tài cấp trường</p>
+                </NavLink>
+                <NavLink
+                    to="/dashboard/my-topic"
+                    className={isActiveSidebarItem}
+                >
+                    <img src={DocumentText} alt="DocumentText" />
+                    <p>Đề tài cấp khoa</p>
+                </NavLink> */}
+                {/* <NavLink to="/" className={isActiveSidebarItem}>
+                    <img src={Bell} alt="Bell" />
+                    <p>Hội đồng</p>
+                </NavLink>
                 <NavLink to="/" className={isActiveSidebarItem}>
                     <img src={Bell} alt="Bell" />
-                    <p>Thông báo</p>
+                    <p>Thống kê</p>
                 </NavLink>
+                <NavLink to="/" className={isActiveSidebarItem}>
+                    <img src={Bell} alt="Bell" />
+                    <p>Tài khoản</p>
+                </NavLink>
+                <NavLink to="/" className={isActiveSidebarItem}>
+                    <img src={Bell} alt="Bell" />
+                    <p>Tin tức</p>
+                </NavLink>
+                <NavLink to="/" className={isActiveSidebarItem}>
+                    <img src={Bell} alt="Bell" />
+                    <p>Biểu mẩu</p>
+                </NavLink>
+                <NavLink to="/" className={isActiveSidebarItem}>
+                    <img src={Bell} alt="Bell" />
+                    <p>Ngành / Khoa</p>
+                </NavLink>
+                <NavLink to="/" className={isActiveSidebarItem}>
+                    <img src={Bell} alt="Bell" />
+                    <p>Nhật ký</p>
+                </NavLink> */}
             </div>
         </div>
     );

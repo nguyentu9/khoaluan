@@ -36,6 +36,13 @@ export const userApi = createApi({
         getMyProfile: builder.query({
             query: () => `/users/me/profile`,
         }),
+
+        getUsersWithParam: builder.mutation({
+            query: ({ param, searchData }) => ({
+                url: `/users/members?${param}=${searchData}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
@@ -45,4 +52,5 @@ export const {
     useLogoutMutation,
     useGetMyProfileQuery,
     useCheckInfoStepsMutation,
+    useGetUsersWithParamMutation,
 } = userApi;

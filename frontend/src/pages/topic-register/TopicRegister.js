@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Breadcrumb, Form } from "semantic-ui-react";
 import AddMemberModal from "../../components/common/add-member-modal/AddMemberModal";
@@ -6,17 +6,45 @@ import Member from "../../components/common/member/Member";
 import UserCountLabel from "../../components/common/user-count-label/UserCountLabel";
 import { useGetMajorsQuery } from "../../services/major";
 import "./TopicRegister.scss";
+import { list } from "../../utils";
+import { removeMember } from "../../redux/topicRegisterSlice";
 
 const TopicRegister = () => {
     const dispatch = useDispatch();
+    const usersSelectedBefore = useSelector(
+        (state) => state.topicRegister.usersSelected
+    );
+    const [usersSelected, setUsersSelected] = useState([]);
+    const currentUser = useSelector((state) => state.userSignin.userInfo.data);
+    console.log(currentUser);
+
     const [open, setOpen] = useState(false);
     const { data: majorData, isLoading: majorLoading } = useGetMajorsQuery();
+    const [totalExpense, setTotalExpense] = useState(0);
+    const [duration, setDuration] = useState(0);
+
+    useEffect(() => {
+        if (usersSelectedBefore) {
+            setUsersSelected(usersSelectedBefore);
+        }
+    }, [usersSelectedBefore]);
+
     const handleMajorChange = (e) => {
         // setMajorSelected(e.target.value);
     };
 
-    const members = useSelector((state) => state.members);
+    const handleChangeExpense = (e) => {
+        setTotalExpense(e.target.value);
+    };
+    const handleChangeDuration = (e) => {
+        setDuration(e.target.value);
+    };
 
+    const handleRemove = (user) => () => {
+        let newArrUser = usersSelected.filter(({ id }) => id !== user.id);
+        setUsersSelected(newArrUser);
+        dispatch(removeMember(user.id));
+    };
     return (
         <div className="container-fluid">
             <Breadcrumb>
@@ -41,36 +69,12 @@ const TopicRegister = () => {
                             <Form.Group grouped>
                                 <label>Thời gian thực hiện</label>
                             </Form.Group>
-                            <Form.Group
-                                inline
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <Form.Radio
-                                    label="12 tháng"
-                                    value="12"
-                                    // checked={value === "md"}
-                                    // onChange={this.handleChange}
-                                />
-                                <Form.Radio
-                                    label="18 tháng"
-                                    value="18"
-                                    style={{ marginLeft: "2rem" }}
-                                    // checked={value === "md"}
-                                    // onChange={this.handleChange}
-                                />
-                                <Form.Radio
-                                    label="Khác"
-                                    value="0"
-                                    style={{ marginLeft: "2rem" }}
-                                    // checked={value === "md"}
-                                    // onChange={this.handleChange}
-                                />
-                            </Form.Group>
+
                             <div className="customfield">
-                                <input type="number" />
+                                <input
+                                    type="number"
+                                    onChange={handleChangeDuration}
+                                />
                                 <span>Tháng</span>
                             </div>
                         </div>
@@ -79,35 +83,11 @@ const TopicRegister = () => {
                             <Form.Group grouped>
                                 <label>Kinh phí</label>
                             </Form.Group>
-                            <Form.Group
-                                inline
-                                style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                }}
-                            >
-                                <Form.Radio
-                                    label="5 000 000 VNĐ"
-                                    value="5000000"
-                                    // checked={value === "sm"}
-                                    // onChange={this.handleChange}
-                                />
-                                <Form.Radio
-                                    label="10 000 000 VNĐ"
-                                    value="10000000"
-                                    // checked={value === "md"}
-                                    // onChange={this.handleChange}
-                                />
-                                <Form.Radio
-                                    label="Khác"
-                                    value="0"
-                                    style={{ marginLeft: "2rem" }}
-                                    // checked={value === "md"}
-                                    // onChange={this.handleChange}
-                                />
-                            </Form.Group>
                             <div className="customfield">
-                                <input type="number" />
+                                <input
+                                    type="number"
+                                    onChange={handleChangeExpense}
+                                />
                                 <span>VNĐ</span>
                             </div>
                         </div>
@@ -118,31 +98,47 @@ const TopicRegister = () => {
                             name="major"
                             label="Lĩnh vực"
                             style={{ height: "41.7969px" }}
-                            options={majorData?.map((e) => ({
-                                key: e.id,
-                                value: e.id,
-                                text: e.name,
-                            }))}
+                            options={list(majorData)}
                             selection
                             search
                             loading={majorLoading}
                             onChange={handleMajorChange}
                         />
-                        <Form.Field>
-                            <Form.Input
-                                id="keyword"
-                                label="Từ khoá"
-                                type="text"
-                            ></Form.Input>
-                        </Form.Field>
 
-                        <UserCountLabel currentNum={1} />
-                        <Member isOwner showAction={false} />
-                        {Array(4).map((e, i) => (
-                            <Member key={i} />
-                        ))}
+                        <UserCountLabel
+                            currentNum={
+                                usersSelected.length
+                                    ? usersSelected.length + 1
+                                    : 1
+                            }
+                            className="mb-2"
+                        />
+                        <Member
+                            key={currentUser?.id}
+                            name={currentUser?.fullName}
+                            desc={currentUser?.email}
+                            showAction={false}
+                            isOwner
+                        />
+                        {usersSelected &&
+                            usersSelected?.map((user) => (
+                                <Member
+                                    key={user.id}
+                                    name={user.fullName}
+                                    desc={user.email}
+                                    showAction={false}
+                                    showDel
+                                    onDelete={handleRemove(user)}
+                                />
+                            ))}
 
-                        <AddMemberModal open={open} setOpen={setOpen} />
+                        <div className="mt-2">
+                            <AddMemberModal
+                                open={open}
+                                setOpen={setOpen}
+                                usersSelectedBefore={usersSelected}
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="row">

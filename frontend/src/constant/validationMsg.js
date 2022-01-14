@@ -3,7 +3,7 @@ const messageVN = {
     "string.base": "{{#label}} phải là chuỗi ký tự",
     "string.creditCard": "{{#label}} phải là một thẻ tín dụng hợp lệ",
     "string.email": "{{#label}} không hợp lệ",
-    "string.empty": "{{#label}} không được phép để trống",
+    "string.empty": "{{#label}} không được trống",
     "string.length": "{{#label}} chiều dài phải là {{#limit}} ký tự",
     "string.lowercase": "{{#label}} chỉ được chứa các ký tự viết thường",
     "string.max": "{{#label}} chiều dài tối đa là {{#limit}} ký tự",

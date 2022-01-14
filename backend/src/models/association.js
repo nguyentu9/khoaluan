@@ -24,14 +24,12 @@ FacDept.hasMany(WorkPlace, {
     foreignKey: {
         name: "facdeptID",
         constraints: false,
-        allowNull: true,
     },
 });
 WorkPlace.belongsTo(FacDept, {
     foreignKey: {
         name: "facdeptID",
         constraints: false,
-        allowNull: true,
     },
 });
 
@@ -39,13 +37,15 @@ WorkPlace.belongsTo(FacDept, {
 User.hasOne(WorkPlace, {
     foreignKey: {
         name: "userID",
-        constraints: true,
+        // constraints: true,
+        unique: true,
     },
 });
 WorkPlace.belongsTo(User, {
     foreignKey: {
         name: "userID",
-        constraints: true,
+        // constraints: true,
+        unique: true,
     },
 });
 

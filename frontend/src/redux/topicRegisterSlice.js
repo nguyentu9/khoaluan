@@ -9,6 +9,7 @@ export const topicRegisterSlice = createSlice({
         majorID: "",
         keyword: "",
         members: [],
+        usersSelected: [],
     },
     reducers: {
         updateInfo: (state, action) => {
@@ -24,7 +25,10 @@ export const topicRegisterSlice = createSlice({
             state[field] = value;
         },
         removeMember: (state, action) => {
-            state.members.splice(action, 1);
+            const newMembers = state.members.filter(
+                ({ id }) => id !== action.payload.id
+            );
+            state.members = newMembers;
         },
         clearInfo: (state, action) => {
             state.name = "";
@@ -34,8 +38,12 @@ export const topicRegisterSlice = createSlice({
             state.keyword = "";
             state.members = [];
         },
+        addMembers: (state, action) => {
+            state.usersSelected = action.payload;
+        },
     },
 });
 
-export const { updateInfo, clearInfo } = topicRegisterSlice.actions;
+export const { updateInfo, clearInfo, addMembers, removeMember } =
+    topicRegisterSlice.actions;
 export default topicRegisterSlice.reducer;

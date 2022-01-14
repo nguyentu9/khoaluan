@@ -8,6 +8,7 @@ import { majorApi } from "../services/major";
 import { topicApi } from "../services/topic";
 import { degreeApi } from "../services/degree";
 import { facDeptApi } from "../services/facdept";
+import topicRegisterSlice from "./topicRegisterSlice";
 const reducer = combineReducers({
     [userApi.reducerPath]: userApi.reducer,
     [jobTitleApi.reducerPath]: jobTitleApi.reducer,
@@ -17,6 +18,7 @@ const reducer = combineReducers({
     [facDeptApi.reducerPath]: facDeptApi.reducer,
     userSignin: userSigninReducer,
     userSignup: userSignupReducer,
+    topicRegister: topicRegisterSlice,
 });
 export const store = configureStore({
     reducer,

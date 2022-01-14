@@ -11,7 +11,6 @@ const User = require("../models/user.model");
 // @access  Private/TopicOwner
 exports.getMyTopics = async (req, res, next) => {
     const userID = req.user.id;
-    // const userID = "3947d580-8ef2-4918-a0e0-4b9fb038bebf";
     let { page, size } = req.query;
 
     const minSize = 5;
@@ -21,7 +20,7 @@ exports.getMyTopics = async (req, res, next) => {
     if (size > maxSize) size = maxSize;
 
     const topics = await Topic.findAndCountAll({
-        attributes: ["id", "name", "registraionDate"],
+        attributes: ["id", "name", "registrationDate"],
         include: [
             {
                 model: TopicMember,
@@ -34,16 +33,44 @@ exports.getMyTopics = async (req, res, next) => {
                 model: Status,
                 attributes: ["name"],
                 required: true,
+                order: [["id", "DESC"]],
             },
         ],
+        order: [["registrationDate", "DESC"]],
         limit: size,
         offset: (page - 1) * size,
     });
-
     return res.json({ page, size, ...topics });
 };
 
 // @desc    Lấy danh sách đề tài cá nhân theo id
 // @route   GET /api/topics/:id/me
 // @access  Private/TopicOwner
-exports.getMyTopicByID = async (req, res, next) => {};
+exports.getMyTopicByID = async (req, res, next) => {
+    const userID = req.user.id;
+    const topicID = req.params.id;
+
+    const topic = await Topic.findOne({
+        where: { id: topicID },
+        attributes: ["id", "name", "registrationDate"],
+        include: [
+            {
+                model: TopicMember,
+                required: true,
+                where: { userID },
+                include: [{ model: TopicRole, attributes: ["name"] }],
+            },
+            {
+                model: Status,
+                attributes: ["name"],
+                required: true,
+                order: [["id", "DESC"]],
+            },
+        ],
+        order: [["registrationDate", "DESC"]],
+        limit: size,
+        offset: (page - 1) * size,
+    });
+    if (topic) return res.json(topic);
+    else return next(createError.BadRequest("Không tìm thấy đề tài"));
+};

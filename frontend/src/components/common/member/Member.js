@@ -8,14 +8,19 @@ const Member = ({
     isOwner = false,
     showAction = true,
     onChange,
+    onClick,
     onDelete,
+    showDel = false,
+    showChange = false,
     desc,
 }) => {
     return (
-        <div className="member__item">
+        <div className={`member__item`} onClick={onClick}>
             <Avatar />
             <div className="member__info">
-                <h4 className="member__name">{name}</h4>
+                <div className="member__name">
+                    <p>{name}</p>
+                </div>
                 <span className="member__role">
                     {desc} {isOwner ? "(Bạn)" : ""}
                 </span>
@@ -36,6 +41,25 @@ const Member = ({
                     />
                 </div>
             )}
+
+            <div className="member__action">
+                {showChange && (
+                    <img
+                        src={ChangeCircle}
+                        alt="icon"
+                        className="member__action-change"
+                        onClick={onChange}
+                    />
+                )}
+                {showDel && (
+                    <img
+                        src={XCircle}
+                        alt="icon"
+                        className="member__action-delete"
+                        onClick={onDelete}
+                    />
+                )}
+            </div>
         </div>
     );
 };

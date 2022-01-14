@@ -11,10 +11,12 @@ const WorkPlace = sequelize.define(
             allowNull: false,
         },
         insiderID: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.STRING(11),
+            allowNull: false,
         },
-        isInsider: {
-            type: DataTypes.BOOLEAN,
+        facdeptID: {
+            type: DataTypes.UUID,
+            allowNull: false,
         },
         isHeadOfDept: {
             type: DataTypes.BOOLEAN,
@@ -31,9 +33,6 @@ const WorkPlace = sequelize.define(
         isStaff: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
-        },
-        workplaceOutside: {
-            type: DataTypes.STRING,
         },
     },
     { timestamps: false }

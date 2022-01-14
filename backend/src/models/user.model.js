@@ -12,6 +12,13 @@ const User = sequelize.define("User", {
     avatarUrl: {
         type: DataTypes.STRING,
     },
+    isInsider: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    },
+    workplaceOutside: {
+        type: DataTypes.STRING,
+    },
     fullName: {
         type: DataTypes.STRING(50),
         allowNull: false,
@@ -61,16 +68,6 @@ const User = sequelize.define("User", {
         unique: {
             args: true,
             msg: "Số CMND đã được sử dụng!",
-        },
-    },
-    nationalIDImg: {
-        type: DataTypes.STRING,
-    },
-    hash: {
-        type: DataTypes.STRING,
-        unique: {
-            args: true,
-            msg: "Ảnh CMND đã được sử dụng!. Vui lòng tải lên iại.",
         },
     },
     issuedDate: {

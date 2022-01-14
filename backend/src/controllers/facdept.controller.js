@@ -25,6 +25,7 @@ exports.getFacdepts = async (req, res, next) => {
 
     const facDept = await FacDept.findAll({
         where: type,
+        order: [["type", "DESC"]],
     });
     res.json(facDept);
 };

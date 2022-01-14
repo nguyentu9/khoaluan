@@ -1,7 +1,5 @@
 const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
-const crypto = require("crypto");
-const fs = require("fs");
 const sequelize = require("../config/db");
 const createError = require("http-errors");
 const validateUser = require("../validation/validateUser");
@@ -53,13 +51,12 @@ exports.login = async (req, res, next) => {
 // @route   POST /api/auth/logout
 // @access  Private
 exports.logout = async (req, res, next) => {
-    req.logOut();
     req.session.destroy((err) => {
         res.clearCookie("connect.sid", {
             path: "/",
             secure: false,
             httpOnly: true,
-            // domain: "localhost",
+            domain: "localhost:3000",
             // sameSite: true,
         }).json({
             message: "Đăng xuất thành công",

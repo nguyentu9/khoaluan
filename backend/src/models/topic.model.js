@@ -15,7 +15,7 @@ const Topic = sequelize.define(
             allowNull: false,
             unique: true,
         },
-        registraionDate: {
+        registrationDate: {
             type: DataTypes.DATE,
             allowNull: false,
             defaultValue: DataTypes.NOW,

@@ -2,128 +2,68 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        // await queryInterface.bulkInsert("topicmember", [
-        //     {
-        //         id: 1,
-        //         topicID: "88ebf964-ca67-4767-a596-4b85075c8037",
-        //         userID: "3947d580-8ef2-4918-a0e0-4b9fb038bebf",
-        //         topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
-        //     },
-        //     {
-        //         id: 2,
-        //         topicID: "88ebf964-ca67-4767-a596-4b85075c8037",
-        //         userID: "bb7d391e-c15c-4a0a-88c8-1d17382cf6a3",
-        //         topicRoleID: "51eb7852-2396-40eb-8704-f801eb332391",
-        //     },
-        //     {
-        //         id: 3,
-        //         topicID: "88ebf964-ca67-4767-a596-4b85075c8037",
-        //         userID: "ecb75b0b-7d6f-467f-ae96-8ad73886d68c",
-        //         topicRoleID: "d3e64eca-ba95-4acd-9cb1-6573db7c3d1b",
-        //     },
-        //     {
-        //         id: 4,
-        //         topicID: "0684d952-0407-4ebe-85f4-6aec61dc5b7e",
-        //         userID: "3947d580-8ef2-4918-a0e0-4b9fb038bebf",
-        //         topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
-        //     },
-        //     {
-        //         id: 5,
-        //         topicID: "0684d952-0407-4ebe-85f4-6aec61dc5b7e",
-        //         userID: "ecb75b0b-7d6f-467f-ae96-8ad73886d68c",
-        //         topicRoleID: "d3e64eca-ba95-4acd-9cb1-6573db7c3d1b",
-        //     },
-        //     {
-        //         id: 6,
-        //         topicID: "0684d952-0407-4ebe-85f4-6aec61dc5b7e",
-        //         userID: "71781964-2f0a-41cc-b6c9-42e01014d4bc",
-        //         topicRoleID: "c1ca663a-7c68-44fc-a504-55de37b4910f",
-        //     },
-        //     {
-        //         id: 7,
-        //         topicID: "d3bed5e0-f12a-4658-b1f7-b796eeac5f51",
-        //         userID: "3947d580-8ef2-4918-a0e0-4b9fb038bebf",
-        //         topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
-        //     },
-        //     {
-        //         id: 9,
-        //         topicID: "d3bed5e0-f12a-4658-b1f7-b796eeac5f51",
-        //         userID: "e52ea468-a8e0-44bc-9cab-533f15144725",
-        //         topicRoleID: "c1ca663a-7c68-44fc-a504-55de37b4910f",
-        //     },
-        //     {
-        //         id: 10,
-        //         topicID: "d3769ba2-d7f1-4f88-9b8e-b71f60f6b839",
-        //         userID: "3947d580-8ef2-4918-a0e0-4b9fb038bebf",
-        //         topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
-        //     },
-        //     {
-        //         id: 11,
-        //         topicID: "d3769ba2-d7f1-4f88-9b8e-b71f60f6b839",
-        //         userID: "e52ea468-a8e0-44bc-9cab-533f15144725",
-        //         topicRoleID: "d3e64eca-ba95-4acd-9cb1-6573db7c3d1b",
-        //     },
-        //     {
-        //         id: 12,
-        //         topicID: "d3769ba2-d7f1-4f88-9b8e-b71f60f6b839",
-        //         userID: "bb7d391e-c15c-4a0a-88c8-1d17382cf6a3",
-        //         topicRoleID: "c1ca663a-7c68-44fc-a504-55de37b4910f",
-        //     },
-        // {
-        //     id: 13,
-        //     topicID: "a4b36a4f-7773-4771-9567-ef20dc84ba2b",
-        //     userID: "e52ea468-a8e0-44bc-9cab-533f15144725",
-        //     topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
-        // },
-        // {
-        //     id: 14,
-        //     topicID: "a4b36a4f-7773-4771-9567-ef20dc84ba2b",
-        //     userID: "bb7d391e-c15c-4a0a-88c8-1d17382cf6a3",
-        //     topicRoleID: "d3e64eca-ba95-4acd-9cb1-6573db7c3d1b",
-        // },
-        // {
-        //     id: 15,
-        //     topicID: "a4b36a4f-7773-4771-9567-ef20dc84ba2b",
-        //     userID: "106f3bd4-86b9-4c1d-bee4-1f8efadf6713",
-        //     topicRoleID: "c1ca663a-7c68-44fc-a504-55de37b4910f",
-        // },
-        // {
-        //     id: 16,
-        //     topicID: "adf4f08a-96ef-47f7-b8ad-230a7773a40e",
-        //     userID: "bb7d391e-c15c-4a0a-88c8-1d17382cf6a3",
-        //     topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
-        // },
-        // {
-        //     id: 17,
-        //     topicID: "adf4f08a-96ef-47f7-b8ad-230a7773a40e",
-        //     userID: "106f3bd4-86b9-4c1d-bee4-1f8efadf6713",
-        //     topicRoleID: "d3e64eca-ba95-4acd-9cb1-6573db7c3d1b",
-        // },
-        // {
-        //     id: 18,
-        //     topicID: "adf4f08a-96ef-47f7-b8ad-230a7773a40e",
-        //     userID: "944113ed-bfcf-4814-ab8d-3f3358f54604",
-        //     topicRoleID: "c1ca663a-7c68-44fc-a504-55de37b4910f",
-        // },
-        // {
-        //     id: 19,
-        //     topicID: "acee5ed7-bbdb-4628-98a9-b5e72692d1a0",
-        //     userID: "106f3bd4-86b9-4c1d-bee4-1f8efadf6713",
-        //     topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
-        // },
-        // {
-        //     id: 20,
-        //     topicID: "acee5ed7-bbdb-4628-98a9-b5e72692d1a0",
-        //     userID: "944113ed-bfcf-4814-ab8d-3f3358f54604",
-        //     topicRoleID: "d3e64eca-ba95-4acd-9cb1-6573db7c3d1b",
-        // },
-        // {
-        //     id: 21,
-        //     topicID: "acee5ed7-bbdb-4628-98a9-b5e72692d1a0",
-        //     userID: "725bab2a-5826-44ef-97f8-70913ad49085",
-        //     topicRoleID: "c1ca663a-7c68-44fc-a504-55de37b4910f",
-        // },
-        // ]);
+        await queryInterface.bulkInsert("topicmember", [
+            {
+                id: 1,
+                topicID: "5b5b5c80-e606-441e-9fd5-695d9e756192",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 2,
+                topicID: "5909e5dd-ad14-406e-945d-66b7a4663a85",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 3,
+                topicID: "423ca9b9-4cd0-49ea-b5b1-7fab7b0f3b0c",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 4,
+                topicID: "719d350a-e2ea-4891-82f0-c3fb66b0447a",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 5,
+                topicID: "a074c2e9-a773-402d-b5a5-e58b50a858ca",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 6,
+                topicID: "0d292b13-b452-4b4f-b332-20ad8732ab6d",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 7,
+                topicID: "ea057b5c-cf7f-4f63-be11-8d18265155f4",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 8,
+                topicID: "c09e3ef2-eec9-4710-a66c-72d39687571e",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 9,
+                topicID: "4fe68951-cb58-4a8f-a1b3-4b18ce9597c6",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+            {
+                id: 10,
+                topicID: "d092c522-5a03-4e9b-b4c0-ddf6ffc8b7ea",
+                userID: "34da331e-37af-45a8-8378-2fa8a4a30b06",
+                topicRoleID: "3a259543-e7b9-4137-9a4f-7df800050cf4",
+            },
+        ]);
     },
 
     down: async (queryInterface, Sequelize) => {

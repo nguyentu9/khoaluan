@@ -136,7 +136,7 @@ const MyTopic = () => {
 
                             <Table.Body>
                                 {topicArr?.map((topic, i) => (
-                                    <Table.Row>
+                                    <Table.Row key={topic.id}>
                                         <Table.Cell>{page + i}</Table.Cell>
                                         <Table.Cell>{topic.name}</Table.Cell>
                                         <Table.Cell>
@@ -147,12 +147,12 @@ const MyTopic = () => {
                                         </Table.Cell>
                                         <Table.Cell>
                                             <Badge
-                                                title={topic.Statuses[0].name}
+                                                title={topic.Statuses[0]?.name}
                                                 status="warning"
                                             />
                                         </Table.Cell>
                                         <Table.Cell>
-                                            {topic.registraionDate
+                                            {topic.registrationDate
                                                 ?.match(/([^T]+)/)[0]
                                                 .split("-")
                                                 .reverse()

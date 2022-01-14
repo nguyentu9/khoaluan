@@ -3,7 +3,7 @@ import { SearchIcon } from "../../../assets/icons";
 import "./InputSearch.scss";
 const InputSearch = (props, ref) => {
     return (
-        <div {...props} className={`inputsearch__wrapper ${props?.className}`}>
+        <div className={`inputsearch__wrapper ${props?.className}`}>
             <span className="inputsearch__img">
                 <img src={SearchIcon} alt="close" />
             </span>
@@ -12,6 +12,7 @@ const InputSearch = (props, ref) => {
                 ref={ref}
                 className="inputsearch__text"
                 placeholder={props?.placeholder}
+                onChange={props.onChange}
             />
         </div>
     );

@@ -1,0 +1,68 @@
+@use "../../assets/scss/" as *;
+
+.news__container {
+    min-height: 85%;
+}
+.news__breadcumb {
+    margin: 32px 0;
+}
+.news__list {
+    @include flex(center, center, column);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.news {
+    &__wrapper {
+        @include flex(space-between, center);
+        width: 50%;
+        @include tablet {
+            width: 90%;
+            margin: 0 2rem;
+        }
+        @include mobile {
+            width: 90%;
+            margin: 0 2rem;
+        }
+        background: #ffffff;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+    }
+    &__image {
+        height: 8rem;
+    }
+    &__image img {
+        max-height: 100%;
+        padding: 0.5rem;
+    }
+    &__content {
+        @include flex(flex-start, flex-start, column);
+        gap: 12px;
+        color: $primary-black;
+        height: 100%;
+        flex: 1;
+        width: calc(100% - 140px);
+    }
+    &__title {
+        font-size: 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        line-height: 1;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    &__date__wrapper {
+        @include flex(flex-start, center);
+        gap: 8px;
+    }
+    &__date {
+        color: #707070;
+    }
+    &__latest {
+        display: block;
+        border-radius: 10px;
+        color: #ef5454;
+    }
+}

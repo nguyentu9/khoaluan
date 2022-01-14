@@ -5,6 +5,7 @@ import ChangePassword from "./pages/change-password/ChangePassword";
 import Home from "./pages/Home";
 import MyInfo from "./pages/my-info/MyInfo";
 import MyTopic from "./pages/my-topic/MyTopic";
+import News from "./pages/news/News";
 import { SignIn } from "./pages/sign-in/SignIn";
 import SignUp from "./pages/sign-up";
 import Step1 from "./pages/sign-up/Step1";
@@ -20,7 +21,7 @@ const routes = [
         element: <AppLayout />,
         children: [
             { path: "/", element: <Home /> },
-            { path: "/news", element: <div>Tin tuc</div> },
+            { path: "/news", element: <News /> },
             { path: "/news/:id", element: <div>Chi tiet thong bao</div> },
             { path: "/forms", element: <div>Bieu mau</div> },
             { path: "/login", element: <SignIn /> },
@@ -39,10 +40,10 @@ const routes = [
         path: "/sign-up",
         element: (
             <SignUp>
+                <Step4 />
                 <Step1 />
                 <Step2 />
                 <Step3 />
-                <Step4 />
                 <StepFinal />
             </SignUp>
         ),

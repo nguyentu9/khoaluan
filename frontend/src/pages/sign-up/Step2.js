@@ -42,7 +42,6 @@ const Step2 = ({ goToPrev, goToNext }) => {
     const handleGoToNext = (e) => {
         e.preventDefault();
         const newState = { ...state, gender };
-
         const errors = validateUserSignUp(newState);
 
         if (errors) {
@@ -58,7 +57,7 @@ const Step2 = ({ goToPrev, goToNext }) => {
         if (errors) {
             setErrors(errors);
         } else {
-            goToPrev(newState);
+            goToPrev();
         }
     };
 

@@ -59,9 +59,12 @@
     }
 
     &__content {
-        // background-color: #eee;
         overflow-y: scroll;
         max-height: 20rem;
+        min-height: 386px;
+    }
+    &__content__notfound {
+        text-align: center;
     }
 
     div.member__item {
