@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./SignUp.scss";
 
 const SignUp = ({ children }) => {
-    // const [onBoardingData, setOnBoardingData] = useState({});
     const [currentIndex, setCurrentIndex] = useState(0);
 
     // useEffect(() => {
@@ -14,32 +13,20 @@ const SignUp = ({ children }) => {
     //     e.returnValue = "";
     // };
 
-    const goToNext = (stepData) => {
+    const goToNext = () => {
         const nextIndex = currentIndex + 1;
-        // const updatedData = {
-        //     ...onBoardingData,
-        //     ...stepData,
-        // };
 
         if (nextIndex < children.length) {
             setCurrentIndex(nextIndex);
         } else {
         }
-        // console.log(updatedData);
-        // setOnBoardingData(updatedData);
     };
 
-    const goToPrev = (stepData) => {
+    const goToPrev = () => {
         const prevIndex = currentIndex - 1;
-        // const updatedData = {
-        //     ...onBoardingData,
-        //     ...stepData,
-        // };
-
         if (prevIndex >= 0) {
             setCurrentIndex(prevIndex);
         }
-        // setOnBoardingData(updatedData);
     };
     const currentChild = React.Children.toArray(children)[currentIndex];
     return (

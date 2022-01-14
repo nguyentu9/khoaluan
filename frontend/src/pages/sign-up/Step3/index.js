@@ -61,8 +61,16 @@ const Step3 = ({ goToPrev, goToNext }) => {
     const handleGoToNext = (e) => {
         e.preventDefault();
         const newState = { ...state, isInsider, isStudent };
+        console.log(
+            "🚀 ~ file: index.js ~ line 65 ~ handleGoToNext ~ newState",
+            newState
+        );
 
         const errors = validateUserSignUp(newState);
+        console.log(
+            "🚀 ~ file: index.js ~ line 70 ~ handleGoToNext ~ errors",
+            errors
+        );
 
         if (errors) {
             setErrors(errors);
@@ -74,15 +82,15 @@ const Step3 = ({ goToPrev, goToNext }) => {
         }
     };
     const handleGoToPrev = (e) => {
-        e.preventDefault();
-        const newState = { ...state, isInsider, isStudent };
+        // e.preventDefault();
+        // const newState = { ...state, isInsider, isStudent };
 
-        const errors = validateUserSignUp(newState);
-        if (errors) {
-            setErrors(errors);
-        } else {
-            goToPrev(newState);
-        }
+        // const errors = validateUserSignUp(newState);
+        // if (errors) {
+        //     setErrors(errors);
+        // } else {
+        goToPrev();
+        // }
     };
 
     const renderByRole = () => {
@@ -170,10 +178,10 @@ const validateUserSignUp = (user) => {
         workplace: Joi.string()
             .label("Đơn vị công tác")
             .allow("")
+            .trim()
             .when("isInsider", {
                 is: true,
-                then: Joi.allow(null),
-                otherwise: Joi.string()
+                then: Joi.string()
                     .required()
                     .trim()
                     .max(36)

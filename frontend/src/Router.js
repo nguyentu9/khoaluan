@@ -40,10 +40,10 @@ const routes = [
         path: "/sign-up",
         element: (
             <SignUp>
-                <Step4 />
                 <Step1 />
                 <Step2 />
                 <Step3 />
+                <Step4 />
                 <StepFinal />
             </SignUp>
         ),

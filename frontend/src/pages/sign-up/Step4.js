@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "semantic-ui-react";
 import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
 import "./SignUp.scss";
@@ -6,31 +6,27 @@ import Joi from "joi";
 import messagesVN from "../../constant/validationMsg";
 import { updateInfoRegister } from "../../redux/userSignUpSlice";
 import { useCheckInfoStepsMutation } from "../../services/user";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Step4 = ({ goToPrev, goToNext }) => {
     const dispatch = useDispatch();
     const [checkInfoSteps, { isLoading, data, error }] =
         useCheckInfoStepsMutation();
-    const [hasBankNumber, setHasBankNumber] = useState(1);
     const [state, setState] = useState({
         nationalID: "",
         issuedDate: "",
         issuedPlace: "",
-        bankNumber: "",
-        bankBranch: "",
     });
-    const isInsider = useSelector(({ userSignup }) => userSignup.isInsider);
     const [errors, setErrors] = useState({});
 
-    // useEffect(() => {
-    //     if (error?.data?.message) {
-    //         setErrors({ ["nationalID"]: error?.data?.message });
-    //     } else if (data) {
-    //         dispatch(updateInfoRegister({ ...state, hasBankNumber }));
-    //         goToNext();
-    //     }
-    // }, [data, error]);
+    useEffect(() => {
+        if (error?.data?.message) {
+            setErrors({ ["nationalID"]: error?.data?.message });
+        } else if (data) {
+            dispatch(updateInfoRegister({ ...state }));
+            goToNext();
+        }
+    }, [data, error]);
 
     const handleChange = ({ target }) => {
         let value = target.value;
@@ -43,10 +39,8 @@ const Step4 = ({ goToPrev, goToNext }) => {
 
     const handleGoToNext = (e) => {
         e.preventDefault();
-        const newState = { ...state, hasBankNumber };
-        const errors = validateUserSignUp(newState);
-        console.log(errors);
-        return;
+
+        const errors = validateUserSignUp(state);
         if (errors) {
             setErrors(errors);
         } else {
@@ -55,19 +49,7 @@ const Step4 = ({ goToPrev, goToNext }) => {
     };
     const handleGoToPrev = (e) => {
         e.preventDefault();
-        const newState = { ...state, hasBankNumber };
-        const errors = validateUserSignUp(newState);
-
-        if (errors) {
-            setErrors(errors);
-        } else {
-            goToPrev();
-        }
-    };
-
-    const handleChangeHasBankNum = (value) => () => {
-        setHasBankNumber(value);
-        setErrors();
+        goToPrev();
     };
 
     return (
@@ -112,52 +94,6 @@ const Step4 = ({ goToPrev, goToNext }) => {
                         }
                     />
                 </Form.Field>
-                <div className="field">
-                    <label className="label">Tài khoản ngân hàng</label>
-                    <Form.Radio
-                        label="Tôi sẽ cung cấp sau"
-                        checked={!hasBankNumber}
-                        onChange={handleChangeHasBankNum(false)}
-                    ></Form.Radio>
-                    <Form.Radio
-                        label="Tôi có tài khoản"
-                        checked={hasBankNumber}
-                        onChange={handleChangeHasBankNum(true)}
-                    ></Form.Radio>
-                </div>
-                {hasBankNumber && (
-                    <>
-                        <Form.Field>
-                            <Form.Input
-                                id="bankNumber"
-                                name="bankNumber"
-                                label="Số tài khoản"
-                                type="number"
-                                onChange={handleChange}
-                                error={
-                                    errors?.bankNumber
-                                        ? errors?.bankNumber
-                                        : false
-                                }
-                            />
-                        </Form.Field>
-                        <Form.Field>
-                            <Form.Input
-                                id="bankBranch"
-                                name="bankBranch"
-                                label="Tại ngân hàng"
-                                type="text"
-                                onChange={handleChange}
-                                error={
-                                    errors?.bankBranch
-                                        ? errors?.bankBranch
-                                        : false
-                                }
-                            />
-                        </Form.Field>
-                    </>
-                )}
-
                 <div className="field signup__button-submit">
                     <Button type="button" onClick={handleGoToPrev}>
                         Trở lại
@@ -192,13 +128,6 @@ const validateUserSignUp = (user) => {
                 ...messagesVN,
                 "string.pattern.base": "CMND/CCCD phải 9 hoặc 12 ký tự số",
             }),
-        nationalIDImg: Joi.string().when("isInsider", {
-            is: false,
-            then: Joi.string()
-                .label("CMND/CCCD")
-                .required()
-                .messages(messagesVN),
-        }),
         issuedDate: Joi.date()
             .label("Ngày cấp")
             .less(Date.now())
@@ -214,32 +143,6 @@ const validateUserSignUp = (user) => {
             .max(30)
             .required()
             .messages(messagesVN),
-        hasBankNumber: Joi.boolean().required().messages(messagesVN),
-        bankNumber: Joi.string().when("hasBankNumber", {
-            is: true,
-            then: Joi.string()
-                .trim()
-                .label("Số tài khoản")
-                .regex(/^(\d)+$/)
-                .min(9)
-                .max(12)
-                .required()
-                .messages({
-                    ...messagesVN,
-                    "string.pattern.base":
-                        "Số tài khoản phải là chuỗi ký tự số",
-                }),
-        }),
-        bankBranch: Joi.string().when("hasBankNumber", {
-            is: true,
-            then: Joi.string()
-                .trim()
-                .label("Chi nhánh ngân hàng")
-                .min(10)
-                .max(36)
-                .required()
-                .messages(messagesVN),
-        }),
     });
 
     const { error } = schema.validate(user, {

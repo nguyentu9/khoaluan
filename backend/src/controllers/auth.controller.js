@@ -4,6 +4,7 @@ const sequelize = require("../config/db");
 const createError = require("http-errors");
 const validateUser = require("../validation/validateUser");
 const FacDept = require("../models/facdept.model");
+const WorkPlace = require("../models/workplace.model");
 
 // @desc    Đăng nhập
 // @route   POST /api/auth/login
@@ -65,12 +66,7 @@ exports.logout = async (req, res, next) => {
 };
 
 exports.isUserValid = async (req, res, next) => {
-    const body = {};
-    for (const [key, value] of Object.entries(req.body)) {
-        body[key] = Array.isArray(value) ? value[0] : value;
-    }
     const { errors, user } = await validateUser(body);
-
     if (errors) {
         res.status(400).json({
             message: "Thông tin không hợp lệ",
@@ -110,9 +106,7 @@ exports.signup = async (req, res, next) => {
         });
     if (!user.isInsider) {
         newUser.set({
-            hash: user.hash,
-            nationalIDImg: user.nationalIDImg,
-            workplaceOutside: user.workplace,
+            workplaceOutside: user.workplaceOutside,
         });
     }
     if (user.isInsider)
@@ -129,7 +123,7 @@ exports.signup = async (req, res, next) => {
 
     try {
         const savedUser = await newUser.save();
-        const fetchedFacdept = await FacDept.findByPk(user.workplace);
+        const fetchedFacdept = await WorkPlace.findByPk(user.workplace);
         if (user.isInsider) {
             await savedUser.addFacdept(fetchedFacdept);
         }
