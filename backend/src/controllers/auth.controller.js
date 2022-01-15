@@ -2,10 +2,8 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user.model");
 const sequelize = require("../config/db");
 const createError = require("http-errors");
-const validateUser = require("../validation/validateUser");
 const FacDept = require("../models/facdept.model");
 const WorkPlace = require("../models/workplace.model");
-
 // @desc    Đăng nhập
 // @route   POST /api/auth/login
 // @access  Public
@@ -66,24 +64,24 @@ exports.logout = async (req, res, next) => {
 };
 
 exports.isUserValid = async (req, res, next) => {
-    const { errors, user } = await validateUser(body);
-    if (errors) {
-        res.status(400).json({
-            message: "Thông tin không hợp lệ",
-            errors,
-        });
-        return;
-    }
-    req.data = { user, errors };
+    // // const { errors, user } = await validateUser(req.body);
+    // if (errors) {
+    //     res.status(400).json({
+    //         message: "Thông tin không hợp lệ",
+    //         errors,
+    //     });
+    //     return;
+    // }
+    // req.data = { user, errors };
     next();
-    return;
 };
 
 // @desc    Đăng ký
-// @route   POST /api/auth/register
+// @route   POST /api/auth/signup
 // @access  Public
 exports.signup = async (req, res, next) => {
-    const { user } = req.data;
+    const user = req.body;
+    console.log(user);
     const newUser = await User.build({
         isInsider: user.isInsider,
         email: user.email,
@@ -99,11 +97,6 @@ exports.signup = async (req, res, next) => {
         majorID: user.major,
     });
 
-    if (user.haveABankNum)
-        newUser.set({
-            bankNumber: user.bankNumber,
-            bankBranch: user.bankBranch,
-        });
     if (!user.isInsider) {
         newUser.set({
             workplaceOutside: user.workplaceOutside,
@@ -122,21 +115,38 @@ exports.signup = async (req, res, next) => {
     }
 
     try {
-        const savedUser = await newUser.save();
-        const fetchedFacdept = await WorkPlace.findByPk(user.workplace);
         if (user.isInsider) {
-            await savedUser.addFacdept(fetchedFacdept);
+            const isExsist = await WorkPlace.findOne({
+                where: {
+                    insiderID: user.insiderID,
+                },
+            });
+
+            if (isExsist) {
+                return createError(createError.BadRequest("Mã số đã tồn tại!"));
+            }
+            const savedUser = await newUser.save();
+            const workplace = await savedUser.createWorkplace({
+                facdeptID: user.workplace,
+                isStudent: user.isStudent,
+                isStaff: !user.isStudent,
+            });
+            console.log("thanh cong");
+            // const fetchedFacdept = await WorkPlace.findByPk(user.workplace);
+            // await savedUser.addFacdept(fetchedFacdept);
+        } else {
+            await newUser.save();
         }
 
-        res.status(201).json({
+        return res.status(201).json({
             message: "Đăng ký thành công!",
         });
-        return;
     } catch (err) {
         const errArr = err?.errors?.map((e) => ({
             message: e.message,
             key: e.path,
         }));
+        console.log(err);
         res.status(400).json(errArr);
         return;
     }
@@ -208,7 +218,7 @@ exports.validateSteps = async (req, res, next) => {
                 return next(createError.BadRequest("Thông tin không hợp lệ"));
             let isExsist = await User.findOne({
                 attributes: ["id"],
-                where: { nationalIDImg },
+                where: { nationalID },
             });
             if (isExsist)
                 return next(createError.BadRequest("CMND/CCCD đã tồn tại"));

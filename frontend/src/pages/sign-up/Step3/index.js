@@ -13,33 +13,21 @@ import { useCheckInfoStepsMutation } from "../../../services/user";
 import { useDispatch } from "react-redux";
 
 const Step3 = ({ goToPrev, goToNext }) => {
-    const isInsider = useSelector(({ userSignup }) => userSignup.isInsider);
-    const isStudent = useSelector(({ userSignup }) => userSignup.isStudent);
-    const scientificTitle = useSelector(
-        ({ userSignup }) => userSignup.scientificTitle
-    );
-    const workplaceOutside = useSelector(
-        ({ userSignup }) => userSignup.workplaceOutside
-    );
-    const insiderID = useSelector(({ userSignup }) => userSignup.insiderID);
-    const degree = useSelector(({ userSignup }) => userSignup.degree);
-    const jobTitle = useSelector(({ userSignup }) => userSignup.jobTitle);
-    const workplace = useSelector(({ userSignup }) => userSignup.workplace);
-    const major = useSelector(({ userSignup }) => userSignup.major);
-
     const [errors, setErrors] = useState({});
     const dispatch = useDispatch();
+    const isInsider = useSelector(({ userSignup }) => userSignup.isInsider);
+    const isStudent = useSelector(({ userSignup }) => userSignup.isStudent);
     const [checkInfoSteps, { isLoading, data, error }] =
         useCheckInfoStepsMutation();
 
     const [state, setState] = useState({
-        scientificTitle,
-        workplaceOutside,
-        insiderID,
-        degree,
-        jobTitle,
-        workplace,
-        major,
+        scientificTitle: "",
+        workplaceOutside: "",
+        insiderID: "",
+        degree: "",
+        jobTitle: "",
+        workplace: "",
+        major: "",
     });
 
     useEffect(() => {
@@ -52,7 +40,6 @@ const Step3 = ({ goToPrev, goToNext }) => {
     }, [data, error]);
 
     const handleChange = (event, result) => {
-        console.log(state);
         const { name, value } = result || event.target;
         setState({ ...state, [name]: value });
         setErrors({});
@@ -61,17 +48,11 @@ const Step3 = ({ goToPrev, goToNext }) => {
     const handleGoToNext = (e) => {
         e.preventDefault();
         const newState = { ...state, isInsider, isStudent };
-        console.log(
-            "🚀 ~ file: index.js ~ line 65 ~ handleGoToNext ~ newState",
-            newState
-        );
-
         const errors = validateUserSignUp(newState);
         console.log(
-            "🚀 ~ file: index.js ~ line 70 ~ handleGoToNext ~ errors",
+            "🚀 ~ file: index.js ~ line 64 ~ handleGoToNext ~ errors",
             errors
         );
-
         if (errors) {
             setErrors(errors);
         } else if (isInsider) {
@@ -81,17 +62,10 @@ const Step3 = ({ goToPrev, goToNext }) => {
             goToNext();
         }
     };
-    const handleGoToPrev = (e) => {
-        // e.preventDefault();
-        // const newState = { ...state, isInsider, isStudent };
-
-        // const errors = validateUserSignUp(newState);
-        // if (errors) {
-        //     setErrors(errors);
-        // } else {
-        goToPrev();
-        // }
-    };
+    // const handleGoToPrev = (e) => {
+    //     e.preventDefault();
+    //     goToPrev();
+    // };
 
     const renderByRole = () => {
         if (!isInsider)
@@ -121,9 +95,9 @@ const Step3 = ({ goToPrev, goToNext }) => {
                 {renderByRole()}
 
                 <div className="field signup__button-submit">
-                    <Button type="button" onClick={handleGoToPrev}>
+                    {/* <Button type="button" onClick={handleGoToPrev}>
                         Trở lại
-                    </Button>
+                    </Button> */}
                     <Button
                         type="submit"
                         primary
@@ -141,13 +115,13 @@ const Step3 = ({ goToPrev, goToNext }) => {
 const validateUserSignUp = (user) => {
     const schema = Joi.object().keys({
         isInsider: Joi.boolean().required(),
-        isStudent: Joi.boolean().required(),
+        isStudent: Joi.number().required(),
         insiderID: Joi.alternatives()
             .conditional("isInsider", [
                 {
                     is: true,
                     then: Joi.when("isStudent", {
-                        is: false,
+                        is: 0,
                         then: Joi.string()
                             .trim()
                             .regex(/^(T52-[0-9]{7})$/)

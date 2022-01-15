@@ -1,5 +1,5 @@
-require("dotenv").config();
 const express = require("express");
+require("dotenv").config();
 const session = require("express-session");
 const helmet = require("helmet");
 const xss = require("xss-clean");
@@ -30,7 +30,7 @@ require("./src/models/association");
 // TODO: sequelize sesssion
 // TODO: config helmet
 app.use(helmet());
-app.use(morgan("dev"));
+app.use(morgan("combined"));
 // app.use(hpp());
 app.use(compression());
 // app.use(xss());
@@ -48,9 +48,10 @@ app.set("trust proxy", 1); // trust first proxy
 app.use(
     cors({
         origin: "http://localhost:3000",
-        methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
+        methods: ["POST", "PUT", "GET", "DELETE", "HEAD"],
         preflightContinue: false,
         credentials: true,
+        maxAge: 1728000,
     })
 );
 app.use(express.json());

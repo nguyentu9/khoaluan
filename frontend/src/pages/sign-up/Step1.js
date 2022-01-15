@@ -27,7 +27,7 @@ const Step1 = ({ goToNext }) => {
             return;
         } else if (data) {
             const regex = new RegExp(/^\w+\d+(@tgu.edu.vn)$/);
-            const isStudent = regex.test(state.email);
+            const isStudent = regex.test(state.email) ? 1 : 0;
             dispatch(updateInfoRegister({ isStudent, isInsider, ...state }));
             goToNext();
         }

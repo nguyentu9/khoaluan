@@ -202,8 +202,11 @@ module.exports = async function validateUser(user) {
         })
         .unknown(true);
     if (
-        typeof user?.isInsider == "string" &&
-        (user?.isInsider == "false" || user?.isInsider == "0")
+        (typeof user?.isInsider == "string" &&
+            (user?.isInsider == "false" || user?.isInsider == "0")) ||
+        typeof user.isInsider == undefined ||
+        typeof user.isInsider == "" ||
+        !user.isInsider
     ) {
         user.isInsider = false;
     } else user.isInsider = true;

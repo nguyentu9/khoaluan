@@ -78,16 +78,6 @@ const User = sequelize.define("User", {
         type: DataTypes.STRING(30),
         allowNull: false,
     },
-    bankNumber: {
-        type: DataTypes.STRING(12),
-        unique: {
-            args: true,
-            msg: "Số tài khoản đã được sử dụng!",
-        },
-    },
-    bankBranch: {
-        type: DataTypes.STRING(50),
-    },
     isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

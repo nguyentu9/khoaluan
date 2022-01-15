@@ -17,3 +17,9 @@ export { default as ChangeCircle } from "./change-circle.svg";
 export { default as XCircle } from "./x-circle.svg";
 export { default as UserAdd } from "./user-add.svg";
 export { default as SearchIcon } from "./search.svg";
+
+export { default as RegisterConfirmedIcon } from "./registerconfirmed.svg";
+export { default as FingerPrintIcon } from "./finger-print.svg";
+export { default as OfficeBuildingIcon } from "./office-building.svg";
+export { default as FormsIcon } from "./forms.svg";
+export { default as Newspaper } from "./newspaper.svg";

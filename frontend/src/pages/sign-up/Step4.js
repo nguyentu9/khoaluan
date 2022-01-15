@@ -26,7 +26,7 @@ const Step4 = ({ goToPrev, goToNext }) => {
             dispatch(updateInfoRegister({ ...state }));
             goToNext();
         }
-    }, [data, error]);
+    }, [error, data]);
 
     const handleChange = ({ target }) => {
         let value = target.value;
@@ -47,10 +47,10 @@ const Step4 = ({ goToPrev, goToNext }) => {
             checkInfoSteps({ step: "4", data: state.nationalID });
         }
     };
-    const handleGoToPrev = (e) => {
-        e.preventDefault();
-        goToPrev();
-    };
+    // const handleGoToPrev = (e) => {
+    //     e.preventDefault();
+    //     goToPrev();
+    // };
 
     return (
         <>
@@ -95,9 +95,9 @@ const Step4 = ({ goToPrev, goToNext }) => {
                     />
                 </Form.Field>
                 <div className="field signup__button-submit">
-                    <Button type="button" onClick={handleGoToPrev}>
+                    {/* <Button type="button" onClick={handleGoToPrev}>
                         Trở lại
-                    </Button>
+                    </Button> */}
                     <Button
                         type="submit"
                         primary
@@ -134,7 +134,7 @@ const validateUserSignUp = (user) => {
             .required()
             .messages({
                 ...messagesVN,
-                "date.less": "Ngày cấp phải thời gian hiện tại",
+                "date.less": "Ngày cấp phải nhỏ hơn thời gian hiện tại",
             }),
         issuedPlace: Joi.string()
             .label("Nơi cấp")

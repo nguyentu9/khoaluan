@@ -50,17 +50,6 @@ const Step2 = ({ goToPrev, goToNext }) => {
             checkInfoSteps({ step: "2", data: state.phone });
         }
     };
-    const handleGoToPrev = (e) => {
-        e.preventDefault();
-        const newState = { ...state, gender };
-        const errors = validateUserSignUp(newState);
-        if (errors) {
-            setErrors(errors);
-        } else {
-            goToPrev();
-        }
-    };
-
     return (
         <>
             <SignUpStep step={2} style={{ marginTop: "2rem" }} />
@@ -132,9 +121,6 @@ const Step2 = ({ goToPrev, goToNext }) => {
                     />
                 </Form.Field>
                 <div className="field signup__button-submit">
-                    <Button type="button" onClick={handleGoToPrev}>
-                        Trở lại
-                    </Button>
                     <Button
                         type="submit"
                         primary
@@ -157,14 +143,8 @@ const validateUserSignUp = (user) => {
             .min(5)
             .max(40)
             .label("Họ tên")
-            .regex(
-                /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/
-            )
             .required()
-            .messages({
-                ...messagesVN,
-                "string.pattern.base": "Họ tên không hợp lệ",
-            }),
+            .messages(messagesVN),
         birthday: Joi.date()
             .label("Ngày sinh")
             .less(new Date(Date.now() - 568024668))
