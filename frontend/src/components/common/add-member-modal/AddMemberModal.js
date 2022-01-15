@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button, Dimmer, Loader, Modal } from "semantic-ui-react";
 import { CloseIcon } from "../../../assets/icons";
+import { addMembers } from "../../../redux/topicRegisterSlice";
 import { useGetUsersWithParamMutation } from "../../../services/user";
 import InputSearch from "../input-search/InputSearch";
 import Member from "../member/Member";
 import "./AddMemberModal.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { addMembers } from "../../../redux/topicRegisterSlice";
 
-const AddMemberModal = ({ open, setOpen, usersSelectedBefore }) => {
+const AddMemberModal = ({
+    open,
+    setOpen,
+    usersSelectedBefore,
+    maxUser,
+    title,
+}) => {
     const dispatch = useDispatch();
     const [searchData, setSearchData] = useState("");
+
     const [userSelected, setUserSelected] = useState([...usersSelectedBefore]);
     const [getUsersWithParam, { isLoading, data: users, error }] =
         useGetUsersWithParamMutation();
+
     useEffect(() => {
         if (usersSelectedBefore) {
             setUserSelected(usersSelectedBefore);
@@ -33,7 +41,7 @@ const AddMemberModal = ({ open, setOpen, usersSelectedBefore }) => {
     };
 
     const handleSelect = (newUser) => () => {
-        if (userSelected.length >= 4) return;
+        if (userSelected.length >= maxUser) return;
         let isExsist = userSelected.find(({ id }) => id === newUser.id);
         if (isExsist) return;
         setUserSelected([...userSelected, newUser]);
@@ -50,19 +58,19 @@ const AddMemberModal = ({ open, setOpen, usersSelectedBefore }) => {
 
     const handleAddUser = () => {
         dispatch(addMembers(userSelected));
-        setUserSelected([]);
         setOpen(false);
+        setUserSelected([]);
     };
     return (
         <Modal
             open={open}
             onClose={handleOnClose}
             onOpen={() => setOpen(true)}
-            trigger={<Button primary>Thêm thành viên</Button>}
+            trigger={<Button primary>{title}</Button>}
         >
             <Modal.Header>
                 <div className="modaladdmem__header">
-                    <h3>Thêm thành viên </h3>
+                    <h3>{title} </h3>
                     <div className="modaladdmem__close" onClick={handleOnClose}>
                         <img src={CloseIcon} alt="close" />
                     </div>
@@ -131,9 +139,10 @@ const AddMemberModal = ({ open, setOpen, usersSelectedBefore }) => {
                                     </div>
                                     <div>
                                         <div className="create__group__labelwrapper">
-                                            <p>Thành viên đã chọn: </p>
+                                            <p>Danh sách đã chọn: </p>
                                             <p className="create__group__label">
-                                                {userSelected?.length} / 4
+                                                {userSelected?.length} /{" "}
+                                                {maxUser}
                                             </p>
                                         </div>
                                         <div className="create__group__content">

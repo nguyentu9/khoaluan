@@ -83,8 +83,7 @@ exports.getMyTopicByID = async (req, res, next) => {
 // @route   POST /api/topics
 // @access  Private/TopicOwner
 exports.regiterTopic = async (req, res, next) => {
-    // const userID = req.user.id;
-    const userID = "34da331e-37af-45a8-8378-2fa8a4a30b06";
+    const userID = req.user.id;
     const { errors, topic } = await validateRegisterTopic(req.body);
     if (errors) {
         return next(createError.BadRequest(errors));
@@ -100,17 +99,42 @@ exports.regiterTopic = async (req, res, next) => {
     ) {
         return next(createError.BadRequest("Kinh phí không hợp lệ."));
     }
+
     try {
+        const promiseMembers = topic.members.map(({ userID }) =>
+            User.findByPk(userID)
+        );
+        const members = await Promise.all(promiseMembers);
+        if (members.includes(null)) {
+            return next(createError("Thành viên không hợp lệ"));
+        }
+
         const savedTopic = await Topic.create({
             name: topic.name,
             duration: topic.duration,
             totalExpense: topic.totalExpense,
             majorID: topic.majorID,
             instructor: topic.instructor,
-            Topicmember: topic.members,
         });
-        return res.json(savedTopic);
+
+        const promiseSavedMembers = [];
+        for (let i = 0; i < members.length; i++) {
+            promiseSavedMembers.push(
+                savedTopic.addUser(members[i], {
+                    through: { topicRole: topic.members[i].topicRole },
+                })
+            );
+        }
+        promiseSavedMembers.push(
+            savedTopic.addUser(user, {
+                through: { topicRole: "chunhiem" },
+            })
+        );
+
+        await Promise.all(promiseSavedMembers);
+
+        return res.status(201).json({ message: "Đăng ký thành công" });
     } catch (err) {
-        return next(createError.BadRequest(err.errors[0].message));
+        return next(createError.BadRequest(err?.errors[0]?.message));
     }
 };

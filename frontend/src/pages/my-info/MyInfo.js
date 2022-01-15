@@ -274,43 +274,6 @@ const MyInfo = () => {
                         <div className="col-lg-10 offset-lg-1 col-sm-12">
                             <div className="info__wrapper">
                                 <h3 className="info__header">
-                                    Thông tin ngân hàng
-                                </h3>
-                                <div className="info__grid">
-                                    <Form.Field>
-                                        <Form.Input
-                                            id="bankNumber"
-                                            label="Số tài khoản"
-                                            type="text"
-                                            value={
-                                                bankNumber
-                                                    ? bankNumber
-                                                    : "Không"
-                                            }
-                                            readOnly
-                                        ></Form.Input>
-                                    </Form.Field>
-                                    <Form.Field>
-                                        <Form.Input
-                                            id="bankBranch"
-                                            label="Chi nhánh ngân hàng"
-                                            type="text"
-                                            value={
-                                                bankBranch
-                                                    ? bankBranch
-                                                    : "Không"
-                                            }
-                                            readOnly
-                                        ></Form.Input>
-                                    </Form.Field>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-lg-10 offset-lg-1 col-sm-12">
-                            <div className="info__wrapper">
-                                <h3 className="info__header">
                                     Phân quyền hệ thống
                                 </h3>
                                 <Form.Field>

@@ -4,24 +4,29 @@ import { Breadcrumb, Form } from "semantic-ui-react";
 import AddMemberModal from "../../components/common/add-member-modal/AddMemberModal";
 import Member from "../../components/common/member/Member";
 import UserCountLabel from "../../components/common/user-count-label/UserCountLabel";
-import { useGetMajorsQuery } from "../../services/major";
-import "./TopicRegister.scss";
-import { list } from "../../utils";
 import { removeMember } from "../../redux/topicRegisterSlice";
+import { useGetMajorsQuery } from "../../services/major";
+import { useRegisterTopicMutation } from "../../services/topic";
+import { list } from "../../utils";
+import "./TopicRegister.scss";
 
 const TopicRegister = () => {
     const dispatch = useDispatch();
+    const [registerTopic, { isLoading: isRegistering, error: errRegister }] =
+        useRegisterTopicMutation();
+    const { data: majorData, isLoading: majorLoading } = useGetMajorsQuery();
+
     const usersSelectedBefore = useSelector(
         (state) => state.topicRegister.usersSelected
     );
-    const [usersSelected, setUsersSelected] = useState([]);
     const currentUser = useSelector((state) => state.userSignin.userInfo.data);
     console.log(currentUser);
 
-    const [open, setOpen] = useState(false);
-    const { data: majorData, isLoading: majorLoading } = useGetMajorsQuery();
+    const [usersSelected, setUsersSelected] = useState([]);
     const [totalExpense, setTotalExpense] = useState(0);
     const [duration, setDuration] = useState(0);
+
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         if (usersSelectedBefore) {
@@ -45,6 +50,11 @@ const TopicRegister = () => {
         setUsersSelected(newArrUser);
         dispatch(removeMember(user.id));
     };
+
+    const handleSendTopic = () => {
+        //registerTopic()
+    };
+
     return (
         <div className="container-fluid">
             <Breadcrumb>
@@ -53,6 +63,9 @@ const TopicRegister = () => {
                 <Breadcrumb.Section active>Đăng ký đề tài</Breadcrumb.Section>
             </Breadcrumb>
             <Form className="container" style={{ marginTop: "3rem" }}>
+                <div className="row">
+                    {errRegister ? errRegister.message : ""}
+                </div>
                 <div className="row">
                     <div className="col-lg-4 offset-lg-1">
                         <div className="inputfield">
@@ -91,6 +104,21 @@ const TopicRegister = () => {
                                 <span>VNĐ</span>
                             </div>
                         </div>
+                        <div className="group inputfield">
+                            <Form.Group grouped>
+                                <label>Người hướng dẫn</label>
+                            </Form.Group>
+
+                            <div className="customfield">
+                                <AddMemberModal
+                                    open={open}
+                                    setOpen={setOpen}
+                                    usersSelectedBefore={usersSelected}
+                                    maxUser={1}
+                                    title="Chọn GV hướng dẫn"
+                                />
+                            </div>
+                        </div>
                     </div>
                     <div className="col-lg-4 offset-lg-1">
                         <Form.Dropdown
@@ -116,9 +144,9 @@ const TopicRegister = () => {
                         <Member
                             key={currentUser?.id}
                             name={currentUser?.fullName}
-                            desc={currentUser?.email}
                             showAction={false}
                             isOwner
+                            desc={"Chủ Nhiệm"}
                         />
                         {usersSelected &&
                             usersSelected?.map((user) => (
@@ -128,6 +156,8 @@ const TopicRegister = () => {
                                     desc={user.email}
                                     showAction={false}
                                     showDel
+                                    showChange
+                                    // onChange={}
                                     onDelete={handleRemove(user)}
                                 />
                             ))}
@@ -137,13 +167,20 @@ const TopicRegister = () => {
                                 open={open}
                                 setOpen={setOpen}
                                 usersSelectedBefore={usersSelected}
+                                maxUser={4}
+                                title="Thêm thành viên"
                             />
                         </div>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-lg-1 offset-lg-9">
-                        <Form.Button primary fluid>
+                        <Form.Button
+                            primary
+                            fluid
+                            onClick={handleSendTopic}
+                            loading={isRegistering}
+                        >
                             Gửi
                         </Form.Button>
                     </div>

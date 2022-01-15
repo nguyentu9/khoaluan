@@ -4,6 +4,7 @@ const sequelize = require("../config/db");
 const createError = require("http-errors");
 const FacDept = require("../models/facdept.model");
 const WorkPlace = require("../models/workplace.model");
+
 // @desc    Đăng nhập
 // @route   POST /api/auth/login
 // @access  Public

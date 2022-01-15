@@ -18,7 +18,7 @@ exports.validateRegisterTopic = async (topic) => {
                 .required()
                 .messages(messagesVN),
             totalExpense: Joi.number().label("Kinh phí thực hiện").required(),
-            major: Joi.string()
+            majorID: Joi.string()
                 .label("Lĩnh vực đề tài")
                 .trim()
                 .max(36)
@@ -44,7 +44,7 @@ exports.validateRegisterTopic = async (topic) => {
                             .guid()
                             .required()
                             .messages(messagesVN),
-                        topicRoleID: Joi.string()
+                        topicRole: Joi.string()
                             .label("Vai trò đề tài")
                             .valid(
                                 "dongchunhiem",

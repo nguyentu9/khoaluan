@@ -1,5 +1,5 @@
-const express = require("express");
 require("dotenv").config();
+const express = require("express");
 const session = require("express-session");
 const helmet = require("helmet");
 const xss = require("xss-clean");
@@ -26,8 +26,6 @@ require("./src/models/association");
 
 // TODO: express rate limix
 // TODO: hpp
-// TODO: sequelize sesssion
-// TODO: config helmet
 app.use(helmet());
 app.use(morgan("dev"));
 // app.use(hpp());
@@ -59,7 +57,7 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(
     session({
-        secret: "1234567890QWERTY",
+        secret: process.env.SESSION_SECRET,
         resave: false,
         store,
         saveUninitialized: true,
@@ -90,5 +88,5 @@ sequelize
     .then(() => console.log("Connection Successful!"))
     .catch((e) => console.log("Error: " + e));
 
-const PORT = 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

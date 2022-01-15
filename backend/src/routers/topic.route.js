@@ -6,11 +6,7 @@ const {
 const { isUserExsist } = require("../middlewares/user.mdw");
 const router = require("express").Router();
 
-router.post(
-    "/",
-    // isUserExsist,
-    regiterTopic
-);
+router.post("/", isUserExsist, regiterTopic);
 router.get("/me", isUserExsist, getMyTopics);
 router.get("/:id/me", isUserExsist, getMyTopicByID);
 

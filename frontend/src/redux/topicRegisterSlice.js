@@ -10,6 +10,7 @@ export const topicRegisterSlice = createSlice({
         keyword: "",
         members: [],
         usersSelected: [],
+        instructor: {},
     },
     reducers: {
         updateInfo: (state, action) => {
@@ -40,6 +41,9 @@ export const topicRegisterSlice = createSlice({
         },
         addMembers: (state, action) => {
             state.usersSelected = action.payload;
+        },
+        addInstructor: (state, action) => {
+            state.instructor = action.payload;
         },
     },
 });

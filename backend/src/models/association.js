@@ -109,22 +109,24 @@ User.belongsTo(UserRole, {
 // ========= UserRole N - N Permission ========
 UserRole.belongsToMany(Permission, {
     through: UserPermission,
-    foreignKey: "permissionID",
+    foreignKey: "userRoleID",
+    constraints: true,
 });
 Permission.belongsToMany(UserRole, {
     through: UserPermission,
-    foreignKey: "userRoleID",
+    foreignKey: "permissionID",
+    constraints: true,
 });
 
 // ========= Topic 1 - N TopicMember 1 - N User ========
 Topic.belongsToMany(User, {
     through: TopicMember,
-    foreignKey: "userID",
+    foreignKey: "topicID",
     constraints: true,
 });
 User.belongsToMany(Topic, {
     through: TopicMember,
-    foreignKey: "topicID",
+    foreignKey: "userID",
     constraints: true,
 });
 
