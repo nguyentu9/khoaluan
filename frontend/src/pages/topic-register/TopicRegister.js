@@ -23,10 +23,19 @@ const TopicRegister = () => {
     console.log(currentUser);
 
     const [usersSelected, setUsersSelected] = useState([]);
-    const [totalExpense, setTotalExpense] = useState(0);
-    const [duration, setDuration] = useState(0);
+    const [instrSelected, setInstrSelected] = useState([]);
 
-    const [open, setOpen] = useState(false);
+    const [openMems, setOpenMems] = useState(false);
+
+    const [openInstr, setOpenInstr] = useState(false);
+
+    const [errors, setErrors] = useState({});
+    const [state, setState] = useState({
+        totalExpense: 0,
+        duration: 0,
+        name: "",
+    });
+    console.log(state);
 
     useEffect(() => {
         if (usersSelectedBefore) {
@@ -34,15 +43,10 @@ const TopicRegister = () => {
         }
     }, [usersSelectedBefore]);
 
-    const handleMajorChange = (e) => {
-        // setMajorSelected(e.target.value);
-    };
-
-    const handleChangeExpense = (e) => {
-        setTotalExpense(e.target.value);
-    };
-    const handleChangeDuration = (e) => {
-        setDuration(e.target.value);
+    const handleChange = (event, result) => {
+        const { name, value } = result || event.target;
+        setState({ ...state, [name]: value });
+        setErrors({});
     };
 
     const handleRemove = (user) => () => {
@@ -72,38 +76,38 @@ const TopicRegister = () => {
                             <Form.Field>
                                 <Form.Input
                                     id="name"
+                                    name="name"
                                     label="Tên đề tài"
+                                    onChange={handleChange}
                                     type="text"
                                 ></Form.Input>
                             </Form.Field>
                         </div>
 
                         <div className="group inputfield">
-                            <Form.Group grouped>
-                                <label>Thời gian thực hiện</label>
-                            </Form.Group>
-
-                            <div className="customfield">
-                                <input
+                            <Form.Field>
+                                <Form.Input
                                     type="number"
-                                    onChange={handleChangeDuration}
-                                />
-                                <span>Tháng</span>
-                            </div>
+                                    id="duration"
+                                    name="duration"
+                                    label="Thời gian thực hiện"
+                                    onChange={handleChange}
+                                ></Form.Input>
+                            </Form.Field>
                         </div>
 
                         <div className="group inputfield">
-                            <Form.Group grouped>
-                                <label>Kinh phí</label>
-                            </Form.Group>
-                            <div className="customfield">
-                                <input
+                            <Form.Field>
+                                <Form.Input
                                     type="number"
-                                    onChange={handleChangeExpense}
-                                />
-                                <span>VNĐ</span>
-                            </div>
+                                    id="totalExpense"
+                                    name="totalExpense"
+                                    label="Kinh phí thực hiện"
+                                    onChange={handleChange}
+                                ></Form.Input>
+                            </Form.Field>
                         </div>
+
                         <div className="group inputfield">
                             <Form.Group grouped>
                                 <label>Người hướng dẫn</label>
@@ -111,9 +115,9 @@ const TopicRegister = () => {
 
                             <div className="customfield">
                                 <AddMemberModal
-                                    open={open}
-                                    setOpen={setOpen}
-                                    usersSelectedBefore={usersSelected}
+                                    open={openInstr}
+                                    setOpen={setOpenInstr}
+                                    usersSelectedBefore={instrSelected}
                                     maxUser={1}
                                     title="Chọn GV hướng dẫn"
                                 />
@@ -122,15 +126,15 @@ const TopicRegister = () => {
                     </div>
                     <div className="col-lg-4 offset-lg-1">
                         <Form.Dropdown
-                            id="major"
-                            name="major"
+                            id="majorID"
+                            name="majorID"
                             label="Lĩnh vực"
                             style={{ height: "41.7969px" }}
                             options={list(majorData)}
                             selection
                             search
                             loading={majorLoading}
-                            onChange={handleMajorChange}
+                            onChange={handleChange}
                         />
 
                         <UserCountLabel
@@ -164,8 +168,8 @@ const TopicRegister = () => {
 
                         <div className="mt-2">
                             <AddMemberModal
-                                open={open}
-                                setOpen={setOpen}
+                                open={openMems}
+                                setOpen={setOpenMems}
                                 usersSelectedBefore={usersSelected}
                                 maxUser={4}
                                 title="Thêm thành viên"

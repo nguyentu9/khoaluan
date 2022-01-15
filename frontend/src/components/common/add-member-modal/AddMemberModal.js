@@ -66,7 +66,7 @@ const AddMemberModal = ({
             open={open}
             onClose={handleOnClose}
             onOpen={() => setOpen(true)}
-            trigger={<Button primary>{title}</Button>}
+            trigger={<Button basic>{title}</Button>}
         >
             <Modal.Header>
                 <div className="modaladdmem__header">

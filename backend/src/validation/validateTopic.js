@@ -55,10 +55,14 @@ exports.validateRegisterTopic = async (topic) => {
                             .messages(messagesVN),
                     })
                 )
-
+                .unique(comparator)
                 .messages(messagesVN),
         })
         .unknown(true);
+
+    function comparator(a, b) {
+        return a.userID === b.userID;
+    }
 
     try {
         const topicValid = await schema.validateAsync(topic, {

@@ -3,11 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 export const topicRegisterSlice = createSlice({
     name: "topicRegister",
     initialState: {
-        name: "",
-        duration: 0,
-        totalExpense: 0,
-        majorID: "",
-        keyword: "",
         members: [],
         usersSelected: [],
         instructor: {},

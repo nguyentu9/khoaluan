@@ -44,10 +44,6 @@ const Step3 = ({ goToPrev, goToNext, onBoardingState }) => {
         e.preventDefault();
         const newState = { ...state, isInsider, isStudent };
         const errors = validateUserSignUp(newState);
-        console.log(
-            "🚀 ~ file: index.js ~ line 64 ~ handleGoToNext ~ errors",
-            errors
-        );
         if (errors) {
             setErrors(errors);
         } else if (isInsider) {
