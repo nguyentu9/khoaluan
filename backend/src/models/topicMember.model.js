@@ -14,8 +14,9 @@ const TopicMember = sequelize.define(
         userID: {
             type: DataTypes.UUID,
         },
-        topicRoleID: {
-            type: DataTypes.UUID,
+        topicRole: {
+            type: DataTypes.STRING(50),
+            allowNull: false,
         },
     },
     { timestamps: false }

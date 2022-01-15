@@ -8,7 +8,6 @@ const User = require("./user.model");
 const UserRole = require("./userRole.model");
 const Permission = require("./permission.model");
 const Topic = require("./topic.model");
-const TopicRole = require("./topicRole.model");
 const Scores = require("./scores.model");
 const TopicMember = require("./topicMember.model");
 const UserPermission = require("./userPermission.model");
@@ -135,10 +134,6 @@ User.hasMany(TopicMember, { foreignKey: "userID" });
 
 TopicMember.belongsTo(Topic, { foreignKey: "topicID" });
 TopicMember.belongsTo(User, { foreignKey: "userID" });
-
-// ========= TopicRole 1 - N TopicMember ========
-TopicRole.hasMany(TopicMember, { foreignKey: "topicRoleID" });
-TopicMember.belongsTo(TopicRole, { foreignKey: "topicRoleID" });
 
 // ========= Major 1 - N Topic ========
 Topic.belongsTo(Major, { foreignKey: "majorID" });

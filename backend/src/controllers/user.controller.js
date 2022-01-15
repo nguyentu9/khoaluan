@@ -57,7 +57,18 @@ exports.getMembers = async (req, res, next) => {
 
     const users = await User.findAll({
         attributes: ["id", "fullName", "email"],
-        where: param,
+        where: { ...param, isActive: true },
+        include: [
+            {
+                model: UserRole,
+                attributes: ["id"],
+                where: {
+                    code: {
+                        [Op.ne]: "admin",
+                    },
+                },
+            },
+        ],
     });
     return res.json(users);
 };

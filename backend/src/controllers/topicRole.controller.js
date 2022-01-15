@@ -2,7 +2,7 @@ const TopicRole = require("../models/topicRole.model");
 const createError = require("http-errors");
 
 // @desc    Lấy tất cả vai trò đề tài
-// @route   GET /api/topicroles/:id
+// @route   GET /api/topicroles/
 // @access  Public
 exports.getTopicRoles = async (req, res, next) => {
     const topicRoles = await TopicRole.findAll();
