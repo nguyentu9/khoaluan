@@ -131,7 +131,6 @@ exports.signup = async (req, res, next) => {
                 isStudent: user.isStudent,
                 isStaff: !user.isStudent,
             });
-            console.log("thanh cong");
             // const fetchedFacdept = await WorkPlace.findByPk(user.workplace);
             // await savedUser.addFacdept(fetchedFacdept);
         } else {
@@ -146,7 +145,6 @@ exports.signup = async (req, res, next) => {
             message: e.message,
             key: e.path,
         }));
-        console.log(err);
         res.status(400).json(errArr);
         return;
     }

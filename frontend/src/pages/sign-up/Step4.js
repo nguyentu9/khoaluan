@@ -4,12 +4,9 @@ import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
 import "./SignUp.scss";
 import Joi from "joi";
 import messagesVN from "../../constant/validationMsg";
-import { updateInfoRegister } from "../../redux/userSignUpSlice";
 import { useCheckInfoStepsMutation } from "../../services/user";
-import { useDispatch } from "react-redux";
-
-const Step4 = ({ goToPrev, goToNext }) => {
-    const dispatch = useDispatch();
+import { toast } from "react-toastify";
+const Step4 = ({ goToPrev, goToNext, error: SignUpErr }) => {
     const [checkInfoSteps, { isLoading, data, error }] =
         useCheckInfoStepsMutation();
     const [state, setState] = useState({
@@ -23,11 +20,13 @@ const Step4 = ({ goToPrev, goToNext }) => {
         if (error?.data?.message) {
             setErrors({ ["nationalID"]: error?.data?.message });
         } else if (data) {
-            dispatch(updateInfoRegister({ ...state }));
-            goToNext();
+            goToNext({ ...state });
         }
     }, [error, data]);
 
+    useEffect(() => {
+        if (SignUpErr?.message) toast.error(SignUpErr?.message);
+    }, [SignUpErr]);
     const handleChange = ({ target }) => {
         let value = target.value;
         setState((state) => ({
@@ -105,7 +104,7 @@ const Step4 = ({ goToPrev, goToNext }) => {
                         loading={isLoading}
                         onClick={handleGoToNext}
                     >
-                        Tiếp tục
+                        Gửi
                     </Button>
                 </div>
             </Form>

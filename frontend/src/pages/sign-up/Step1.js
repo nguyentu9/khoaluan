@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { Button, Form } from "semantic-ui-react";
 import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
 import Joi from "joi";
 import messagesVN from "../../constant/validationMsg";
 import "./SignUp.scss";
-import { updateInfoRegister } from "../../redux/userSignUpSlice";
 import { useCheckInfoStepsMutation } from "../../services/user";
 
 const Step1 = ({ goToNext }) => {
-    const dispatch = useDispatch();
     const [checkInfoSteps, { isLoading, data, error }] =
         useCheckInfoStepsMutation();
     const [isInsider, setInsider] = useState(true);
@@ -24,12 +21,10 @@ const Step1 = ({ goToNext }) => {
     useEffect(() => {
         if (error?.data?.message) {
             setErrors({ ["email"]: error?.data?.message });
-            return;
         } else if (data) {
             const regex = new RegExp(/^\w+\d+(@tgu.edu.vn)$/);
             const isStudent = regex.test(state.email) ? 1 : 0;
-            dispatch(updateInfoRegister({ isStudent, isInsider, ...state }));
-            goToNext();
+            goToNext({ isStudent, isInsider, ...state });
         }
     }, [data, error]);
 

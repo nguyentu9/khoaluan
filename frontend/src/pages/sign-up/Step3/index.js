@@ -7,16 +7,12 @@ import messagesVN from "../../../constant/validationMsg";
 import Officer from "./Officer";
 import Student from "./Student";
 import Outsider from "./Outsider";
-import { useSelector } from "react-redux";
-import { updateInfoRegister } from "../../../redux/userSignUpSlice";
 import { useCheckInfoStepsMutation } from "../../../services/user";
-import { useDispatch } from "react-redux";
 
-const Step3 = ({ goToPrev, goToNext }) => {
+const Step3 = ({ goToPrev, goToNext, onBoardingState }) => {
     const [errors, setErrors] = useState({});
-    const dispatch = useDispatch();
-    const isInsider = useSelector(({ userSignup }) => userSignup.isInsider);
-    const isStudent = useSelector(({ userSignup }) => userSignup.isStudent);
+    const isInsider = onBoardingState.isInsider || false;
+    const isStudent = onBoardingState.isStudent || 0;
     const [checkInfoSteps, { isLoading, data, error }] =
         useCheckInfoStepsMutation();
 
@@ -34,8 +30,7 @@ const Step3 = ({ goToPrev, goToNext }) => {
         if (error?.data?.message) {
             setErrors({ ["insiderID"]: error?.data?.message });
         } else if (data) {
-            dispatch(updateInfoRegister(state));
-            goToNext();
+            goToNext({ ...state });
         }
     }, [data, error]);
 
@@ -58,8 +53,7 @@ const Step3 = ({ goToPrev, goToNext }) => {
         } else if (isInsider) {
             checkInfoSteps({ step: "3", data: state.insiderID });
         } else {
-            dispatch(updateInfoRegister(state));
-            goToNext();
+            goToNext({ ...state });
         }
     };
     // const handleGoToPrev = (e) => {

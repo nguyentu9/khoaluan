@@ -30,7 +30,7 @@ require("./src/models/association");
 // TODO: sequelize sesssion
 // TODO: config helmet
 app.use(helmet());
-app.use(morgan("combined"));
+app.use(morgan("dev"));
 // app.use(hpp());
 app.use(compression());
 // app.use(xss());

@@ -4,12 +4,9 @@ import SignUpStep from "../../components/common/SignUpStep/SignUpStep";
 import "./SignUp.scss";
 import Joi from "joi";
 import messagesVN from "../../constant/validationMsg";
-import { updateInfoRegister } from "../../redux/userSignUpSlice";
 import { useCheckInfoStepsMutation } from "../../services/user";
-import { useDispatch } from "react-redux";
 
 const Step2 = ({ goToPrev, goToNext }) => {
-    const dispatch = useDispatch();
     const [checkInfoSteps, { isLoading, data, error }] =
         useCheckInfoStepsMutation();
     const [gender, setGender] = useState(1);
@@ -25,8 +22,7 @@ const Step2 = ({ goToPrev, goToNext }) => {
         if (error?.data?.message) {
             setErrors({ ["phone"]: error?.data?.message });
         } else if (data) {
-            dispatch(updateInfoRegister({ gender, ...state }));
-            goToNext();
+            goToNext({ gender, ...state });
         }
     }, [data, error]);
 
