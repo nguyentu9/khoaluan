@@ -14,7 +14,6 @@ const UserPermission = require("./userPermission.model");
 const Council = require("./council.model");
 const WorkPlace = require("./workplace.model");
 const Status = require("./status.model");
-const Keyword = require("./keyword.model");
 const TopicStatus = require("./topicStatus.model");
 
 // ========= FacDept 1 - N Workplace ========
@@ -121,12 +120,12 @@ Permission.belongsToMany(UserRole, {
 Topic.belongsToMany(User, {
     through: TopicMember,
     foreignKey: "userID",
-    constraints: false,
+    constraints: true,
 });
 User.belongsToMany(Topic, {
     through: TopicMember,
     foreignKey: "topicID",
-    constraints: false,
+    constraints: true,
 });
 
 Topic.hasMany(TopicMember, { foreignKey: "topicID" });
@@ -172,11 +171,6 @@ Status.hasMany(TopicStatus, { foreignKey: "statusID" });
 Topic.hasMany(TopicStatus, { foreignKey: "topicID" });
 TopicStatus.belongsTo(Status, { foreignKey: "statusID" });
 TopicStatus.belongsTo(Topic, { foreignKey: "topicID" });
-
-// ========= Topic 1 - N Keyword ========
-
-Topic.hasMany(Keyword, { constraints: true, foreignKey: "topicID" });
-Keyword.belongsTo(Topic, { constraints: true, foreignKey: "topicID" });
 
 // ========= Topic 1 - N Council ========
 Topic.hasMany(Council, { constraints: true, foreignKey: "topicID" });

@@ -3,8 +3,13 @@ const sequelize = require("../config/db");
 const Status = require("../models/status.model");
 const Topic = require("../models/topic.model");
 const TopicMember = require("../models/topicMember.model");
-const TopicRole = require("../models/topicRole.model");
 const User = require("../models/user.model");
+const { validateRegisterTopic } = require("../validation/validateTopic");
+
+// @desc    Lấy danh sách cán bộ hướng dẫn
+// @route   GET /api/topics/instructor
+// @access  Private/TopicOwner
+// TODO: function chỉ lấy cán bộ (bỏ sv, admin)
 
 // @desc    Lấy danh sách đề tài cá nhân
 // @route   GET /api/topics/me
@@ -24,10 +29,9 @@ exports.getMyTopics = async (req, res, next) => {
         include: [
             {
                 model: TopicMember,
-                attributes: ["id"],
+                attributes: ["id", "topicRole"],
                 required: true,
                 where: { userID },
-                include: [{ model: TopicRole, attributes: ["name"] }],
             },
             {
                 model: Status,
@@ -73,4 +77,40 @@ exports.getMyTopicByID = async (req, res, next) => {
     });
     if (topic) return res.json(topic);
     else return next(createError.BadRequest("Không tìm thấy đề tài"));
+};
+
+// @desc    Đăng ký đề tài
+// @route   POST /api/topics
+// @access  Private/TopicOwner
+exports.regiterTopic = async (req, res, next) => {
+    // const userID = req.user.id;
+    const userID = "34da331e-37af-45a8-8378-2fa8a4a30b06";
+    const { errors, topic } = await validateRegisterTopic(req.body);
+    if (errors) {
+        return next(createError.BadRequest(errors));
+    }
+    const user = await User.findByPk(userID);
+    const workplace = await user.getWorkplace();
+
+    const totalExpense = topic.totalExpense;
+    if (
+        (workplace.isStudent &&
+            (totalExpense < 1000000 || totalExpense > 10000000)) ||
+        (!workplace.isStudent && ![30000000, 70000000].includes(totalExpense))
+    ) {
+        return next(createError.BadRequest("Kinh phí không hợp lệ."));
+    }
+    try {
+        const savedTopic = await Topic.create({
+            name: topic.name,
+            duration: topic.duration,
+            totalExpense: topic.totalExpense,
+            majorID: topic.majorID,
+            instructor: topic.instructor,
+            Topicmember: topic.members,
+        });
+        return res.json(savedTopic);
+    } catch (err) {
+        return next(createError.BadRequest(err.errors[0].message));
+    }
 };

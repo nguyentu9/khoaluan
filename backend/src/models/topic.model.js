@@ -13,7 +13,10 @@ const Topic = sequelize.define(
         name: {
             type: DataTypes.STRING(100),
             allowNull: false,
-            unique: true,
+            unique: {
+                args: true,
+                msg: "Tên đề tài đã tồn tại",
+            },
         },
         registrationDate: {
             type: DataTypes.DATE,

@@ -21,7 +21,6 @@ const majorRoute = require("./src/routers/major.route");
 const topicRoute = require("./src/routers/topic.route");
 const userRoute = require("./src/routers/user.route");
 const statusRoute = require("./src/routers/status.route");
-const topicRoleRoute = require("./src/routers/topicRole.route");
 const facDeptRoute = require("./src/routers/facdept.route");
 require("./src/models/association");
 
@@ -80,7 +79,6 @@ app.use("/api/majors", majorRoute);
 app.use("/api/topics", topicRoute);
 app.use("/api/users", userRoute);
 app.use("/api/statuses", statusRoute);
-app.use("/api/topicroles", topicRoleRoute);
 app.use("/api/facdepts", facDeptRoute);
 
 app.use(notFound);
