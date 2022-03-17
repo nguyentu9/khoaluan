@@ -7,7 +7,7 @@ const Topic = sequelize.define(
     {
         id: {
             type: DataTypes.UUID,
-            defaultValue: uuidv4(),
+            defaultValue: sequelize.UUIDV4,
             primaryKey: true,
         },
         name: {
@@ -43,5 +43,13 @@ const Topic = sequelize.define(
         timestamps: false,
     }
 );
+
+Topic.beforeCreate(async (topic, options) => {
+    return (topic.id = uuidv4());
+});
+
+Topic.beforeBulkCreate(async (topic, options) => {
+    return (topic.id = uuidv4());
+});
 
 module.exports = Topic;

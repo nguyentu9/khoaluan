@@ -56,7 +56,7 @@ exports.logout = async (req, res, next) => {
             path: "/",
             secure: false,
             httpOnly: true,
-            domain: "localhost:3000",
+            domain: "localhost",
             // sameSite: true,
         }).json({
             message: "Đăng xuất thành công",

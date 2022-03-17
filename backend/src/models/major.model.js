@@ -3,7 +3,7 @@ const sequelize = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
 
 const Major = sequelize.define(
-    "Major",
+    "major",
     {
         id: {
             type: DataTypes.UUID,

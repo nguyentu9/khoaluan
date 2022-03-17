@@ -14,12 +14,14 @@ import InputSearch from "../../components/common/input-search/InputSearch";
 import SidebarFilter from "../../components/common/sidebar-filter/SidebarFilter";
 import { useGetMyTopicsQuery } from "../../services/topic";
 import "./MyTopic.scss";
+import { topicRoles } from "../../constant";
+
 const MyTopic = () => {
     const [visible, setVisible] = useState(false);
     const { data: topics, isLoading, error } = useGetMyTopicsQuery();
     const { page, size, count, rows: topicArr } = topics || {};
     const totalPages = Math.ceil(count / size);
-
+    console.log(error);
     const [currentSize, setCurrentSize] = useState(5);
 
     const handlePageSizeChange = (e) => {
@@ -141,13 +143,20 @@ const MyTopic = () => {
                                         <Table.Cell>{topic.name}</Table.Cell>
                                         <Table.Cell>
                                             {
-                                                topic.Topicmembers[0].Topicrole
-                                                    .name
+                                                topicRoles[
+                                                    topic.Topicmembers[0]
+                                                        ?.topicRole
+                                                ]
+                                                // &&
+                                                //     topicRoles[
+                                                //         topic.Topicmembers[0]
+                                                //             ?.topicRole
+                                                //     ]
                                             }
                                         </Table.Cell>
                                         <Table.Cell>
                                             <Badge
-                                                title={topic.Statuses[0]?.name}
+                                                // title={topic.Statuses[0]?.name}
                                                 status="warning"
                                             />
                                         </Table.Cell>

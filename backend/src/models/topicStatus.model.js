@@ -1,23 +1,18 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
-const TopicStatus = sequelize.define(
-    "Topicstatus",
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            allowNull: false,
-        },
-        topicID: {
-            type: DataTypes.UUIDV4,
-        },
-        statusID: {
-            type: DataTypes.UUIDV4,
-        },
+const TopicStatus = sequelize.define("Topicstatus", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
     },
-    {
-        timestamps: false,
-    }
-);
+    name: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+    },
+    nextStatus: {
+        type: DataTypes.INTEGER,
+    },
+});
 module.exports = TopicStatus;

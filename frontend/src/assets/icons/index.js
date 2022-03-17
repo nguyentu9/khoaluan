@@ -23,3 +23,5 @@ export { default as FingerPrintIcon } from "./finger-print.svg";
 export { default as OfficeBuildingIcon } from "./office-building.svg";
 export { default as FormsIcon } from "./forms.svg";
 export { default as Newspaper } from "./newspaper.svg";
+
+export { default as Check } from "./check.svg";

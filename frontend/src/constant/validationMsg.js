@@ -10,6 +10,8 @@ const messageVN = {
     "string.min": "{{#label}} chiều dài tối thiểu là {{#limit}} ký tự",
     "string.trim": "{{#label}} không được có khoảng trắng ở đầu hoặc cuối",
     "string.uppercase": "{{#label}} chỉ được chứa các ký tự viết hoa",
+    "number.min": "{{#label}} phải lớn hơn hoặc bằng {{#limit}}",
+    "number.max": "{{#label}} phải nhỏ hơn hoặc bằng {{#limit}}",
     "any.required": "{{#label}} là bắt buộc",
     "date.base": "{{#label}} phải là ngày hợp lệ",
 };

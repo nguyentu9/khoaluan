@@ -19,10 +19,59 @@
     &__role {
         color: $black-50;
     }
+    &__action {
+        display: flex;
+    }
     &__action img {
         cursor: pointer;
     }
     &__action-delete {
         margin-left: 8px;
+    }
+    &__wrapper-action-change {
+        position: relative;
+    }
+    &__dd {
+        display: block;
+        width: 30px;
+        height: 30px;
+    }
+    &__dd:hover .member__dd-list {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+    }
+    &__dd-list {
+        position: absolute;
+        top: 30px;
+        right: 0;
+        background-color: #fff;
+        box-shadow: 2px 2px 15px 0px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        height: auto;
+        opacity: 0;
+        visibility: hidden;
+        display: none;
+        transition: all 0.3s;
+        z-index: 1;
+        @include flex(flex-start, center, column);
+    }
+
+    &__dd-item {
+        width: 220px;
+        padding: 8px;
+        display: inline-block;
+        cursor: pointer;
+        @include flex(flex-start, center);
+        &:hover {
+            background-color: #f5f5f5;
+        }
+        img {
+            visibility: hidden;
+        }
+    }
+
+    &__dd-item.active img {
+        visibility: visible;
     }
 }

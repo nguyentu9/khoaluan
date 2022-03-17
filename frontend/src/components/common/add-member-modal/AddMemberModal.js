@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Button, Dimmer, Loader, Modal } from "semantic-ui-react";
 import { CloseIcon } from "../../../assets/icons";
-import { addMembers } from "../../../redux/topicRegisterSlice";
-import { useGetUsersWithParamMutation } from "../../../services/user";
 import InputSearch from "../input-search/InputSearch";
 import Member from "../member/Member";
 import "./AddMemberModal.scss";
@@ -11,22 +8,23 @@ import "./AddMemberModal.scss";
 const AddMemberModal = ({
     open,
     setOpen,
-    usersSelectedBefore,
+    setUsers,
+    getUsers,
     maxUser,
     title,
+    getUsersWithParam,
+    isLoading,
+    users,
+    error,
 }) => {
-    const dispatch = useDispatch();
     const [searchData, setSearchData] = useState("");
-
-    const [userSelected, setUserSelected] = useState([...usersSelectedBefore]);
-    const [getUsersWithParam, { isLoading, data: users, error }] =
-        useGetUsersWithParamMutation();
+    const [userSelected, setUserSelected] = useState([...getUsers]);
 
     useEffect(() => {
-        if (usersSelectedBefore) {
-            setUserSelected(usersSelectedBefore);
+        if (getUsers) {
+            setUserSelected(getUsers);
         }
-    }, [usersSelectedBefore, open]);
+    }, [getUsers, open]);
 
     const handleOnChange = ({ target: { value } }) => {
         setSearchData(value.trim());
@@ -44,7 +42,10 @@ const AddMemberModal = ({
         if (userSelected.length >= maxUser) return;
         let isExsist = userSelected.find(({ id }) => id === newUser.id);
         if (isExsist) return;
-        setUserSelected([...userSelected, newUser]);
+        setUserSelected([
+            ...userSelected,
+            { ...newUser, topicRole: "thanhvien" },
+        ]);
     };
     const handleRemove = (user) => () => {
         let newArrUser = userSelected.filter(({ id }) => id !== user.id);
@@ -57,7 +58,7 @@ const AddMemberModal = ({
     };
 
     const handleAddUser = () => {
-        dispatch(addMembers(userSelected));
+        setUsers(userSelected);
         setOpen(false);
         setUserSelected([]);
     };

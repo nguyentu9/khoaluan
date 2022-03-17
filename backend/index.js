@@ -6,10 +6,11 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const morgan = require("morgan");
 const cors = require("cors");
-const app = express();
-const sequelize = require("./src/config/db");
-const store = new session.MemoryStore();
 const compression = require("compression");
+
+const sequelize = require("./src/config/db");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+// const store = new session.MemoryStore();
 
 const notFound = require("./src/middlewares/notFound.mdw");
 const error = require("./src/middlewares/error.mdw");
@@ -20,17 +21,18 @@ const authRoute = require("./src/routers/auth.route");
 const majorRoute = require("./src/routers/major.route");
 const topicRoute = require("./src/routers/topic.route");
 const userRoute = require("./src/routers/user.route");
-const statusRoute = require("./src/routers/status.route");
 const facDeptRoute = require("./src/routers/facdept.route");
 require("./src/models/association");
 
+const app = express();
 // TODO: express rate limix
 // TODO: hpp
 app.use(helmet());
+app.use(helmet.hidePoweredBy({ setTo: "guesswhat" }));
 app.use(morgan("dev"));
 // app.use(hpp());
 app.use(compression());
-// app.use(xss());
+app.use(xss());
 app.set("trust proxy", 1); // trust first proxy
 
 // app.use(function (req, res, next) {
@@ -45,7 +47,7 @@ app.set("trust proxy", 1); // trust first proxy
 app.use(
     cors({
         origin: "http://localhost:3000",
-        methods: ["POST", "PUT", "GET", "DELETE", "HEAD"],
+        methods: ["GET", "POST", "PUT", "DELETE", "HEAD"],
         preflightContinue: false,
         credentials: true,
         maxAge: 1728000,
@@ -59,7 +61,10 @@ app.use(
     session({
         secret: process.env.SESSION_SECRET,
         resave: false,
-        store,
+        // store,
+        store: new SequelizeStore({
+            db: sequelize,
+        }),
         saveUninitialized: true,
         cookie: {
             maxAge: 1000 * 60 * 60 * 24,
@@ -76,7 +81,6 @@ app.use("/api/degrees", degreeRoute);
 app.use("/api/majors", majorRoute);
 app.use("/api/topics", topicRoute);
 app.use("/api/users", userRoute);
-app.use("/api/statuses", statusRoute);
 app.use("/api/facdepts", facDeptRoute);
 
 app.use(notFound);

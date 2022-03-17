@@ -3,7 +3,7 @@ const sequelize = require("../config/db");
 const { v4: uuidv4 } = require("uuid");
 
 const FacDept = sequelize.define(
-    "Facdept",
+    "facdept",
     {
         id: {
             type: DataTypes.UUID,

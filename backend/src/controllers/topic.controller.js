@@ -1,15 +1,11 @@
 const createError = require("http-errors");
 const sequelize = require("../config/db");
-const Status = require("../models/status.model");
 const Topic = require("../models/topic.model");
 const TopicMember = require("../models/topicMember.model");
 const User = require("../models/user.model");
 const { validateRegisterTopic } = require("../validation/validateTopic");
-
-// @desc    Lấy danh sách cán bộ hướng dẫn
-// @route   GET /api/topics/instructor
-// @access  Private/TopicOwner
-// TODO: function chỉ lấy cán bộ (bỏ sv, admin)
+const { topicStatus } = require("../constant");
+const TopicStatus = require("../models/topicStatus.model");
 
 // @desc    Lấy danh sách đề tài cá nhân
 // @route   GET /api/topics/me
@@ -33,12 +29,12 @@ exports.getMyTopics = async (req, res, next) => {
                 required: true,
                 where: { userID },
             },
-            {
-                model: Status,
-                attributes: ["name"],
-                required: true,
-                order: [["id", "DESC"]],
-            },
+            // {
+            //     model: Status,
+            //     attributes: ["name"],
+            //     required: true,
+            //     order: [["id", "DESC"]],
+            // },
         ],
         order: [["registrationDate", "DESC"]],
         limit: size,
@@ -65,7 +61,7 @@ exports.getMyTopicByID = async (req, res, next) => {
                 include: [{ model: TopicRole, attributes: ["name"] }],
             },
             {
-                model: Status,
+                model: TopicStatus,
                 attributes: ["name"],
                 required: true,
                 order: [["id", "DESC"]],
@@ -117,6 +113,8 @@ exports.regiterTopic = async (req, res, next) => {
             instructor: topic.instructor,
         });
 
+        const status = await TopicStatus.create(topicStatus[0]);
+        console.log(status);
         const promiseSavedMembers = [];
         for (let i = 0; i < members.length; i++) {
             promiseSavedMembers.push(

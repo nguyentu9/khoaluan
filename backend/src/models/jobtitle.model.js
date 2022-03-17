@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 
 const JobTitle = sequelize.define(
-    "JobTitle",
+    "jobtitle",
     {
         id: {
             type: DataTypes.UUID,

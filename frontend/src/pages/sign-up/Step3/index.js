@@ -52,10 +52,6 @@ const Step3 = ({ goToPrev, goToNext, onBoardingState }) => {
             goToNext({ ...state });
         }
     };
-    // const handleGoToPrev = (e) => {
-    //     e.preventDefault();
-    //     goToPrev();
-    // };
 
     const renderByRole = () => {
         if (!isInsider)

@@ -42,6 +42,12 @@ export const userApi = createApi({
                 method: "GET",
             }),
         }),
+        getInstructorWithParm: builder.mutation({
+            query: ({ param, searchData }) => ({
+                url: `/users/instructor?${param}=${searchData}`,
+                method: "GET",
+            }),
+        }),
     }),
 });
 
@@ -52,4 +58,5 @@ export const {
     useGetMyProfileQuery,
     useCheckInfoStepsMutation,
     useGetUsersWithParamMutation,
+    useGetInstructorWithParmMutation,
 } = userApi;

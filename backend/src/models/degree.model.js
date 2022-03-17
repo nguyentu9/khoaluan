@@ -2,7 +2,7 @@ const sequelize = require("../config/db");
 const { DataTypes } = require("sequelize");
 
 const Degree = sequelize.define(
-    "Degree",
+    "degree",
     {
         id: {
             type: DataTypes.UUID,
